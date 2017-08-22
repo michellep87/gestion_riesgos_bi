@@ -1,0 +1,104 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block contenido %}
+	
+	<style type="text/css" media="screen">
+   
+   .largo{
+      width: 200px;
+      font-size: 16px;
+   }
+
+   .sub-style2 {
+                        font-family: Tahoma, Verdana, Segoe, sans-serif;
+                        color: #0000cc;
+                        font-size: 14;
+                        font-weight: bold;
+                      }
+    
+	</style>
+
+	<div class="box box-primary  with-border">
+	<div class="box-body">
+	
+
+	<div class="card">
+	<div class="card-header text-center">
+		<p >
+		<h3 class="text-center sub-style2">Menu de Administracion de Catalogos</h3>
+	</p>
+	<p><br></p>
+	</div>
+	<div class="card-block text-center">
+		
+		<button class="btn btn-success btn-lg largo" type="button" id="btnTipoarea">Tipos de Areas</button>
+		
+		<button class="btn btn-success btn-lg largo" type="button" id="btnArea">Areas</button>
+		
+		<button class="btn btn-success btn-lg largo" type="button" id="btnPuesto">Puestos</button>
+		
+		<button class="btn btn-success btn-lg largo" type="button" id="btnTipoproceso">Tipos de Procesos</button>
+		
+		<button class="btn btn-success btn-lg largo" type="button" id="btnTipoactividad">Tipos de Actividades</button>
+		<br>
+		<br>
+		<button class="btn btn-success btn-lg largo" type="button" id="btnTipocontrol">Tipos de Controles</button>
+		<button class="btn btn-success btn-lg largo" type="button" id="btnTiporiesgo">Tipos de Riesgos</button>
+		<button class="btn btn-success btn-lg largo" type="button" id="btnriesgos">Riesgos</button>
+		<button class="btn btn-success btn-lg largo" type="button" id="btnNaturalezacontrol">Naturaleza de Controles</button>
+		<button class="btn btn-success btn-lg largo" type="button" id="btnEscenariosriesgos">Escenarios de Riesgos</button>
+		
+	</div>
+	</div>
+		
+     </div>
+    </div>
+    <br><br>
+    </div>
+
+    <script type="text/javascript">
+    	$('#btnTipoarea').click(function () {
+    		window.location.href = "{% url 'tipo_area' %}";
+    	})
+
+    	$('#btnArea').click(function () {
+    		window.location.href = "{% url 'areas' %}";
+    	})
+    	$('#btnPuesto').click(function () {
+    		window.location.href = "{% url 'puestos' %}";
+    	})
+    	$('#btnTipoproceso').click(function () {
+    		window.location.href = "{% url 'tipoproceso' %}";
+    	})
+    	$('#btnTipoactividad').click(function () {
+    		window.location.href = "{% url 'tipoactividad' %}";
+    	})
+    	$('#btnTipocontrol').click(function () {
+    		window.location.href = "{% url 'tipocontrol' %}";
+    	})
+    	$('#btnTiporaci').click(function () {
+    		window.location.href = "{% url 'tiporaci' %}";
+    	})
+    	$('#btnTiporiesgo').click(function () {
+    		window.location.href = "{% url 'tiporiesgos' %}";
+    	})
+    	$('#btnriesgos').click(function () {
+    		window.location.href = "{% url 'riesgos' %}";
+    	})
+    	$('#btnNaturalezacontrol').click(function () {
+    		window.location.href = "{% url 'naturalezacontrol' %}";
+    	})
+    	$('#btnEscenariosriesgos').click(function () {
+    		window.location.href = "{% url 'escenarioriesgos' %}";
+    	})
+    </script>
+{% endblock %}
+
+
+
+
+					
+					     
+					

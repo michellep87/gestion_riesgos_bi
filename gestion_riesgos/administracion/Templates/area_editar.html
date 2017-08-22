@@ -1,0 +1,56 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block contenido %}
+<div class="card">
+	<div class="card-header text-center">
+		<p class="page-header"></p>
+		<p class="text-center sub-style2">EDITAR AREAS</p>
+	</div>
+	<div class="card-block">
+		<div class="box box-primary  with-border">
+	<div class="box-body">
+	{% if mensaje %}
+		<div id="mensaje">
+			{% if mensaje == 'exito' %}
+				<h4><span class="label label-success">El registro se Actualizo correctamente</span></h4>
+			{% elif mensaje == 'error' %}
+				<h4><span class="label label-danger">Error! Contactese con el administrador</span></h4>
+			
+			{% endif %}
+		</div>
+		
+	{% endif %}
+	<div>
+			<a href="{% url 'areas' %}"><span>Regresar</span></a>
+	</div>
+	<form action="" method="POST" accept-charset="utf-8" class="form-horizontal">
+		{% csrf_token %}
+				
+		<div class="col-sm-5">
+			{{formulario.codtipoarea|bootstrap_horizontal:'col-xs-4'}}
+			
+		</div>
+		<div class="col-sm-5"s>
+			{{formulario.descarea|bootstrap_horizontal:'col-xs-4'}}
+		</div>
+		<button type="submit" class="btn btn-default">Editar</button>
+	</form>
+	</div>
+	</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function(){
+    $("#btnagrega").click(function(){
+        $("#modalagrega").modal();
+    });
+
+    $("#btnedita").click(function(){
+    	$("#modaledita").modal();	
+    });
+});
+</script>
+{% endblock %}

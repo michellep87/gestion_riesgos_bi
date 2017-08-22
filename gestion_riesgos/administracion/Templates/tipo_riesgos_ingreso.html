@@ -1,0 +1,139 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block contenido %}
+<div class="card">
+	<div class="card-header text-center">
+		<p class="page-header"></p>
+		<p class="text-center sub-style2">TIPOS DE RIESGOS</p>
+	</div>
+	<div class="card-block">
+		<div class="box box-primary  with-border">
+	<div class="box-body">
+	{% if mensaje %}
+		<div id="mensaje">
+			{% if mensaje == 'exito' %}
+				<h4><span class="label label-success">El registro se guardo correctamente</span></h4>
+			{% elif mensaje == 'error' %}
+				<h4><span class="label label-danger">Error! Contactese con el administrador</span></h4>
+			
+			{% endif %}
+		</div>
+	{% endif %}
+
+	<form action="" method="GET" accept-charset="utf-8">
+		{% csrf_token %}
+		
+		<div>
+			<button type="button" class="btn btn-success pull-right" id="btnagrega">
+				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Agregar
+			</button>
+		</div>
+		<div class="col-sm-12">
+			<table class="table table-hover" id="tabla">
+				<thead>
+					<tr>
+						<th>Descripcion de Tipos de Riesgos</th>
+					</tr>
+				</thead>
+				<tbody>
+				
+				{% for l in listado %}
+				<tr>
+					<td>{{l.desctiporiesgo}}</td>
+					<td>
+		 					<a href="{% url 'tiporiesgos_editar' l.codtiporiesgo %}"><span>Editar</span></a>
+		 						
+		 			</td>
+				</tr>
+
+				{% endfor %}
+				
+				</tbody>
+			</table>
+		</div>
+	</form>
+	</div>
+	</div>
+	</div>
+	</div>
+	
+
+	<!-- Modal -->
+	<div id="modalagrega" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal Content -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Ingreso de Tipos de Riesgos</h4>
+				</div>
+				<div class="modal-body">
+					<form action="" method="POST" accept-charset="utf-8">
+						{% csrf_token %}
+						<div class="row">
+						
+					<div class="col-sm-12">
+						{{formulario.desctiporiesgo|bootstrap_horizontal:'col-xs-4'}}
+					</div>
+					</div>
+					<button type="submit" class="btn btn-default">Agregar</button>
+					</form>
+					
+					
+				</div>
+				<div class="modal-footer">
+					
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+	<!-- Modal Editar-->
+	<!-- Modal -->
+	<div id="modaledita" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal Content -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Editar Tipos de Riesgos</h4>
+				</div>
+				<div class="modal-body">
+					<form action="" method="POST" accept-charset="utf-8">
+						{% csrf_token %}
+						<div class="row">
+						
+					<div class="col-sm-12">
+						{{formulario.desctiporiesgo|bootstrap_horizontal:'col-xs-4'}}
+					</div>
+					</div>
+					<button type="submit" class="btn btn-default">Editar</button>
+					</form>
+					
+					
+				</div>
+				<div class="modal-footer">
+					
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+	<script>
+$(document).ready(function(){
+    $("#btnagrega").click(function(){
+        $("#modalagrega").modal();
+    });
+
+    $("#btnedita").click(function(){
+    	$("#modaledita").modal();	
+    });
+});
+</script>
+{% endblock %}

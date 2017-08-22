@@ -1,0 +1,82 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            
+       <!-- Vendor styles -->
+        <link rel="stylesheet" href="{% static 'vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css' %}">
+        <link rel="stylesheet" href="{% static 'vendors/bower_components/animate.css/animate.min.css' %}">
+
+        <!-- App styles -->
+        <link rel="stylesheet" href="{% static 'css/app.min.css' %}">
+    </head>
+
+    <body data-ma-theme="indigo">
+
+    <div class="login-box">
+      
+    <div class="login-box-body">
+    <div class="text-center">
+       <img src="{% static 'img/logo.png' %}">
+       <br>
+        <br>
+    </div>
+    <div class="text-center">
+    <!-- <h3><b>Banco FICENSA</b></h3> -->
+    <h4>Sistema para la Gestion de Riesgos</h4>
+    <br>
+    <br>
+    <form action="" method="post">
+      {% csrf_token %}
+    <div class="login__block active" id="l-login">
+        <div class="login__block__body">
+                    <div class="form-group form-group--float form-group--centered">
+                        <input type="text" class="form-control" name='username' value="{{username}}" required="required">
+                        <label>Usuario</label>
+                        <i class="form-group__bar"></i>
+                    </div>
+
+                    <div class="form-group form-group--float form-group--centered">
+                        <input type="password" class="form-control" name='password' required="required">
+                        <label>Contraseña</label>
+                        <i class="form-group__bar"></i>
+                    </div>
+                    {% if error %}
+        <div class="text-center">
+          <span class="label label-danger ">ERROR!! El usuario o contraseña no es correcta.</span>
+          <br>
+          <br>
+        </div>
+      {% endif %}
+      <div class="col-xs-12 col-sm-12 progress-container">
+          <div class="progress progress-striped active">
+              <div class="progress-bar progress-bar-success" style="width:0%"></div>
+          </div>
+      </div>
+     
+       <div class="col-xs-12">
+          <button type="submit" class="btn btn-primary btn-block btn-flat"><i class="zmdi zmdi-lock-open zmdi-hc-2x"></i>  Autentificar</button>
+        </div>
+    </div> 
+    </div>
+                <!-- Login -->
+               
+    </div>
+    </div>
+    </form>
+
+        
+         <!-- Javascript -->
+        <!-- Vendors -->
+        <script src="{% static 'vendors/bower_components/jquery/dist/jquery.min.js' %}"></script>
+        <script src="{% static 'vendors/bower_components/tether/dist/js/tether.min.js' %}"></script>
+        <script src="{% static 'vendors/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'vendors/bower_components/Waves/dist/waves.min.js' %}"></script>
+
+        <!-- App functions and actions -->
+        <script src="{% static 'js/app.min.js' %}"></script>
+    
+</body>
+</html>

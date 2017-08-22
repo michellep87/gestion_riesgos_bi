@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block contenido %}
+
+<style type="text/css" media="screen">
+.sub-style2 {
+                        font-family: Tahoma, Verdana, Segoe, sans-serif;
+                        /*color: #0000cc;*/
+                        color:  #b8b894;
+                        font-size: 14;
+                        font-weight: bold;
+                      }
+ .warning {
+    background-color: #ff9800;
+}
+</style>
+
+<link rel="stylesheet" href="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.css' %}" />
+<script src="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.js' %}"></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.js' %} "></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.min.js' %}"></script>
+
+<div>
+		<button type="button" class="btn btn-success pull-right" id="btnedita">
+			<span class="zmdi zmdi-plus-circle-o zmdi-hc-lg" aria-hidden="true"></span> Editar Proceso
+		</button>
+</div>
+
+
+<div class="card">	
+	<div class="card-header text-center">
+		<p class="page-header">
+			<p class="text-center sub-style2">
+				LISTADO DE SUBPROCESOS INGRESADOS EN PROCESO  "{{instanciap}}" 
+			</p>
+		</p>
+	</div>
+	<div>
+		<button type="button" class="btn btn-success pull-right" id="btnagrega">
+			<span class="zmdi zmdi-plus-circle-o zmdi-hc-lg" aria-hidden="true"></span> Agregar
+		</button>
+	</div>
+	<div class="card-block">
+		<div class="box box-primary with-border">
+		<div class="box box-body">
+			{% if mensaje %}
+		<div id="mensaje">
+			{% if mensaje == 'exito' %}
+			<h4><span class="label label-success">El registro se guardo correctamente</span></h4>
+			{% elif mensaje == 'error' %}
+			<h4><span class="label label-danger">Error! Contactese con el administrador</span></h4>
+
+			{% endif %}
+		</div>
+		{% endif %}
+
+		<form action="" method="get" accept-charset="utf-8" enctype="multipart/form-data" class="form-horizontal">
+			{% csrf_token %}
+			<!-- <p>Proceso: {{procesos.nombre_proceso}}</p> -->
+			<div class="row">
+				<!-- <div class="col-sm-12">
+					<div class="text-center col-sm-10">		
+					
+					<p class="sub-style2">
+						LISTADO DE SUBPROCESOS INGRESADOS
+					</p>
+				</div> -->
+					
+				<div class="col-sm-12">
+						<table class="table table-hover mb-0" id="tabla">
+							
+							<thead>
+								<tr>
+									<th><b>Descripcion Subproceso</b></th>
+									<th><b>Dueño del Subproceso</b></th>.
+									<th><b>Estado</b></th>
+								</tr>
+							</thead>
+							
+							<tbody>
+								{% for data in listado %}
+								<tr>
+									<td>{{data.descsubproceso}}</td>
+									<td>{{data.due_osubproceso}}</td>
+									<td>
+									{% if data.codestado.pk == 3 %}
+										<div class="badge badge-default text-center" rol="alert">{{data.codestado}}</div>
+									{% elif data.codestado.pk == 2 %}
+										<div class="badge warning text-center" rol="alert">{{data.codestado}}</div>
+									{% elif data.codestado.pk == 1 %}
+										<div class="badge badge-success text-center" rol="alert">{{data.codestado}}</div>
+									{% endif %}
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+				</div>
+				</div>
+						<div id="cod_proceso" class="invisible">{{instanciap.pk}}</div>
+					
+			
+		</form>
+		</div>
+		</div>
+	</div>
+
+		
+
+		<!-- Modal -->
+			<div id="modalagrega" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<!-- Modal Content -->
+					<div class="modal-content">
+						<div class="modal-header center-block">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Ingreso Subprocesos</h4>
+						</div>
+						<div class="modal-body">
+							<form action="" method="POST" accept-charset="utf-8">
+								{% csrf_token %}
+								<input type="hidden" name="metodo" value="subproceso">
+								<div class="row">
+								<div class="col-sm-6">
+									{{puesto.descpuesto|bootstrap_horizontal:'col-xs-4'}}
+								</div>
+								<div class="col-sm-6">
+									{{formulario.orden_subproceso|bootstrap_horizontal:'col-xs-4'}}
+								</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-12">
+									{{formulario.descsubproceso|bootstrap_horizontal:'col-xs-4'}}
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-12">
+									{{formulario.observaciones|bootstrap_horizontal:'col-xs-4'}}
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-12">
+									<label for="fecha_implementacion">Fecha de Implementacion</label>
+									<!-- <input type="text" class="form-control datetime-picker flatpickr-input active" placeholder="Pick a date &amp; time" readonly="readonly" name="fecha_implementacion" id="fecha_implementacion"> -->
+									<input type="text" class="form-control date-picker flatpickr-input active" placeholder="Pick a date" readonly="readonly" name="fecha_implementacion" id="fecha_implementacion">
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-12">
+										{{formulario.anexo|bootstrap_horizontal:'col-xs-4'}}
+									</div>
+								</div>
+
+
+								
+								<button type="submit" class="btn btn-default" id="btnsubprocesos">Agregar</button>
+							</form>
+							
+							
+						</div>
+						<div class="modal-footer">
+							
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+				<!-- Modal Editar Procesos-->
+			<div id="modaledita" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<!-- Modal Content -->
+					<div class="modal-content">
+						<div class="modal-header center-block">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Editar Procesos</h4>
+						</div>
+						<div class="modal-body">
+							<form action="" method="POST" accept-charset="utf-8" enctype="multipart/form-data" class="form-horizontal">
+			{% csrf_token %}
+			<input type="hidden" name="metodo" value="editar_proceso">
+			<div class="row">
+				<div class="col-sm-5">
+					{{formulariop.codtipoproceso|bootstrap_horizontal:'col-sm-4'}}
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="col-sm-5">
+					{{formulariop.nombre_proceso|bootstrap_horizontal:'col-sm-4'}}
+				</div>
+				<div class="col-sm-5">
+					{{formulariop.descripcion|bootstrap_horizontal:'col-sm-4'}}
+				</div>
+			
+			</div>
+			<div class="row">
+				<div class="col-sm-5">
+						{{formulariop.idduenoproceso|bootstrap_horizontal:'col-sm-4'}}
+					
+				</div>
+				<!-- <div class="col-sm-5">
+					{{formulariop.fecha_implementacion|bootstrap_horizontal:'col-sm-4'}}
+				</div>  -->
+			</div>
+			<div class="col-sm-2">
+					<div class="form-group">
+					    
+					    
+					    <button type="submit" class="btn btn-default" id="btnProcesos">Editar</button>
+					</div>
+				</div>
+			
+		</form>
+							
+							
+						</div>
+						<div class="modal-footer">
+							
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+</div>
+
+
+
+	<script>
+		$(document).ready(function() {
+    // Así accedemos al Valor de la opción seleccionada
+    //var valor = $("#id_asignado_a option:selected").html();
+    //console.log('alksjdlaksjdlksajdlksadjklsadjlkdsadsalkdsalkjsadkdsasadlkjdsalkdsalkjdsalkjdsalk')
+    var valor = $("#cod_proceso").html();
+    // alert(valor);
+    $.ajax({
+    	type: "GET",
+    	data: { codproceso: valor },
+    	url: "{% url 'ajaxproceso' %}",
+    }).done(function(response){
+    	//console.log('laksjdlaksjdalskjdlaksjdlk', response.groups__pk)
+    	$("#id_nombre_proceso option[value="+ response.pk +"]").attr("selected",true);
+   
+    })
+    
+	});
+
+	$(document).ready(function(){
+    $("#btnagrega").click(function(){
+        $("#modalagrega").modal();
+    });
+
+    $("#btnedita").click(function(){
+    	$("#modaledita").modal();	
+    });
+	});
+
+	$('#id_fecha_implementacion').flatpickr({
+	  	format: 'yyyy-mm-dd',
+	  	language: 'es',
+	  	autoclose: true,
+	});
+
+	
+	</script>
+{% endblock %}

@@ -1,0 +1,567 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block contenido %}
+
+<style type="text/css" media="screen">
+.sub-style2 {
+                        font-family: Tahoma, Verdana, Segoe, sans-serif;
+                        /*color: #0000cc;*/
+                        color:  #b8b894;
+                        font-size: 14;
+                        font-weight: bold;
+                      }
+ .warning {
+    background-color: #ff9800;
+}
+
+/*.badge-default {
+    background-color: #e0e0d1;
+  
+}*/
+
+   .badge-nivel1 {
+        background-color: #00b300; /*#006600 ;*/
+        display: block;
+   } 
+
+
+   .badge-nivel2 {
+        background-color: #66ff33 ;
+        display: block;
+   }
+
+   .badge-nivel3 {
+        background-color: #ffff00;/*#ffff66 ;*/
+        display: block;
+        /*font-size: 18px; */
+   }
+
+   .badge-nivel4 {
+        background-color: #ffbf00 ;
+        display: block;
+   }
+
+   .badge-nivel5 {
+        background-color: #ff1a1a ;
+        display: block;
+   }
+
+/*.badge {
+    color: #000000;
+}*/
+</style>
+
+<link rel="stylesheet" href="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.css' %}" />
+<script src="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.js' %}"></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.js' %} "></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.min.js' %}"></script>
+
+<div>
+        <button type="button" class="btn btn-success pull-right" id="btnedita">
+            <span class="zmdi zmdi-plus-circle-o zmdi-hc-lg" aria-hidden="true"></span> Editar Proceso
+        </button>
+</div>
+
+
+<div class="card">  
+    <div class="card-header text-center">
+        <p class="page-header">
+            <p class="text-center sub-style2">
+                LISTADO DE SUBPROCESOS INGRESADOS EN PROCESO  "{{instanciap}}" 
+            </p>
+        </p>
+    </div>
+    <div>
+        <button type="button" class="btn btn-success pull-right" id="btnagrega">
+            <span class="zmdi zmdi-plus-circle-o zmdi-hc-lg" aria-hidden="true"></span> Agregar
+        </button>
+    </div>
+    <div class="card-block">
+        <div class="box box-primary with-border">
+        <div class="box box-body">
+            {% if mensaje %}
+        <div id="mensaje">
+            {% if mensaje == 'exito' %}
+            <h4><span class="label label-success">El registro se guardo correctamente</span></h4>
+            {% elif mensaje == 'error' %}
+            <h4><span class="label label-danger">Error! Contactese con el administrador</span></h4>
+
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <form action="" method="get" accept-charset="utf-8" enctype="multipart/form-data" class="form-horizontal">
+            {% csrf_token %}
+            <!-- <p>Proceso: {{procesos.nombre_proceso}}</p> -->
+            <div class="row">
+                <!-- <div class="col-sm-12">
+                    <div class="text-center col-sm-10">     
+                    
+                    <p class="sub-style2">
+                        LISTADO DE SUBPROCESOS INGRESADOS
+                    </p>
+                </div> -->
+                    
+                <div class="col-sm-12">
+                        <table class="table mb-0" style="border-collapse:collapse;" id="tabla">
+                            
+                            <thead>
+                                <tr>
+                                    <th><b>Descripcion Subproceso</b></th>
+                                    <th><b>Dueño del Subproceso</b></th>.
+                                    <th><b>Estado</b></th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                {% for data in subproceso %}
+                                <tr data-toggle="collapse" class="subproceso-tr accordion-toggle" data-id = "{{data.pk}}" data-target="#data{{data.pk}}" data-parent="#tabla">
+                                    <td>{{data.descsubproceso}}</td>
+                                    <td>{{data.due_osubproceso}}</td>
+                                    <td>
+                                    {% if data.codestado.pk == 1 %}
+                                        <div class="badge badge-default text-center" rol="alert">{{data.codestado}}</div>
+                                    {% elif data.codestado.pk == 2 %}
+                                        <div class="badge warning text-center" rol="alert">{{data.codestado}}</div>
+                                    {% elif data.codestado.pk == 3 %}
+                                        <div class="badge badge-success text-center" rol="alert">{{data.codestado}}</div>
+                                    {% endif %}
+                                    </td>
+                                </tr>
+                                 <tr> 
+                                    <td class="hiddenRow" colspan="12">
+
+                                        <div id="data{{data.pk}}" class="accordion-body collapse">
+                                            <ul class="nav nav-tabs" role="tablist">
+                                              <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#Actividadesdata{{data.pk}}" role="tab">Actividades</a>
+                                              </li>
+                                              <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#Escenariosdata{{data.pk}}" role="tab">Escenarios</a>
+                                              </li>
+                                              <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#MatrizRACIdata{{data.pk}}" role="tab">Matriz RACI</a>
+                                              </li>
+                                              <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#MatrizControldata{{data.pk}}" role="tab">Matriz de Control</a>
+                                              </li>
+                                            </ul>
+
+                                                <div class="tab-content ">
+                                                  <div class="tab-pane active" id="Actividadesdata{{data.pk}}">
+                                                        <form action="" method="POST" accept-charset="utf-8" class="form-horizontal">
+                                                            {% csrf_token %}
+                                                             <div class="col-sm-12">
+                                                                <div class="text-center col-sm-10">     
+                                                                
+                                                                <p class="sub-style2">
+                                                                    LISTADO DE ACTIVIDADES DEL SUBPROCESO "{{data.descsubproceso}}"
+                                                                </p>
+                                                            </div>
+                                                            </div>
+                                                             <div>
+                                                                <button type="button" class="btn btn-success pull-right btnactividad" data-id="{{data.pk}}" id="btnactividad">
+                                                                    <span class="zmdi zmdi-plus-circle-o zmdi-hc-lg" aria-hidden="true"></span> Agregar Actividad
+                                                                </button>
+                                                                 <input type="hidden" name="subproc" value="{{data.pk}}">
+                                                            </div>
+                                                             <div class="col-sm-12">
+                                                                 <table class="table" id="tabla">
+                                                                        <tr>
+                                                                            <thead>
+                                                                                <th>Orden </th>
+                                                                                <th>Tipo de actividad</th>
+                                                                                <th>Descripcion</th>
+                                                                            </thead>
+                                                                        </tr>
+                                                                        <tbody>
+                                                                            {% for act in data.actividades %}
+                                                                            <tr >
+                                                                                <td>{{act.ordenactividad}}</td>
+                                                                                <td>{{act.codtipoactividad}}</td>
+                                                                                <td>{{act.descripcionactividad}}</td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                            {% endfor %}
+                                                                        </tbody>
+                                                                    </table>
+                                                             </div>   
+                                                        </form>
+                                                    </div>
+
+
+                                                    <div class="tab-pane" id="Escenariosdata{{data.pk}}">
+                                              <form action="" method="POST" accept-charset="utf-8" class="form-horizontal">
+                                                            {% csrf_token %}
+                                                             <div class="col-sm-12">
+                                                                <div class="text-center col-sm-10">     
+                                                                
+                                                                <p class="sub-style2">
+                                                                    LISTADO DE ESCENARIOS DEL SUBPROCESO "{{data.descsubproceso}}"
+                                                                </p>
+                                                            </div>
+                                                            </div>
+                                                             <div>
+                                                                <button type="button" class="btn btn-success pull-right btnescenario" data-id="{{data.pk}}" id="btnactividad">
+                                                                    <span class="zmdi zmdi-plus-circle-o zmdi-hc-lg" aria-hidden="true"></span> Agregar Escenario
+                                                                </button>
+                                                                 <input type="hidden" name="subproc" value="{{data.pk}}">
+                                                            </div>
+                                                             <div class="col-sm-12">
+                                                                 <table class="table" id="tabla">
+                                                                        <tr>
+                                                                            <thead>
+                                                                                <th>Escenario</th>
+                                                                                <th>Probabilidad</th>
+                                                                                <th>Impacto</th>
+                                                                                <th class="text-center">Nivel de Riesgo</th>
+                                                                            </thead>
+                                                                        </tr>
+                                                                        <tbody>
+                                                                            {% for esc in data.escenarios %}
+                                                                            <tr >
+                                                                                <td>{{esc.codescenarioriesgo}}</td>
+                                                                                <td>{{esc.probabilidad}}</td>
+                                                                                <td>{{esc.impacto}}</td>
+                                                                                <td>
+                                                                                    {% if esc.nivel_riesgo_inherente == 1 %}
+                                                                                    <div class="badge badge-nivel1"  style="text-shadow:1px 1px 0 #444" rol="alert">{{esc.nivel_riesgo_inherente}}</div>
+
+                                                                                    {% elif esc.nivel_riesgo_inherente == 2 %}
+                                                                                    <div class="badge badge-nivel2"  style="text-shadow:1px 1px 0 #444" rol="alert">{{esc.nivel_riesgo_inherente}}</div>
+                                                                                    
+                                                                                    {% elif esc.nivel_riesgo_inherente == 3 %}
+                                                                                    <div class="badge badge-nivel3"  style="text-shadow:1px 1px 0 #444" rol="alert">{{esc.nivel_riesgo_inherente}}</div>
+
+                                                                                    {% elif esc.nivel_riesgo_inherente == 4 %}
+                                                                                    <div class="badge badge-nivel4"  style="text-shadow:1px 1px 0 #444" rol="alert">{{esc.nivel_riesgo_inherente}}</div>
+
+                                                                                    {% elif esc.nivel_riesgo_inherente == 5 %}
+                                                                                    <div class="badge badge-nivel5"  style="text-shadow:1px 1px 0 #444" rol="alert">{{esc.nivel_riesgo_inherente}}</div>
+                                                                                    {% endif %}
+                                                                                </td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                            {% endfor %}
+                                                                        </tbody>
+                                                                    </table>
+                                                             </div>   
+                                                        </form>
+                                                    </div>
+                                            <div class="tab-pane" id="MatrizRACIdata{{data.pk}}">
+                                              <h3>add clearfix to tab-content (see the css)</h3>
+                                                    </div>
+                                            <div class="tab-pane" id="MatrizControldata{{data.pk}}">
+                                              <h3>add clearfix to tab-content (see the css231)</h3>
+                                                    </div>
+                                                </div>
+                                      </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                </div>
+                </div>
+                        <div id="cod_proceso" class="invisible">{{instanciap.pk}}</div>
+                    
+            
+        </form>
+        </div>
+        </div>
+    </div>
+
+      
+
+        <!-- Modal -->
+            <div id="modalagrega" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal Content -->
+                    <div class="modal-content">
+                        <div class="modal-header center-block">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Ingreso Subprocesos</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="POST" accept-charset="utf-8">
+                                {% csrf_token %}
+                                <input type="hidden" name="metodo" value="subproceso">
+                                <div class="row">
+                                <div class="col-sm-6">
+                                    {{puesto.descpuesto|bootstrap_horizontal:'col-xs-4'}}
+                                </div>
+                                <div class="col-sm-6">
+                                    {{formulario.orden_subproceso|bootstrap_horizontal:'col-xs-4'}}
+                                </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                    {{formulario.descsubproceso|bootstrap_horizontal:'col-xs-4'}}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                    {{formulario.observaciones|bootstrap_horizontal:'col-xs-4'}}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                    <label for="fecha_implementacion">Fecha de Implementacion</label>
+                                    <!-- <input type="text" class="form-control datetime-picker flatpickr-input active" placeholder="Pick a date &amp; time" readonly="readonly" name="fecha_implementacion" id="fecha_implementacion"> -->
+                                    <input type="text" class="form-control date-picker flatpickr-input active" placeholder="Pick a date" readonly="readonly" name="fecha_implementacion" id="fecha_implementacion">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        {{formulario.anexo|bootstrap_horizontal:'col-xs-4'}}
+                                    </div>
+                                </div>
+
+
+                                
+                                <button type="submit" class="btn btn-default" id="btnsubprocesos">Agregar</button>
+                            </form>
+                            
+                            
+                        </div>
+                        <div class="modal-footer">
+                            
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+                <!-- Modal Editar Procesos-->
+            <div id="modaledita" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal Content -->
+                    <div class="modal-content">
+                        <div class="modal-header center-block">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Editar Procesos</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="POST" accept-charset="utf-8" enctype="multipart/form-data" class="form-horizontal">
+            {% csrf_token %}
+            <input type="hidden" name="metodo" value="editar_proceso">
+            <div class="row">
+                <div class="col-sm-5">
+                    {{formulariop.codtipoproceso|bootstrap_horizontal:'col-sm-4'}}
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-sm-5">
+                    {{formulariop.nombre_proceso|bootstrap_horizontal:'col-sm-4'}}
+                </div>
+                <div class="col-sm-5">
+                    {{formulariop.descripcion|bootstrap_horizontal:'col-sm-4'}}
+                </div>
+            
+            </div>
+            <div class="row">
+                <div class="col-sm-5">
+                        {{formulariop.idduenoproceso|bootstrap_horizontal:'col-sm-4'}}
+                    
+                </div>
+                <!-- <div class="col-sm-5">
+                    {{formulariop.fecha_implementacion|bootstrap_horizontal:'col-sm-4'}}
+                </div>  -->
+            </div>
+            <div class="col-sm-2">
+                    <div class="form-group">
+                        
+                        
+                        <button type="submit" class="btn btn-default" id="btnProcesos">Editar</button>
+                    </div>
+                </div>
+            
+        </form>
+                            
+                            
+                        </div>
+                        <div class="modal-footer">
+                            
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+                   <!-- Modal Agregar Actividad-->
+            <div id="modalactividad" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal Content -->
+                    <div class="modal-content">
+                        <div class="modal-header center-block">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Ingresar Actividades</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="POST" accept-charset="utf-8" enctype="multipart/form-data" class="form-horizontal">
+            {% csrf_token %}
+            <input type="hidden" name="metodo" value="Inserta_actividad">
+            <input type="text" name="subproceso_id" id="subproceso_id" value="">
+           
+                <div class="col-sm-10">
+                    {{formularioa.ordenactividad|bootstrap_horizontal:'col-sm-4'}}
+                </div>
+            
+                <div class="col-sm-10">
+                    {{tipoactividad.desctipoactividad|bootstrap_horizontal:'col-sm-4'}}
+                </div>
+                <div class="col-sm-10">
+                    {{formularioa.descripcionactividad|bootstrap_horizontal:'col-sm-4'}}
+                </div>
+            
+            
+            
+            <div class="col-sm-2">
+                    <div class="form-group">
+                        
+                        
+                        <button type="submit" class="btn btn-default" id="btnActividad">Guardar</button>
+                    </div>
+                </div>
+            
+        </form>
+                            
+                            
+                        </div>
+                        <div class="modal-footer">
+                            
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+
+                   <!-- Modal Agregar Escenarios-->
+            <div id="modalescenario" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal Content -->
+                    <div class="modal-content">
+                        <div class="modal-header center-block">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Ingresar Escenarios</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="POST" accept-charset="utf-8" enctype="multipart/form-data" class="form-horizontal">
+            {% csrf_token %}
+            <input type="hidden" name="metodo" value="Inserta_escenario">
+            <input type="text" name="subproceso_ide" id="subproceso_ide" value="">
+           
+                <div class="col-sm-10">
+                    {{formularioe.probabilidad|bootstrap_horizontal:'col-sm-4'}}
+                </div>
+            
+                <div class="col-sm-10">
+                    {{escenario.descescenario|bootstrap_horizontal:'col-sm-4'}}
+                </div>
+                <div class="col-sm-10">
+                    {{formularioe.impacto|bootstrap_horizontal:'col-sm-4'}}
+                </div>
+                <div class="col-sm-10">
+                    {{formularioe.nivel_riesgo_inherente|bootstrap_horizontal:'col-sm-4'}}
+                </div>
+                <div class="col-sm-10">
+                    {{formularioe.observaciones|bootstrap_horizontal:'col-sm-4'}}
+                </div>
+            
+            
+            <div class="col-sm-2">
+                    <div class="form-group">
+                        
+                        
+                        <button type="submit" class="btn btn-default" id="btnEscenario">Guardar</button>
+                    </div>
+                </div>
+            
+        </form>
+                            
+                            
+                        </div>
+                        <div class="modal-footer">
+                            
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+</div>
+
+
+
+    <script>
+        $(document).ready(function() {
+    // Así accedemos al Valor de la opción seleccionada
+    //var valor = $("#id_asignado_a option:selected").html();
+    //console.log('alksjdlaksjdlksajdlksadjklsadjlkdsadsalkdsalkjsadkdsasadlkjdsalkdsalkjdsalkjdsalk')
+    var valor = $("#cod_proceso").html();
+    // alert(valor);
+    $.ajax({
+        type: "GET",
+        data: { codproceso: valor },
+        url: "{% url 'ajaxproceso' %}",
+    }).done(function(response){
+        //console.log('laksjdlaksjdalskjdlaksjdlk', response.groups__pk)
+        $("#id_nombre_proceso option[value="+ response.pk +"]").attr("selected",true);
+   
+    })
+    
+    });
+
+    $(document).ready(function(){
+    $("#btnagrega").click(function(){
+        $("#modalagrega").modal();
+    });
+
+    $("#btnedita").click(function(){
+        $("#modaledita").modal();   
+    });
+
+    $(".btnactividad").click(function(){
+        $("#modalactividad").modal(); 
+
+    });
+
+    $(".btnescenario").click(function(){
+        $("#modalescenario").modal(); 
+
+    });
+    });
+
+    $('#id_fecha_implementacion').flatpickr({
+        format: 'yyyy-mm-dd',
+        language: 'es',
+        autoclose: true,
+    });
+
+   $('.subproceso-tr').click(function(){
+            subproceso_id = $(this).data('id');
+            // window.location.href = "/procesos/subprocesos/ingreso/"+proceso_id; 
+            console.log('alsjdalskdlaksjdaldlaksjdldsa', subproceso_id);
+        })
+
+   $('.btnactividad').click(function(event) {
+        $('#subproceso_id').val($(this).data('id'))
+   });
+   
+   $('.btnescenario').click(function(event) {
+        $('#subproceso_ide').val($(this).data('id'))
+   });
+    
+    </script>
+{% endblock %}
