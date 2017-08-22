@@ -11,4 +11,5 @@ urlpatterns = [
 
 	#Ajax
 	url(r'^ajaxproceso/$', views.ajaxproceso, name='ajaxproceso'),
+	url(r'^ajaxactividad/$', views.ajaxactividad, name='ajaxactividad'),
 ]

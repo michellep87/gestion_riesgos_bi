@@ -405,6 +405,7 @@ def tiporaci(request):
 		try:
 			campos = Tiporaci()
 			campos.descripcion = request.POST.get('descripcion')
+			campos.letra = request.POST.get('letra')
 			campos.save()
 			mensaje = 'exito'
 
@@ -434,6 +435,7 @@ def tiporaci_editar(request, id):
 		try:
 			campos = Tiporaci.objects.get(pk=id)
 			campos.descripcion = request.POST.get('descripcion')
+			campos.letra = request.POST.get('letra')
 			campos.save()
 			
 

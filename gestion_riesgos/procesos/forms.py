@@ -90,3 +90,12 @@ class SubprocesosXEscenariosForm(ModelForm):
 	    # 			'nivel_riesgo_inherente': _('Nivel de Riesgo Inherente')
 	    # }
 
+class RACIForm(ModelForm):
+	class Meta:
+		model = Raci
+		fields = '__all__'
+
+		labels = {
+					'codRaci': _('RACI')
+		}
+

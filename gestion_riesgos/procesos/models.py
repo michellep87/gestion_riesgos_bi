@@ -76,12 +76,33 @@ class Raci(models.Model):
     idraci = models.AutoField(db_column='IdRaci', primary_key=True)  # Field name made lowercase.
     codactividad = models.ForeignKey(Actividades, models.DO_NOTHING, db_column='CodActividad', blank=True, null=True)  # Field name made lowercase.
     codraci = models.ForeignKey(Tiporaci, models.DO_NOTHING, db_column='CodRaci', blank=True, null=True)  # Field name made lowercase.
-    codpuesto = models.IntegerField(db_column='CodPuesto', blank=True, null=True)  # Field name made lowercase.
+    codpuesto = models.ForeignKey(Puestos, models.DO_NOTHING,db_column='CodPuesto', blank=True, null=True)  # Field name made lowercase.
     observaciones = models.CharField(db_column='Observaciones', max_length=150, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'RACI'
+    def __unicode__(self):
+        return u'%s' % (self.idraci)
+
+
+class Controles(models.Model):
+    codcontrol = models.AutoField(db_column='CodControl', primary_key=True)  # Field name made lowercase.
+    codactividad = models.ForeignKey(Actividades, models.DO_NOTHING, db_column='CodActividad', blank=True, null=True)  # Field name made lowercase.
+    codtipocontrol = models.ForeignKey(Tipocontrol, models.DO_NOTHING, db_column='CodTipoControl', blank=True, null=True)  # Field name made lowercase.
+    efectividad = models.IntegerField(db_column='Efectividad', blank=True, null=True)  # Field name made lowercase.
+    nivel_riesgo = models.IntegerField(db_column='NivelRiesgo', blank=True, null=True)  # Field name made lowercase.
+    riesgo_residual = models.IntegerField(db_column='RiesgoResidual', blank=True, null=True)  # Field name made lowercase.
+    codnaturaleza = models.ForeignKey(Naturalezacontrol, models.DO_NOTHING, db_column='CodNaturaleza', blank=True, null=True)  # Field name made lowercase.
+    realiza = models.ForeignKey(Puestos, models.DO_NOTHING, db_column='Realiza', blank=True, null=True, related_name='realiza')  # Field name made lowercase.
+    ejecuta = models.ForeignKey(Puestos, models.DO_NOTHING, db_column='Ejecuta', blank=True, null=True, related_name='ejecuta')  # Field name made lowercase.
+    revisa = models.ForeignKey(Puestos, models.DO_NOTHING, db_column='Revisa', blank=True, null=True, related_name='revisa')  # Field name made lowercase.
+    fecha_implementacion = models.DateTimeField(db_column='FechaImplementacion', blank=True, null=True)  # Field name made lowercase.
+    descripcion = models.CharField(db_column='Descripcion', max_length=150, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Controles'
 
 
 

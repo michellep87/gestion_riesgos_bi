@@ -70,13 +70,13 @@ class PuestosForm(ModelForm):
 		}
 
 class PuestosEditarForm(ModelForm):
-	descpuesto = forms.ModelChoiceField(queryset= Puestos.objects.all(), label="Dueño del Subproceso")
+	descpuesto = forms.ModelChoiceField(queryset= Puestos.objects.all(), label="Dueño")
 	class Meta:
 		model = Puestos
 		fields = '__all__'
 
 		labels = {
-					'descpuesto': _('Dueño del Subproceso'),
+					'descpuesto': _('Dueño'),
 					'codarea': _('Area')
 		}
 
@@ -132,7 +132,7 @@ class TipoRaciForm(ModelForm):
 		fields = '__all__'
 
 class TipoRaciEditarForm(ModelForm):
-	descripcion = forms.ModelChoiceField(queryset=Tiporaci.objects.all())
+	letra = forms.ModelChoiceField(queryset=Tiporaci.objects.all())
 	class Meta:
 		model = Tiporaci
 		fields = '__all__'

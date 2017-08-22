@@ -121,30 +121,43 @@ def procesos_editar(request, id):
 @login_required
 def subprocesos(request, id):
 	ctx = {}
+
+	#instancias
 	try:
 		instancia = Subprocesos.objects.filter(codproceso = id)
 		
 	except Subprocesos.DoesNotExist: 
 		instancia = None
-		
-	
-	formulario = SubprocesosForm()
-	listado = Subprocesos.objects.filter(codproceso = id)
-	
-	
+	instanciap = Procesos.objects.get(codproceso= id)
+
+
+	#Formularios
+	formulario = SubprocesosForm()	
+	formularioProceso = ProcesosForm(instance= instanciap)
+	formularioActividad = ActividadesForm()
+	formularioEscenario = SubprocesosXEscenariosForm()
+	formularioraci = RACIForm()
 	tipoactividad = TipoActividadEditarForm()
 	escenario = EscenarioriesgosEditarForm()
-	instanciap = Procesos.objects.get(codproceso= id)
-	formularioProceso = ProcesosForm(instance= instanciap)
 	procesos = ProcesosEditarForm()
 	Puesto = PuestosEditarForm()
-	formularioActividad = ActividadesForm()
+	actividadesedit = ActividadesEditarForm()
+	tipocontrol = TipoControlEditarForm()
+	naturaleza = NaturalezacontrolEditarForm()
+	racie = TipoRaciEditarForm()
+	# actividadesedit.fields["descripcionactividad"] = forms.ModelChoiceField(queryset=Actividades.objects.filter(codsubproceso=request.POST.get('subproc3')), label = 'Actividad')
+	#Listados
+	listado = Subprocesos.objects.filter(codproceso = id)
 	actividades = Actividades.objects.filter(codsubproceso__isnull= False)
 	escenarios = Subprocesosxescenarios.objects.filter(codsubproceso__isnull=False)
-	formularioEscenario = SubprocesosXEscenariosForm()
+	matrizraci = Raci.objects.filter(codactividad__isnull=False)
+	matrizcontrol = Controles.objects.filter(codactividad__isnull=False)
+	
+	
 
 	subproceso = []
 
+	#Subprocesos
 	for sub in listado:
 		array = {}
 		array['pk'] = sub.pk
@@ -157,6 +170,8 @@ def subprocesos(request, id):
 		array['observaciones'] = sub.observaciones
 		array['codestado'] = sub.codestado
 		array['fecha_implementacion'] = sub.fecha_implementacion
+		
+		#Actividades
 		dic=[]
 		for act in actividades:
 			if act.codsubproceso.pk == sub.pk:
@@ -166,10 +181,50 @@ def subprocesos(request, id):
 				lista['ordenactividad'] = act.ordenactividad
 				lista['codtipoactividad'] = act.codtipoactividad
 				lista['descripcionactividad'] = act.descripcionactividad
+
+				#RACI
+				dic3=[]
+				for raci in matrizraci:
+					if raci.codactividad.pk == act.pk and raci.codactividad.codsubproceso.pk == sub.pk:
+
+						matriz = {}
+						matriz['idraci'] = raci.idraci
+						matriz['codraci'] = raci.codraci
+						matriz['codpuesto'] = raci.codpuesto
+						matriz['observaciones'] = raci.observaciones
+						matriz['codactividad'] = raci.codactividad
+						dic3.append(matriz)
+
+				lista['raci'] = dic3
 				dic.append(lista)
+
+			# #Controles
+			# dic4 = []
+			# for ctrl in matrizcontrol:
+			# 	if ctrl.codactividad.pk == act.pk:
+			# 		mcontrol = {}
+			# 		mcontrol['codcontrol'] = ctrl.codcontrol
+			# 		mcontrol['codtipocontrol'] = ctrl.codtipocontrol
+			# 		mcontrol['efectividad'] = ctrl.efectividad
+			# 		mcontrol['nivel_riesgo'] = ctrl.nivel_riesgo
+			# 		mcontrol['riesgo_residual'] = ctrl.riesgo_residual
+			# 		mcontrol['codnaturaleza'] = ctrl.codnaturaleza
+			# 		mcontrol['realiza'] = ctrl.realiza
+			# 		mcontrol['ejecuta'] = ctrl.ejecuta
+			# 		mcontrol['revisa'] = ctrl.revisa
+			# 		mcontrol['fecha_implementacion'] = ctrl.fecha_implementacion
+			# 		mcontrol['descripcion'] = ctrl.descripcion
+
+			# 		dic4.append(mcontrol)
+
+			# lista['controles'] = dic4
+
+			  
+
 		array['actividades'] = dic
 		# subproceso.append(array)
 
+		#Escenarios
 		dic2=[]
 		for esc in escenarios:
 			if esc.codsubproceso.pk == sub.pk:
@@ -185,11 +240,13 @@ def subprocesos(request, id):
 
 				dic2.append(listescenario)
 		array['escenarios'] = dic2
+
+
 		subproceso.append(array)	
 	
-	print  subproceso
+	#print  subproceso
 	if request.is_ajax():
-		request.session['valor'] = request.GET['valor']
+		request.session['valor'] = request.GET['valors']
 		request.session['metodo'] = request.GET['metodo']
 		return HttpResponse(True) 
 	# procesos.fields['nombre_proceso'] = forms.ModelChoiceField(queryset = Procesos.objects.get(codproceso= id))
@@ -217,6 +274,7 @@ def subprocesos(request, id):
 					'formulariop': formularioProceso,
 					'formularioa': formularioActividad,
 					'formularioe': formularioEscenario,
+					'formularior': formularioraci,
 					'listado': listado,
 					'tipoactividad': tipoactividad,
 					'escenario': escenario,
@@ -224,6 +282,10 @@ def subprocesos(request, id):
 					'procesos': procesos,
 					'mensaje': mensaje,
 					'puesto':Puesto,
+					'actividades_editar': actividadesedit,
+					'tipocontrol': tipocontrol,
+					'naturaleza': naturaleza,
+					'racie': racie,
 
 			}
 			return HttpResponseRedirect('/procesos/subprocesos/ingreso/'+ id +'/')
@@ -281,6 +343,24 @@ def subprocesos(request, id):
 				raise e
 			return HttpResponseRedirect('/procesos/subprocesos/ingreso/'+ id +'/')
 
+		if request.POST['metodo'] == 'Inserta_raci':
+			try:
+				
+				campos = Raci()
+				campos.codactividad = None if request.POST.get('actividad') == '' else Actividades.objects.get(pk=request.POST.get('actividad'))
+				campos.codraci = None if request.POST.get('letra') == '' else Tiporaci.objects.get(pk=request.POST.get('letra'))
+				campos.codpuesto = None if request.POST.get('descpuesto') == '' else Puestos.objects.get(pk=request.POST.get('descpuesto'))
+				campos.observaciones = request.POST.get('observaciones')
+				# campos.codsubproceso = None if request.POST.get('subproceso_ide') == '' else Subprocesos.objects.get(pk=request.POST.get('subproceso_ide'))
+				
+				campos.save() 
+				
+
+				
+			except Exception as e:
+				raise e
+			return HttpResponseRedirect('/procesos/subprocesos/ingreso/'+ id +'/')
+
 	else:
 		print 'sopitaaa'
 		ctx = {
@@ -288,6 +368,7 @@ def subprocesos(request, id):
 			'formulariop': formularioProceso,
 			'formularioa': formularioActividad,
 		 	'formularioe': formularioEscenario,
+		 	'formularior': formularioraci,
 			'listado': listado,
 			'tipoactividad': tipoactividad,
 			'escenario': escenario,
@@ -295,6 +376,10 @@ def subprocesos(request, id):
 			'procesos': procesos,
 			'instanciap': instanciap,
 			'puesto':Puesto,
+			'actividades_editar': actividadesedit,
+			'tipocontrol': tipocontrol,
+			'naturaleza': naturaleza,
+			'racie': racie,
 			
 		}
 			#return HttpResponseRedirect('/procesos/subprocesos/ingreso/'+ id + '/' )
@@ -429,6 +514,12 @@ def ajaxproceso(request):
 	if request.is_ajax():
 		codproceso = request.GET['codproceso']
 	data = dict(Procesos.objects.values('pk').get(pk=codproceso))
+	return HttpResponse(json.dumps(data), content_type='application/json')
+
+def ajaxactividad(request):
+	if request.is_ajax():
+		codsubproceso = request.GET['valor']
+	data = list(Actividades.objects.values('pk','descripcionactividad').filter(codsubproceso=codsubproceso))
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
 

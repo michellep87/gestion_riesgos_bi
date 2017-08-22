@@ -59,7 +59,7 @@ class Tiporaci(models.Model):
         managed = False
         db_table = 'TipoRACI'
     def __unicode__(self):
-        return u'%s' % (self.descripcion)
+        return u'%s' % (self.letra)
 
 class Tiposriesgos(models.Model):
     codtiporiesgo = models.AutoField(db_column='CodTipoRiesgo', primary_key=True)  # Field name made lowercase.
@@ -135,6 +135,35 @@ class Escnariosriesgos(models.Model):
         db_table = 'EscnariosRiesgos'
     def __unicode__(self):
         return u'%s' % (self.descescenario)  
+
+
+class Empleados(models.Model):
+    codempleado = models.AutoField(db_column='CodEmpleado', primary_key=True)  # Field name made lowercase.
+    nombre_completo = models.CharField(db_column='NombreCompleto', max_length=75, blank=True, null=True)  # Field name made lowercase.
+    usuarioad = models.CharField(db_column='UsuarioAD', max_length=75, blank=True, null=True)  # Field name made lowercase.
+    correo = models.CharField(db_column='Correo', max_length=75, blank=True, null=True)  # Field name made lowercase.
+    telefono = models.CharField(db_column='Telefono', max_length=75, blank=True, null=True)  # Field name made lowercase.
+    celular = models.CharField(db_column='Celular', max_length=75, blank=True, null=True)  # Field name made lowercase.
+    fecha_ingreso = models.DateTimeField(db_column='FechaIngreso', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Empleados'        
+
+class Empleadoxareas(models.Model):
+    codempeladoxarea = models.AutoField(db_column='CodEmpeladoXArea', primary_key=True)  # Field name made lowercase.
+    codarea = models.ForeignKey(Areas, models.DO_NOTHING, db_column='CodArea', blank=True, null=True)  # Field name made lowercase.
+    codempleado = models.ForeignKey('Empleados', models.DO_NOTHING, db_column='CodEmpleado', blank=True, null=True)  # Field name made lowercase.
+    fecha_inicio = models.DateTimeField(db_column='FechaInicio', blank=True, null=True)  # Field name made lowercase.
+    fecha_final = models.DateTimeField(db_column='FechaFinal', blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'EmpleadoXAreas'
+
+
+
 
 
 

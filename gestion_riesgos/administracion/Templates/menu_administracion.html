@@ -45,6 +45,7 @@
 		<br>
 		<br>
 		<button class="btn btn-success btn-lg largo" type="button" id="btnTipocontrol">Tipos de Controles</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnTiporaci">Tipos de RACI</button>
 		<button class="btn btn-success btn-lg largo" type="button" id="btnTiporiesgo">Tipos de Riesgos</button>
 		<button class="btn btn-success btn-lg largo" type="button" id="btnriesgos">Riesgos</button>
 		<button class="btn btn-success btn-lg largo" type="button" id="btnNaturalezacontrol">Naturaleza de Controles</button>
@@ -93,6 +94,9 @@
     	$('#btnEscenariosriesgos').click(function () {
     		window.location.href = "{% url 'escenarioriesgos' %}";
     	})
+        $('#btnTiporaci').click(function () {
+            window.location.href = "{% url 'tiporaci' %}";
+        })
     </script>
 {% endblock %}
 
