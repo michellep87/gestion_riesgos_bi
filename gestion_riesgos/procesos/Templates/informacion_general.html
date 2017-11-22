@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block contenido %}
+	<div class="card">
+	<div class="card-header text-center">
+		<p class="page-header"></p>
+		<p class="text-center sub-style2">INFORMACION GENERAL</p>
+	</div>
+	<div class="card-block">
+		<div class="box box-primary  with-border">
+	<div class="box-body">
+	{% if mensaje %}
+		<div id="mensaje">
+			{% if mensaje == 'exito' %}
+				<h4><span class="label label-success">El registro se Actualizo correctamente</span></h4>
+			{% elif mensaje == 'error' %}
+				<h4><span class="label label-danger">Error! Contactese con el administrador</span></h4>
+			
+			{% endif %}
+		</div>
+		
+	{% endif %}
+	<div id="id_procesos" class="invisible">{{proceso}}</div>
+	<div>
+			<a href="{% url 'subprocesos' request.session.proceso %}"><span>Regresar</span></a>
+	</div>
+
+	 <form action="" method="POST" accept-charset="utf-8" class="form-horizontal">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="metodo" value="Inserta_info">
+                                                        <input type="hidden" name="subproceso_idig" id="subproceso_idig" value="">
+                                                        <div class="form-group">
+                                                        <!-- <label for="id_introduccion"><b>Introduccion</b></label> -->
+                                                            <div class=" col-sm-10 ">
+                                                            
+                                                            {{formulario.introduccion|bootstrap_horizontal:'col-xs-4'}}
+                                                           <!--  <textarea class="form-control textarea-autosize" name="introduccion" id="id_introduccion" style="overflow: hidden; word-wrap: break-word; height: 66px;" value></textarea> -->
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                        <!-- <label for="id_objetivos"><b>Objetivos</b></label> -->
+                                                            <div class=" col-sm-10 ">
+                                                               {{formulario.objetivos|bootstrap_horizontal:'col-xs-4'}}
+                                                               <!-- <textarea class="form-control textarea-autosize"  name="objetivos" id="id_objetivos" style="overflow: hidden; word-wrap: break-word; height: 66px;"></textarea> -->
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                        <!-- <label for="id_alcance"><b>Alcance</b></label> -->
+                                                            <div class=" col-sm-10 ">
+                                                             {{formulario.alcance|bootstrap_horizontal:'col-xs-4'}}
+
+
+                                                                <!-- <textarea class="form-control textarea-autosize"  name="alcance" id="id_alcance" style="overflow: hidden; word-wrap: break-word; height: 66px;"></textarea> -->
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                        <!-- <label for="id_responsabilidad"><b>Responsabilidad</b></label> -->
+                                                            <div class=" col-sm-10 ">
+                                                              {{formulario.responsabilidad|bootstrap_horizontal:'col-xs-4'}}
+                                                                <!-- <textarea class="form-control textarea-autosize" name="responsabilidad" id="id_responsabilidad" style="overflow: hidden; word-wrap: break-word; height: 66px;"></textarea> -->
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                        <!-- <label for="id_revision"><b>Revision</b></label> -->
+                                                            <div class=" col-sm-10 ">
+                                                             {{formulario.revision|bootstrap_horizontal:'col-xs-4'}}
+                                                              <!--   <textarea class="form-control textarea-autosize" name="revision" id="id_revision" style="overflow: hidden; word-wrap: break-word; height: 66px;"></textarea> -->
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                        <!-- <label for="id_cumplimiento"><b>Cumplimiento</b></label> -->
+                                                            <div class=" col-sm-10 ">
+                                                               {{formulario.cumplimiento|bootstrap_horizontal:'col-xs-4'}}
+                                                              <!--    <textarea class="form-control textarea-autosize" name="cumplimiento" id="id_cumplimiento" style="overflow: hidden; word-wrap: break-word; height: 66px;"></textarea> -->
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                        <!-- <label for="id_excepciones"><b>Excepciones</b></label> -->
+                                                            <div class=" col-sm-10 ">
+                                                               {{formulario.excepciones|bootstrap_horizontal:'col-xs-4'}}
+                                                              <!--   <textarea class="form-control textarea-autosize" name="excepciones" id="id_excepciones" style="overflow: hidden; word-wrap: break-word; height: 66px;"></textarea> -->
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                        <!-- <label for="id_excepciones"><b>Excepciones</b></label> -->
+                                                            <div class=" col-sm-10 ">
+                                                               {{formulario.definiciones|bootstrap_horizontal:'col-xs-4'}}
+                                                              <!--   <textarea class="form-control textarea-autosize" name="excepciones" id="id_excepciones" style="overflow: hidden; word-wrap: break-word; height: 66px;"></textarea> -->
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div>
+                                                            <button type="submit" class="btn btn-success">Guardar
+                                                            </button>
+                                                        </div>
+                                                    </form>
+	</div>
+	</div>
+	</div>
+</div>
+{% endblock %}

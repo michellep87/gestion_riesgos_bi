@@ -10,9 +10,13 @@
                         font-family: Tahoma, Verdana, Segoe, sans-serif;
                         /*color: #0000cc;*/
                         color:  #b8b894;
-                        font-size: 14;
+                        font-size: 18px;
                         font-weight: bold;
                       }
+.card-header {
+    padding: 1px;
+    background-color: transparent;
+}
 </style>
 
 <!-- <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
@@ -35,7 +39,7 @@
 <div class="card">
 	<div class="card-header text-center">
 		<p class="page-header"></p>
-		<p class="text-center sub-style2">LISTADO DE PROCESOS INGRESADOS</p>
+		<p class="text-center sub-style2">PROCESOS</p>
 	</div>
 	<div class="card-block">
 		<div class="box box-primary with-border">
@@ -43,9 +47,9 @@
 		{% if mensaje %}
 		<div id="mensaje">
 			{% if mensaje == 'exito' %}
-			<h4><span class="label label-success">El registro se guardo correctamente</span></h4>
+			<h4><span class="badge badge-success">El registro se guardo correctamente</span></h4>
 			{% elif mensaje == 'error' %}
-			<h4><span class="label label-danger">Error! Contactese con el administrador</span></h4>
+			<h4><span class="badge badge-danger">Error! Contactese con el administrador</span></h4>
 
 			{% endif %}
 		</div>
@@ -66,7 +70,7 @@
 			</div>
 
 			<div class="col-sm-12">
-				<table class="table table-hover" id="tabla">
+				<table class="table" id="tabla">
 					<tr>
 						<thead>
 							<th>No</th>
@@ -74,41 +78,49 @@
 							<th>Tipo de Proceso</th>
 							<th>Dueño del Proceso</th>
 							<th class="text-center">Estado</th>
+							<th></th>
+							<th></th>
 							
 						</thead>
 					</tr>
 					<tbody>
 						{% for data in listado %}
-						<tr class="proceso-tr" data-id = "{{data.codproceso}}">
-							<td>{{data.codproceso}}</td>
+						<!-- <tr class="proceso-tr" data-id = "{{data.codproceso}}"> -->
+						<tr data-id = "{{data.codproceso}}">
+							<td>
+                       					{{ forloop.counter }}
+                      					</td> 
+							<!--<td>{{data.codproceso}}</td>-->
 							<td>{{data.nombre_proceso}}</td>
 							<td>{{data.codtipoproceso}}</td>
 							<td>{{data.idduenoproceso}}</td>
 							<td>
 								{% if data.estado.codestado == 1 %}
-								<div class="label-default text-center" rol="alert">{{data.estado}}</div>
+								<div class="badge badge-default text-center" rol="alert">{{data.estado}}</div>
 								{% elif data.estado.codestado == 2 %}
-								<div class="label-warning text-center" rol="alert">{{data.estado}}</div>
+								<div class="badge badge-warning text-center" rol="alert">{{data.estado}}</div>
 								{% elif data.estado.codestado == 3 %}
-								<div class="label-sucess text-center" rol="alert">{{data.estado}}</div>
+								<div class="badge badge-sucess text-center" rol="alert">{{data.estado}}</div>
 								{% endif %}
 							</td>
 							<td></td>
-							<!-- <td>
+							<!-- <th><a href="{% url 'menu_administracion' %}"><span>Editar</span></a></th> -->
+							<td>
 								<div class="dropdown">
 									<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-										<span class="glyphicon glyphicon-align-justify"></span>
+										<span class="zmdi zmdi-view-headline zmdi-hc-fw"></span>
 									</button>
 									<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-										{% if user.is_superuser %}
+										<!-- {% if user.is_superuser %}
 										<li ><a href="#"><span>Gestionar</span></a></li>
 										{% endif %}
-										<li ><a href="#"><span>Editar</span></a></li>
+										<li ><a href="#"><span>Editar</span></a></li> -->
+										<li ><a href="{% url 'subprocesos' data.codproceso %}"><span>Detalle</span></a></li>
 
 									</ul>
 								</div>
 
-							</td> -->
+							</td>
 						</tr>
 						{% endfor %}
 					</tbody>
@@ -146,6 +158,8 @@
 					{{formulario.descripcion|bootstrap_horizontal:'col-xs-4'}}
 
 					{{formulario.idduenoproceso|bootstrap_horizontal:'col-xs-4'}}
+
+					{{formulario.logoimagen|bootstrap_horizontal:'col-xs-4'}}
 
 
 					<!-- <input type="text" class="form-control date-picker flatpickr-input active" placeholder="Pick a date" readonly="readonly" name="fecha_implementacion1"> -->

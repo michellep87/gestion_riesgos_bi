@@ -1,0 +1,930 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block contenido %}
+
+<style type="text/css" media="screen">
+.sub-style2 {
+                        font-family: Tahoma, Verdana, Segoe, sans-serif;
+                        /*color: #0000cc;*/
+                        color:  #b8b894;
+                        font-size: 14;
+                        font-weight: bold;
+                      }
+ .warning {
+    background-color: #ff9800;
+}
+
+	.badge-nivel1 {
+        background-color: #66ff33 ; /*#006600 ;*/
+        display: block;
+   } 
+
+
+   .badge-nivel2 {
+        background-color: #006600;
+        display: block;
+   }
+
+   .badge-nivel3 {
+        background-color: #ffff00;/*#ffff66 ;*/
+        display: block;
+        /*font-size: 18px; */
+   }
+
+   .badge-nivel4 {
+        background-color: #ffbf00 ;
+        display: block;
+   }
+
+   .badge-nivel5 {
+        background-color: #ff1a1a ;
+        display: block;
+   }
+
+
+</style>
+<link rel="stylesheet" href="{% static 'vendors/bower_components/select2/dist/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.css' %}" />
+<script src="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.js' %}"></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.js' %} "></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.min.js' %}"></script>
+<script src="{% static 'vendors/bower_components/select2/dist/js/select2.full.min.js' %}"></script>
+
+<script>
+	$(document).ready(function(){
+		
+		$('#id_zonariesgo').attr('disabled', 'True');
+		$('#idescenarioriesgo').attr('required', 'True');
+	
+
+		var valor = $("#cod_proceso").html();
+
+    $.ajax({
+        type: "GET",
+        data:{ codtiporiesgo :"" },
+        url: "{% url 'ajaxTipoRiesgo' %}"
+    }).done(function(response){
+        $.each(response, function(index, val) {
+            $('#idtiporiesgo').append("<option value="+val.pk+">" + val.desctiporiesgo + "</option>");
+           
+                });
+                  // $('#id_actividad').trigger("chosen:updated");
+                  $('#idtiporiesgo').trigger("chosen:updated");
+                  
+    })
+
+
+
+	$.ajax({
+	        type: "GET",
+	        data:{ categoria :"" },
+	        url: "{% url 'ajaxCategoriaRiesgo' %}"
+	    }).done(function(response){
+	        $.each(response, function(index, val) {
+	         $('#idcategoriariesgo').append("<option value="+val.pk+">" + val.codcategoria +"-" +val.descripcion + "</option>");
+	           
+	                });
+	                  // $('#id_actividad').trigger("chosen:updated");
+	                  $('#idcategoriariesgo').trigger("chosen:updated");
+	                   
+	           
+	    })
+
+	$('#idtiporiesgo').addClass('select2')
+	var escenarioid= $("#cod_escenario").html();
+	
+	$.ajax({
+		type: "GET",
+	        data:{ escenario :escenarioid },
+	        url: "{% url 'ajaxEscenarios' %}"
+	    }).done(function(response){
+	        $.each(response.escenarios, function(key, val) {
+
+	           $("#idcategoriariesgo option[value="+ val.categoria_riesgo +"]").attr("selected",true).trigger('change');
+
+	           $("#id_frecuenciaact option[value="+ val.frecuencia_actividad +"]").attr("selected",true).trigger('change');
+
+	           $("#id_defproceso option[value="+ val.definicion_proceso +"]").attr("selected",true).trigger('change');
+	           
+	               
+	           $("#id_areasinvolucradas option[value="+ val.areas_involucradas +"]").attr("selected",true).trigger('change');
+
+	           $("#id_eventosriesgo option[value="+ val.evento_riesgo +"]").attr("selected",true).trigger('change');
+
+	           
+	           $("#id_riesgoreputacional option[value="+ val.riesgo_reputacional +"]").attr("selected",true).trigger('change');
+
+	           $("#id_riesgoinstitucional option[value="+ val.riesgo_institucional +"]").attr("selected",true).trigger('change');
+
+	           $("#id_transaccionesef option[value="+ val.transacciones_estados_financieros +"]").attr("selected",true).trigger('change');
+
+	           $("#id_cumplimientonormativo option[value="+ val.cumplimiento_normativo +"]").attr("selected",true).trigger('change');
+
+	           $("#id_tipoproceso option[value="+ val.tipo_proceso +"]").attr("selected",true).trigger('change');
+
+	           $("#id_descsubproceso option[value="+ val.codsubproceso +"]").attr("selected",true).trigger('change');
+
+	        });
+
+	        $.each(response.tiporiesgo,function(index, val) {
+	        	$("#idtiporiesgo option[value="+ val.codtiporiesgo +"]").attr("selected",true).trigger('change');
+	        });
+	                 
+	                   
+	           
+	    });
+
+	
+//============================================ Criterios de Probabilidad============================================//
+	 $.ajax({
+	        type: "GET",
+	        data:{ frecuenciaact :"" },
+	        url: "{% url 'ajaxProbabilidad' %}"
+	    }).done(function(response){
+	    	//Frecuencia de las Actividades
+	        $.each(response.frecuencia_act, function(index, val) {
+	            $('#id_frecuenciaact').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	                });
+	                  $('#id_frecuenciaact').trigger("chosen:updated");
+	        //Definicion de Procesos          
+	        $.each(response.def_proceso, function(index, val) {
+	            $('#id_defproceso').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	                });    
+
+	                  $('#id_defproceso').trigger("chosen:updated");
+	        //Areas Involucradas          
+	        $.each(response.areas_involucradas, function(index, val) {
+	            $('#id_areasinvolucradas').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	                });    
+
+	                  $('#id_areasinvolucradas').trigger("chosen:updated");
+	        
+	        //Eventos de Riesgo
+	         $.each(response.eventos_riesgo, function(index, val) {
+	            $('#id_eventosriesgo').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	                });    
+
+	                  $('#id_eventosriesgo').trigger("chosen:updated");
+	       	           
+	    }) 
+
+	//============================================ Criterios de Impacto ===========================================//  
+	 $.ajax({
+	        type: "GET",
+	        data:{ frecuenciaact :"" },
+	        url: "{% url 'ajaxImpacto' %}"
+	    }).done(function(response){
+
+	    	//Riesgo Reputacional
+	    	 $.each(response.riesgo_reputacional, function(index, val) {
+	            $('#id_riesgoreputacional').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	         });
+	            $('#id_riesgoreputacional').trigger("chosen:updated");
+
+	        //Riesgo Institucional
+	    	 $.each(response.riesgo_institucional, function(index, val) {
+	            $('#id_riesgoinstitucional').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	         });
+	            $('#id_riesgoinstitucional').trigger("chosen:updated");
+
+	        //Transacciones relacionadas con los Estados Financieros
+	    	 $.each(response.transacciones_EF, function(index, val) {
+	            $('#id_transaccionesef').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	         });
+	            $('#id_transaccionesef').trigger("chosen:updated");
+
+	        //Cumplimiento Normativo
+	    	 $.each(response.cumplimiento_normativo, function(index, val) {
+	            $('#id_cumplimientonormativo').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	         });
+	            $('#id_cumplimientonormativo').trigger("chosen:updated");
+
+	        //Tipo Proceso
+	    	 $.each(response.tipo_proceso, function(index, val) {
+	            $('#id_tipoproceso').append("<option value="+val.pk+">" + val.desctipoproceso + "</option>");
+	             
+	         });
+	            $('#id_tipoproceso').trigger("chosen:updated");
+  
+	            
+	    })
+
+
+		//===================================================== Captura de variables para los calculos ===============================================================//
+
+	//Probabilidad
+
+	$('#id_frecuenciaact').change(function(event) {
+
+		var codigo= $(this).val();
+		// console.log(codigo);
+
+		if (codigo > 0)  {
+		$.ajax({
+			url: "{% url 'ajaxPonderacion' %}",
+			type: 'GET',
+			data: {bandera: 5,
+				   valor: codigo	
+			},
+		})
+		.done(function(response) {
+			
+			$.each(response.ponderaciones, function(index, val) {
+				
+				$('#frecuenciaact_id').val(val.ponderacion)
+				valor=$('#frecuenciaact_id').val()
+				sumaProbabilidad();
+			});
+		});
+		
+		}
+		else{
+
+			    $('#frecuenciaact_id').val(0);
+			    // $("#idclasifprobabilidad").val('')
+	    		// $("#idescalaprobabilidad").val(0)
+				sumaProbabilidad();
+		}
+	});
+
+	$('#id_defproceso').change(function(event) {
+		var codigo= $(this).val();
+		// console.log(codigo);
+
+		if (codigo > 0)  {
+		$.ajax({
+			url: "{% url 'ajaxPonderacion' %}",
+			type: 'GET',
+			data: {bandera: 6,
+				   valor: codigo	
+			},
+		})
+		.done(function(response) {
+			
+			$.each(response.ponderaciones, function(index, val) {
+				
+				$('#defproceso_id').val(val.ponderacion)
+				valor=$('#defproceso_id').val()
+				sumaProbabilidad();
+			
+			});
+		});
+		
+		}
+		else{
+				
+			$('#defproceso_id').val(0);
+			sumaProbabilidad();
+
+			
+		}
+		
+	});
+
+	$('#id_areasinvolucradas').change(function(event) {
+
+		var codigo= $(this).val();
+		// console.log(codigo);
+
+		if (codigo > 0)  {
+		$.ajax({
+			url: "{% url 'ajaxPonderacion' %}",
+			type: 'GET',
+			data: {bandera: 7,
+				   valor: codigo	
+			},
+		})
+		.done(function(response) {
+			
+			$.each(response.ponderaciones, function(index, val) {
+				
+				$('#areasinvolucradas_id').val(val.ponderacion)
+				valor=$('#areasinvolucradas_id').val()
+				sumaProbabilidad();
+			
+			});
+		});
+		
+		}
+		else{
+				
+			$('#areasinvolucradas_id').val(0);
+			sumaProbabilidad();
+
+		}
+
+	});
+
+	$('#id_eventosriesgo').change(function(event) {
+
+		var codigo= $(this).val();
+		// console.log(codigo);
+
+		if (codigo > 0)  {
+		$.ajax({
+			url: "{% url 'ajaxPonderacion' %}",
+			type: 'GET',
+			data: {bandera: 8,
+				   valor: codigo	
+			},
+		})
+		.done(function(response) {
+			
+			$.each(response.ponderaciones, function(index, val) {
+				
+				$('#eventosriesgo_id').val(val.ponderacion)
+				valor=$('#eventosriesgo_id').val()
+				sumaProbabilidad();
+			
+			});
+		});
+		
+		}
+		else{
+				
+			$('#eventosriesgo_id').val(0);
+			sumaProbabilidad();
+
+		}
+
+	});
+
+
+	//Impacto
+
+	$('#id_riesgoreputacional').change(function(event) {
+
+		var codigo= $(this).val();
+		// console.log(codigo);
+
+		if (codigo > 0)  {
+		$.ajax({
+			url: "{% url 'ajaxPonderacion' %}",
+			type: 'GET',
+			data: {bandera: 9,
+				   valor: codigo	
+			},
+		})
+		.done(function(response) {
+			
+			$.each(response.ponderaciones, function(index, val) {
+				
+				$('#riesgoreputacional_id').val(val.ponderacion)
+				valor=$('#riesgoreputacional_id').val()
+				sumaImpacto();
+			
+			});
+		});
+		
+		}
+		else{
+				
+			$('#riesgoreputacional_id').val(0);
+			sumaImpacto();
+
+		}
+	});
+
+	$('#id_riesgoinstitucional').change(function(event) {
+
+		var codigo= $(this).val();
+		// console.log(codigo);
+
+		if (codigo > 0)  {
+		$.ajax({
+			url: "{% url 'ajaxPonderacion' %}",
+			type: 'GET',
+			data: {bandera: 10,
+				   valor: codigo	
+			},
+		})
+		.done(function(response) {
+			
+			$.each(response.ponderaciones, function(index, val) {
+				
+				$('#riesgoinstitucional_id').val(val.ponderacion)
+				valor=$('#riesgoinstitucional_id').val()
+				sumaImpacto();
+			
+			});
+		});
+		
+		}
+		else{
+				
+			$('#riesgoinstitucional_id').val(0);
+			sumaImpacto();
+
+		}
+	});
+
+	$('#id_transaccionesef').change(function(event) {
+
+		var codigo= $(this).val();
+		// console.log(codigo);
+
+		if (codigo > 0)  {
+		$.ajax({
+			url: "{% url 'ajaxPonderacion' %}",
+			type: 'GET',
+			data: {bandera: 11,
+				   valor: codigo	
+			},
+		})
+		.done(function(response) {
+			
+			$.each(response.ponderaciones, function(index, val) {
+				
+				$('#transaccionesef_id').val(val.ponderacion)
+				valor=$('#transaccionesef_id').val()
+				sumaImpacto();
+			
+			});
+		});
+		
+		}
+		else{
+				
+			$('#transaccionesef_id').val(0);
+			sumaImpacto();
+
+		}
+	});
+
+	$('#id_cumplimientonormativo').change(function(event) {
+
+		var codigo= $(this).val();
+		// console.log(codigo);
+
+		if (codigo > 0)  {
+		$.ajax({
+			url: "{% url 'ajaxPonderacion' %}",
+			type: 'GET',
+			data: {bandera: 12,
+				   valor: codigo	
+			},
+		})
+		.done(function(response) {
+			
+			$.each(response.ponderaciones, function(index, val) {
+				
+				$('#cumplimientonormativo_id').val(val.ponderacion)
+				valor=$('#cumplimientonormativo_id').val()
+				sumaImpacto();
+			
+			});
+		});
+		
+		}
+		else{
+				
+			$('#cumplimientonormativo_id').val(0);
+			sumaImpacto();
+
+		}
+	});
+
+	$('#id_tipoproceso').change(function(event) {
+
+		var codigo= $(this).val();
+		// console.log(codigo);
+
+		if (codigo > 0)  {
+		$.ajax({
+			url: "{% url 'ajaxPonderacion' %}",
+			type: 'GET',
+			data: {bandera: 13,
+				   valor: codigo	
+			},
+		})
+		.done(function(response) {
+			
+			$.each(response.ponderaciones, function(index, val) {
+				
+				$('#tipoproceso_id').val(val.ponderacion)
+				valor=$('#tipoproceso_id').val()
+				sumaImpacto();
+			
+			});
+		});
+		
+		}
+		else{
+				
+			$('#tipoproceso_id').val(0);
+			sumaImpacto();
+
+		}
+	});
+
+
+	
+
+
+	//===================================================== Fin Captura de variables para los calculos =============================================================//
+
+	});
+
+	
+</script>
+
+<div class="card">	
+	
+	<div class="card-block">
+		<div class="box box-primary with-border">
+		<div class="box box-body">
+			{% if mensaje %}
+		<div id="mensaje">
+			{% if mensaje == 'exito' %}
+			<h4><span class="label label-success">El registro se guardo correctamente</span></h4>
+			{% elif mensaje == 'error' %}
+			<h4><span class="label label-danger">Error! Contactese con el administrador</span></h4>
+
+			{% endif %}
+		</div>
+		{% endif %}
+
+		<div>
+			<a href="{% url 'subprocesos' request.session.proceso %}"><span>Regresar</span></a>
+			<!-- <input type="hidden"  name="subproceso" value="{{subproc}}" id=id_subproceso> -->
+			</div>	
+
+	 <form action="" method="POST" accept-charset="utf-8" enctype="multipart/form-data" class="form-horizontal">
+            {% csrf_token %}
+            <input type="hidden" name="metodo" value="Inserta_escenario">
+            <input type="hidden" name="subproceso_ide" id="subproceso_ide" value="">
+           <div class="panel-info">
+	           	<p class="page-header"></p>
+	            <p class="text-center sub-style2">
+	            	ESCENARIO DE RIESGO
+	            </p>
+	            <p class="page-header"></p>
+	            <br>
+	            <div class="row">
+	            	<div class="col-sm-8">
+	            	<label>Subproceso</label>
+	            		{{subprocesos.descsubproceso}}
+	            	</div>
+	            	
+	            </div>
+	            <br>
+
+	            <div class="row">
+             	<div class="col-sm-12">
+             		<!-- <div class="form-group"> -->
+                                        <label><b>Categoria de Riesgo</b></label><br>
+                                        
+                                        <select data-placeholder="" tabindex="-1" aria-hidden="true" id="idcategoriariesgo" name="categoriariesgo" style=" width: 700px;height: 34px; " >
+                                            <option value="">---------------</option> 
+                                        </select>
+                                    </div>
+             		
+             	<!-- </div> -->
+             </div>
+             <br>
+
+             <div class="row">
+	            	<div class="col-sm-10">
+	            		<div class="form-group">
+    						<label class="control-label col-xs-4 " for="id_descenario"><b>Escenario de Riesgo</b></label>
+        
+            						<div class=" col-xs-8 ">
+        									<input class=" form-control" id="id_descenario" maxlength="200" name="escenario" type="text" value="{{instancia.escenario}}" >
+
+        							 </div>
+        				</div>
+            
+        			</div>
+             </div>
+             <br>
+	            <div class="row">
+	            	<div class="col-sm-5">
+	            		<div class="form-group">
+    						<label class="control-label col-xs-4 " for="id_linea_negocio_1"><b>Línea de Negocio Nivel 1</b></label>
+        
+            						<div class=" col-xs-8 ">
+        									<input class=" form-control" id="id_linea_negocio_1" maxlength="200" name="linea_negocio_nivel1" type="text" value="{{instancia.linea_negocio_nivel1}}" >
+
+        							 </div>
+        				</div>
+            
+        			</div>
+        			<div class="col-sm-5">
+	            		<div class="form-group">
+    						<label class="control-label col-xs-4 " for="id_linea_negocio_2"><b>Línea de Negocio Nivel 2</b></label>
+        
+            						<div class=" col-xs-8 ">
+        									<input class=" form-control" id="id_linea_negocio_2" maxlength="200" name="linea_negocio_nivel2" type="text" value="{{instancia.linea_negocio_nivel2}}" >
+
+        							 </div>
+        				</div>
+            
+        			</div>
+             </div>
+
+             <div class="row">
+             	<div class="col-sm-5">
+             	<label><b>Tipo de Riesgo</b></label>
+             	<div class="input-group">
+ 					
+             		<div class="form-group">
+                                       
+                                        
+                                        <select class="select2 select2-hidden-accessible" multiple="" data-placeholder="Seleccione los tipos de riesgo" tabindex="-1" aria-hidden="true" id="idtiporiesgo" name="TipoRiesgo" style=" width: 700px;height: 34px; " >
+                                            <option value="">---------------</option> 
+                                        
+                                        </select>
+
+                                    </div>
+                                    <!-- <span class="input-group-addon"><i class="zmdi zmdi-caret-left zmdi-hc-lg"></i></span> -->
+                                    </div>
+             	</div>
+             	
+             </div><br>
+             
+            
+             
+
+  <div>
+  <table class="table table-bordered ">
+	            	<tr>
+	            		
+	            		<th colspan="2" class="text-center">PROBABILIDAD</th>
+	            			
+	            		
+	            	</tr>
+	            		            	
+	            	<tbody>
+	            	<tr>
+	            		<th></th>
+	            		<!-- <td>{{frecuenciaact.descripcion}}</td> -->
+	            	</tr>
+	            		<tr>
+	            			
+	            			<th>Frecuencia de la Actividad</th>
+	            			<td>
+	            				<input type="hidden" name="frecuenciaact" id="frecuenciaact_id" value="" class="probl">
+	            				<select class="form-control" id="id_frecuenciaact" name="frecuenciaactiv" style=" height: 38px; ">
+                         		<option value="0">---------------</option> 
+                      			</select>
+                      		</td>
+	            			<!-- <td>{{frecuenciaact.descripcion}}</td> -->
+	            		</tr>
+	            			            		
+	            		<tr>
+	            			<th>Definicion de Proceso</th>
+	            			<td>
+	            				<input type="hidden" name="defproceso" id="defproceso_id" value="" class="probl">
+	            				<select class="form-control" id="id_defproceso" name="defproc" style=" height: 38px; " >
+                         		<option value="0">---------------</option> 
+                      			</select>
+                      		</td>
+	            			<!-- <td>{{defproceso.descripcion}}</td> -->
+	            		</tr>
+	            		<tr>
+	            			<th>Áreas involucradas</th>
+	            			<td>
+	            				<input type="hidden" name="areasinvolucradas" id="areasinvolucradas_id" value="" class="probl">
+	            				<select class="form-control" id="id_areasinvolucradas" name="areasinvoluc" style=" height: 38px;" >
+                         		<option value="0">---------------</option> 
+                      			</select>
+                      		</td>
+	            			<!-- <td>{{areasinvolucradas.descripcion}}</td> -->
+	            		</tr>
+	            		<tr>
+	            			<th>Eventos de Riesgo ultimos 12 meses</th>
+	            			<td>
+	            				<input type="hidden" name="eventosriesgo" id="eventosriesgo_id" value="" class="probl">
+	            				<select class="form-control" id="id_eventosriesgo" name="eventriesgo" style=" height: 38px;" >
+                         		<option value="0">---------------</option> 
+                      			</select>
+                      		</td>
+	            			<!-- <td>{{eventos.descripcion}}</td> -->
+
+	            		</tr>
+	            		<tr>
+	            			<input type="hidden" name="frecuenciaact" id="frecuenciaact_id" value="" >
+	            			<th>Total Probabilidad</th>
+	            			<td><input name="totalprobabilidad" id="idtotalprobabilidad" value="0" ></td>
+	            		</tr>
+	            		<tr>
+	            			<th>Clasificacion</th>
+	            			<td><input name="clasifprobabilidad" id="idclasifprobabilidad" value="" ></td>
+	            		</tr>
+	            		<tr>
+	            			<th>Escala</th>
+	            			<td><input name="escalaprobabilidad" id="idescalaprobabilidad" value="0" ></td>
+	            		</tr>
+	            	</tbody>
+	            </table>
+	            </div>
+  <div>
+  <table class="table table-bordered ">
+	            	<tr>
+	            		
+	            		<th colspan="2" class="text-center">IMPACTO</th>
+	            			
+	            		
+	            	</tr>
+	            		            	
+	            	<tbody>
+
+	            		<tr>
+	            			<th>Riesgo Reputacional</th>
+	            			<td>
+	            				<input type="hidden" name="riesgoreputacional" id="riesgoreputacional_id" value="" class="impac">
+	            				<select class="form-control" id="id_riesgoreputacional" name="riesgo_reputacional" style=" height: 38px; " >
+                         		<option value="">---------------</option> 
+                      			</select>
+                      		</td>
+	            			<!-- <td>{{riesgorepc.descripcion}}</td> -->
+	            		</tr>
+	            			            		
+	            		<tr>
+	            			<th>Riesgo Institucional</th>
+	            			<td>
+	            				<input type="hidden" name="riesgoinstitucional" id="riesgoinstitucional_id" value="" class="impac" >
+	            				<select class="form-control" id="id_riesgoinstitucional" name="riesgo_institucional" style=" height: 38px; " >
+                         		<option value="">---------------</option> 
+                      			</select>
+                      		</td>
+	            			<!-- <td>{{riesgoinst.descripcion}}</td> -->
+	            		</tr>
+	            		<tr>
+	            			<th>Transacciones relacionadas a los Estados Financieros</th>
+	            			<td>
+	            				<input type="hidden" name="transaccionesef" id="transaccionesef_id" value="" class="impac" >
+	            				<select class="form-control" id="id_transaccionesef" name="transacciones_ef" style=" height: 38px; " >
+                         		<option value="">---------------</option> 
+                      			</select>
+                      		</td>
+	            			<!-- <td>{{transacciones.descripcion}}</td> -->
+	            		</tr>
+	            		<tr>
+	            			<th>Cumplimiento normativo</th>
+	            			<td>
+	            				<input type="hidden" name="cumplimientonormativo" id="cumplimientonormativo_id" value="" class="impac" >
+	            				<select class="form-control" id="id_cumplimientonormativo" name="cumplimiento_normativo" style=" height: 38px; ">
+                         		<option value="">---------------</option> 
+                      			</select>
+                      		</td>
+	            			<!-- <td>{{cumplimiento.descripcion}}</td> -->
+	            		</tr>
+	            		<tr>
+	            			<th>Tipo de Proceso</th>
+	            			<td>
+	            				<input type="hidden" name="tipoproceso" id="tipoproceso_id" value="" class="impac">
+	            				<select class="form-control" id="id_tipoproceso" name="tipo_proceso" style=" height: 38px; " >
+                         		<option value="">---------------</option> 
+                      			</select>
+                      		</td>
+	            			<!-- <td>{{tipoproceso.desctipoproceso}}</td> -->
+	            		</tr>
+	            		<tr>
+	            			<th>Total Impacto</th>
+	            			<td><input name="totalimpacto" id="idtotalimpacto" value="0" ></td>
+	            		</tr>
+	            		<tr>
+	            			<th>Clasificacion</th>
+	            			<td><input name="clasifimpacto" id="idclasifimpacto" value="" ></td>
+	            		</tr>
+	            		<tr>
+	            			<th>Escala</th>
+	            			<td><input name="escalaimpacto" id="idescalaimpacto" value="0" ></td>
+	            		</tr>
+
+	            	</tbody>
+	            </table>
+	</div>
+
+
+             
+
+            </div>
+
+               
+            
+            
+            <div class="col-sm-2">
+                    <div class="form-group">
+                    <button type="submit" class="btn btn-default" id="btnEscenario">Guardar</button>
+                    </div>
+                </div>
+
+                <div id="cod_proceso" class="invisible" name="procesoid" >{{request.session.proceso}}</div>
+                <input type="hidden" name="procesoidc" id="proceso_id" value="{{request.session.proceso}}">
+				<div id="cod_subproceso" class="invisible" >{{subproceso.codsubproceso__pk}}</div>
+				<input type="hidden" name="subprocesoidc" id="subproceso_id" value="">
+				<div id="cod_escenario" class="invisible">{{escenarioid}}</div>
+            
+        </form>
+							
+		</div>
+		</div>
+	</div>
+
+		
+
+		
+
+</div>
+
+
+
+	<script>
+	 $('#subproceso_id').val($('#codsubproceso').val())	
+	
+
+	$('#id_fecha_implementacion').flatpickr({
+	  	format: 'yyyy-mm-dd',
+	  	language: 'es',
+	  	autoclose: true,
+	});
+		
+
+	
+	// function sumProbabilidad(valor){
+ //     total = 0;
+ //     totalprobabilidad =  $('#idtotalprobabilidad').val()
+
+ //     var num= parseFloat(valor); 
+ //     total= parseFloat(totalprobabilidad) + parseFloat(num);
+     
+ //     $('#idtotalprobabilidad').val(total)
+     
+	// }
+
+ 	function sumaProbabilidad(){
+     var add = 0;
+        $(".probl").each(function() {
+            add += Number($(this).val());
+        });
+        $("#idtotalprobabilidad").val(Math.round(add));
+
+     var total=  $("#idtotalprobabilidad").val()
+     if (total >= 0){
+     	$.ajax({
+	        type: "GET",
+	        data:{ suma_prob :total },
+	        url: "{% url 'ajaxSumaProbabilidad' %}"
+	    }).done(function(response){
+	    		
+	    		$("#idclasifprobabilidad").val(response.clasificacion)
+	    		$("#idescalaprobabilidad").val(response.escala)
+	    		    	
+	    })
+     }
+     else{
+     		$("#idtotalprobabilidad").val(0)
+     		$("#idclasifprobabilidad").val('')
+	    	$("#idescalaprobabilidad").val(0)
+     }
+    
+
+	}
+
+	function sumaImpacto(){
+     var add = 0;
+        $(".impac").each(function() {
+            add += Number($(this).val());
+        });
+        $("#idtotalimpacto").val(Math.round(add));
+     var total=  $("#idtotalimpacto").val()
+     if(total >= 0){
+     	 $.ajax({
+	        type: "GET",
+	        data:{ suma_impact :total },
+	        url: "{% url 'ajaxSumaImpacto' %}"
+	    }).done(function(response){
+	    	$("#idclasifimpacto").val(response.clasificacion)
+	    	$("#idescalaimpacto").val(response.escala)
+	    })
+     }
+     else{
+     		$("#idtotalimpacto").val(0)
+     		$("#idclasifimpacto").val('')
+	    	$("#idescalaimpacto").val(0)
+     }
+    
+
+	}
+
+	
+
+   	
+	
+
+
+	
+	</script>
+{% endblock %}

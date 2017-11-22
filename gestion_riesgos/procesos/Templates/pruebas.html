@@ -1,0 +1,170 @@
+import smtplib
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText
+remitente = 'michelle.turcios@bi-dss.com'
+destinatario =  'michelle.turcios@bi-dss.com'
+msg = MIMEMultipart()
+msg['From'] = remitente
+msg['To'] = destinatario
+msg['Subject'] = 'Esto es una prueba de la configuracion del correo'
+body = 'Saludos, esta es una prueba de la configuracion del correo de envio de tickets'
+msg.attach (MIMEText(body.encode('utf-8'), 'html', 'utf-8'))
+username = 'michelle.turcios@bi-dss.com'
+password='Altair2009'
+try:
+     server = smtplib.SMTP('smtp.office365.com:587')
+     server.set_debuglevel(True)
+     server.starttls()
+     server.login(username,password)
+     server.sendmail(username, destinatario, msg.as_string())
+     server.quit()
+except Exception as e:
+     print e
+
+
+
+import smtplib
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText
+remitente = 'michop87@gmail.com'
+destinatario =  'michelle.turcios@bi-dss.com'
+msg = MIMEMultipart()
+msg['From'] = remitente
+msg['To'] = destinatario
+msg['Subject'] = 'Esto es una prueba de la configuracion del correo'
+body = 'Saludos, esta es una prueba de la configuracion del correo de envio de tickets'
+msg.attach (MIMEText(body.encode('utf-8'), 'html', 'utf-8'))
+username = 'michop87@gmail.com'
+password='Altair2009'
+try:
+     server = smtplib.SMTP('smtp.gmail.com',587)
+     server.set_debuglevel(True)
+     server.starttls()
+     server.login(username,password)
+     server.sendmail(username, destinatario, msg.as_string())
+     server.quit()
+except Exception as e:
+     print e
+
+
+
+import smtplib
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText 
+
+remitente = 'alacayo@ficensa.com'
+destinatario =  'michelle.turcios@bi-dss.com'
+
+msg = MIMEMultipart()
+msg['From'] = remitente	
+msg['To'] = destinatario
+msg['Subject'] = 'Esto es una prueba de la configuracion del correo'
+
+body = 'Saludos, esta es una prueba de la configuracion del correo de envio de tickets'
+msg.attach (MIMEText(body.encode('utf-8'), 'html', 'utf-8'))
+username = 'alacayo@ficensa.com'
+
+
+try:
+	server = smtplib.SMTP('172.26.1.26:25')
+	server.starttls()
+	server.sendmail(username, destinatario, msg.as_string())
+	server.quit()
+except Exception as e:
+	print e
+
+
+
+import smtplib
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText 
+
+remitente ='michop87@gmail.com'
+destinatario ='michelle.turcios@bi-dss.com'
+
+msg = MIMEMultipart()
+msg['From'] = remitente	
+msg['To'] = destinatario
+msg['Subject'] = 'Esto es una prueba de la configuracion del correo'
+
+body = 'Saludos, esta es una prueba de la configuracion del correo de envio de tickets'
+msg.attach (MIMEText(body.encode('utf-8'), 'html', 'utf-8'))
+username = 'michop87@gmail.com'
+password='Altair2009'
+
+try:
+	
+	server = smtplib.SMTP('smtp.gmail.com:587')
+	server.starttls()
+	server.login(username,password)
+	server.sendmail(remitente, destinatario, msg.as_string())
+	server.quit()
+except Exception as e:
+	print e
+	
+
+import smtplib
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText 
+
+remitente ='tareas@ficensa.com.hn'
+destinatario ='michelle.turcios@bi-dss.com'
+
+msg = MIMEMultipart()
+msg['From'] = remitente	
+msg['To'] = destinatario
+msg['Subject'] = 'Esto es una prueba de la configuracion del correo'
+
+body = 'Saludos, esta es una prueba de la configuracion del correo de envio de tickets'
+msg.attach (MIMEText(body.encode('utf-8'), 'html', 'utf-8'))
+username = 'tareas@ficensa.com.hn'
+password='Fic$$desa16'
+
+try:
+
+server = smtplib.SMTP('mail4ficensa.ficensa.com.hn')
+server.starttls()
+server.login(username,password)
+server.sendmail(remitente, destinatario, msg.as_string())
+server.quit()
+except Exception as e:
+print e
+	
+
+
+username = 'tareas@ficensa.com.hn'
+password='Fic$$desa16'
+	server = smtplib.SMTP('mail4ficensa.ficensa.com.hn:995')
+	server.set_debuglevel(True)
+	server.starttls()
+	
+	server.sendmail(username, destinatario, msg.as_string())
+	server.quit()
+
+
+
+
+
+
+	import smtplib
+	from email.MIMEMultipart import MIMEMultipart
+	from email.MIMEText import MIMEText
+	remitente ='tareas@ficensa.com.hn'
+	destinatario ='michelle.turcios@bi-dss.com'
+	msg = MIMEMultipart()
+	msg['From'] = remitente
+	msg['To'] = destinatario
+	msg['Subject'] = 'Esto es una prueba de la configuracion del correo'
+	body = 'Saludos, esta es una prueba de la configuracion del correo de envio de tickets'
+	msg.attach (MIMEText(body.encode('utf-8'), 'html', 'utf-8'))
+	username = 'tareas@ficensa.com.hn'
+	password='Fic$$desa16'
+	
+	try:
+	    server = smtplib.SMTP('mail4ficensa.ficensa.com.hn')
+	    server.starttls()
+	    server.login(username,password)
+	    server.sendmail(remitente, destinatario, msg.as_string())
+	    server.quit()
+ 	except Exception as e:
+ 		raise e

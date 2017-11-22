@@ -7,8 +7,8 @@
 	<style type="text/css" media="screen">
    
    .largo{
-      width: 200px;
-      font-size: 16px;
+      width: 250px;
+      font-size: 13px;
    }
 
    .sub-style2 {
@@ -40,16 +40,45 @@
 		<button class="btn btn-success btn-lg largo" type="button" id="btnPuesto">Puestos</button>
 		
 		<button class="btn btn-success btn-lg largo" type="button" id="btnTipoproceso">Tipos de Procesos</button>
+        <br>
+        <br>
 		
 		<button class="btn btn-success btn-lg largo" type="button" id="btnTipoactividad">Tipos de Actividades</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnTipocontrol">Tipos de Controles</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnTiporaci">Roles de Matriz RACI</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnTiporiesgo">Tipos de Riesgos</button>
 		<br>
 		<br>
-		<button class="btn btn-success btn-lg largo" type="button" id="btnTipocontrol">Tipos de Controles</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnTiporaci">Tipos de RACI</button>
-		<button class="btn btn-success btn-lg largo" type="button" id="btnTiporiesgo">Tipos de Riesgos</button>
+		
 		<button class="btn btn-success btn-lg largo" type="button" id="btnriesgos">Riesgos</button>
 		<button class="btn btn-success btn-lg largo" type="button" id="btnNaturalezacontrol">Naturaleza de Controles</button>
-		<button class="btn btn-success btn-lg largo" type="button" id="btnEscenariosriesgos">Escenarios de Riesgos</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnEscenariosriesgos">Escenarios de Riesgos</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnRiesgoInstitucional">Riesgo Institucional</button>
+        <br><br>
+		
+        <button class="btn btn-success btn-lg largo" type="button" id="btnRiesgoReputacional">Riesgo Reputacional</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnFrecuenciaActividadesRiesgo">Frecuencia de Actividades de Riesgos</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnFrecuenciaControles">Frecuencia de Controles</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnAreasInvolucradas">Areas Involucradas</button>
+        <br><br>
+       
+        <button class="btn btn-success btn-lg largo" type="button" id="btnObservacionesAuditoria">Observaciones de Auditoria</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnDefinicionProcesos">Definicion de Procesos</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnCumplimientoNormativo">Cumplimiento Normativo</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnEventosRiesgo">Eventos de Riesgo</button>
+        <br><br>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnUnidadesMedida">Unidades de Medida</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnTransaccionesEstadosFinancieros">Transacciones de Estados Financieros</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnCriteriosProbabilidad">Criterios Probabilidad</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnCriteriosImpacto">Criterios Impacto</button>
+        <br><br>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnCriteriosControl">Criterios de Control</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaControl">Escala de Control</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaImpacto">Escala de Impacto</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaProbabilidad">Escala de Probabilidad</button>
+        <br><br>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnZonasRiesgo">Zonas de Riesgo</button>
+        
 		
 	</div>
 	</div>
@@ -97,12 +126,82 @@
         $('#btnTiporaci').click(function () {
             window.location.href = "{% url 'tiporaci' %}";
         })
+        $('#btnRiesgoInstitucional').click(function(event) {
+            window.location.href = "{% url 'riesgoinstitucional' %}"
+        });
+        $('#btnRiesgoReputacional').click(function(event) {
+            window.location.href = "{% url 'riesgoreputacional' %}"
+        });
+        $('#btnFrecuenciaActividadesRiesgo').click(function(event) {
+            window.location.href = "{% url 'frecuenciaactividades' %}"
+        });
+        
+         $('#btnFrecuenciaControles').click(function(event) {
+            window.location.href = "{% url 'frecuenciacontroles' %}"
+        });
+
+        $('#btnAreasInvolucradas').click(function(event) {
+            window.location.href = "{% url 'areasinvolucradas' %}"
+        });
+
+        $('#btnObservacionesAuditoria').click(function(event) {
+            window.location.href = "{% url 'observacionesauditoria' %}"
+        });
+
+        $('#btnDefinicionProcesos').click(function(event) {
+            window.location.href = "{% url 'definicionproceso' %}"
+        });
+
+        $('#btnCumplimientoNormativo').click(function(event) {
+            window.location.href = "{% url 'cumplimientonormativo' %}"
+        });
+
+         $('#btnEventosRiesgo').click(function(event) {
+            window.location.href = "{% url 'eventosriesgo' %}"
+        });
+
+          $('#btnTransaccionesEstadosFinancieros').click(function(event) {
+            window.location.href = "{% url 'transaccionesestadosfinancieros' %}"
+        });
+          $('#btnUnidadesMedida').click(function(event) {
+            window.location.href = "{% url 'unidad_medida' %}"
+        });
+          $('#btnCriteriosControl').click(function(event) {
+            window.location.href = "{% url 'criterios_control' %}"
+        });
+           $('#btnCriteriosImpacto').click(function(event) {
+            window.location.href = "{% url 'criterios_impacto' %}"
+        });
+
+            $('#btnCriteriosProbabilidad').click(function(event) {
+            window.location.href = "{% url 'criterios_probabilidad' %}"
+        });
+
+           $('#btnEscalaControl').click(function(event) {
+            window.location.href = "{% url 'escala_control' %}"
+        });  
+
+            $('#btnEscalaImpacto').click(function(event) {
+            window.location.href = "{% url 'escala_impacto' %}"
+        }); 
+
+             $('#btnEscalaProbabilidad').click(function(event) {
+            window.location.href = "{% url 'escala_probabilidad' %}"
+        }); 
+            $('#btnZonasRiesgo').click(function(event) {
+            window.location.href = "{% url 'zonas_ingreso' %}"
+        });  
+            
+            
+
+          
+        
     </script>
 {% endblock %}
 
 
 
 
-					
+		
 					     
 					

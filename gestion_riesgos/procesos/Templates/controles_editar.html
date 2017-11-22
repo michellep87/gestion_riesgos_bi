@@ -1,0 +1,479 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block contenido %}
+<style type="text/css" media="screen">
+.sub-style2 {
+                        font-family: Tahoma, Verdana, Segoe, sans-serif;
+                        /*color: #0000cc;*/
+                        color:  #b8b894;
+                        font-size: 14;
+                        font-weight: bold;
+                      }
+ .warning {
+    background-color: #ff9800;
+}
+
+
+</style>
+<link rel="stylesheet" href="{% static 'vendors/bower_components/select2/dist/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.css' %}" />
+<script src="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.js' %}"></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.js' %} "></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.min.js' %}"></script>
+<script src="{% static 'vendors/bower_components/select2/dist/js/select2.full.min.js' %}"></script>
+
+
+<div class="card">	
+	
+	<div class="card-block">
+		<div class="box box-primary with-border">
+		<div class="box box-body">
+			{% if mensaje %}
+		<div id="mensaje">
+			{% if mensaje == 'exito' %}
+			<h4><span class="badge badge-success">El registro se guardo correctamente</span></h4>
+			{% elif mensaje == 'error' %}
+			<h4><span class="badge badge-danger">Error! Contactese con el administrador</span></h4>
+
+			{% endif %}
+		</div>
+		{% endif %}
+		<div>
+			<a href="{% url 'subprocesos' request.session.proceso %}"><span>Regresar</span></a>
+			<!-- <input type="hidden"  name="subproceso" value="{{subproc}}" id=id_subproceso> -->
+			</div>	
+	 <form action="" method="POST" accept-charset="utf-8" enctype="multipart/form-data" class="form-horizontal">
+            {% csrf_token %}
+            <input type="hidden" name="metodo" value="Inserta_escenario">
+            <input type="hidden" name="subproceso_ide" id="subproceso_ide" value="">
+           <div class="panel-info">
+	           	<p class="page-header"></p>
+	            <p class="text-center sub-style2">
+	            	CONTROLES
+	            </p>
+	            <p class="page-header"></p>
+	            <br>
+	            <div class="row">
+             	
+             	<div class="col-sm-5">
+             		<div class="form-group">
+                                        <label><b>Escenario de Riesgo</b></label><br>
+                                        
+                                        <select data-placeholder="" tabindex="-1" aria-hidden="true" id="idescenarioriesgo" name="escenarioriesgo" style=" width: 560px;height: 34px; " required>
+                                            <option value="">---------------</option> 
+                                        </select>
+                                    </div>
+             		
+             	</div>
+
+             </div>
+             <div class="row hide">
+             	<div class="col-sm-5">
+             		<div class="form-group">
+
+                                        <label><b>Actividad</b></label><br>
+                                        
+                                        <select data-placeholder="" tabindex="-1" aria-hidden="true" id="idcodactividad" name="codactividad" style=" width: 560px;height: 34px; " >
+                                            <option value="">---------------</option> 
+                                        </select>
+                                    </div>
+             		
+             	</div>
+             </div>
+	        <div class="row">
+	            	<div class="col-sm-10">
+	            	{{control.descripcion|bootstrap_horizontal:'col-xs-4'}}
+	            		<!-- <div class="form-group">
+    						<label class="control-label col-xs-4 " for="id_descenario"><b>Descripcion</b></label>
+        
+            						<div class=" col-xs-8 ">
+        									<input class=" form-control" id="id_descripcion" maxlength="200" name="descripcion" type="text">
+
+        							 </div>
+        				</div> -->
+            
+        			</div>
+             </div>         
+
+  <div>
+  <table class="table table-bordered ">
+	            	<tr>
+	            		
+	            		<th colspan="2" class="text-center">CRITERIOS DE CONTROL</th>
+	            			
+	            		
+	            	</tr>
+	            		            	
+	            	<tbody>
+	            	<tr>
+	            		<th></th>
+	            		<!-- <td>{{frecuenciaact.descripcion}}</td> -->
+	            	</tr>
+	            		<tr>
+	            			
+	            			<th>Tipo de Control</th>
+	            			<td>
+	            				<input type="hidden" name="tipocontrol" id="tipocontrol_id" value="" class="ctrl">
+	            				<select class="form-control" id="id_tipocontrol" name="codtipocontrol" style=" height: 38px; ">
+                         		<option value="0">---------------</option> 
+                      			</select>
+                      		</td>
+	            			<!-- <td>{{frecuenciaact.descripcion}}</td> -->
+	            		</tr>
+	            			            		
+	            		<tr>
+	            			<th>Naturaleza del Control</th>
+	            			<td>
+	            				<input type="hidden" name="naturaleza" id="codnaturaleza_id" value="" class="ctrl">
+	            				<select class="form-control" id="id_codnaturaleza" name="codnaturaleza" style=" height: 38px; ">
+                         		<option value="0">---------------</option> 
+                      			</select>
+                      		</td>
+	            			<!-- <td>{{defproceso.descripcion}}</td> -->
+	            		</tr>
+	            		<tr>
+	            			<th>Frecuencia del Control</th>
+	            			<td>
+	            				<input type="hidden" name="frecuenciacontrol" id="frecuencia_id" value="" class="ctrl">
+	            				<select class="form-control" id="id_frecuencia" name="frecuencia" style=" height: 38px; ">
+                         		<option value="0">---------------</option> 
+                      			</select>
+                      		</td>
+	            			<!-- <td>{{areasinvolucradas.descripcion}}</td> -->
+	            		</tr>
+	            		<tr>
+	            			<th>El control ha tenido observaciones de auditoría? </th>
+	            			<td>
+	            				<input type="hidden" name="observacionesauditoria" id="observaciones_auditoria_id" value="" class="ctrl">
+	            				<select class="form-control" id="id_observaciones_auditoria" name="observaciones_auditoria" style=" height: 38px; ">
+                         		<option value="0">---------------</option> 
+                      			</select>
+                      		</td>
+	            			<!-- <td>{{eventos.descripcion}}</td> -->
+
+	            		</tr>
+	            		<tr>
+	            			<input type="hidden" name="frecuenciaact" id="frecuenciaact_id" value="">
+	            			<th>Efectividad del Control</th>
+	            			<td><input name="totalcontrol" id="idtotalcontrol" value="0"></td>
+	            		</tr>
+	            		<tr>
+	            			<th>Clasificacion</th>
+	            			<td><input name="clasifcontrol" id="idclasifcontrol" value=""></td>
+	            		</tr>
+	            		<tr>
+	            			<th>Escala</th>
+	            			<td><input name="escalacontrol" id="idescalacontrol" value="0"></td>
+	            		</tr>
+	            	</tbody>
+	            </table>
+	            </div>
+
+            </div>
+
+               
+            
+            
+            <div class="col-sm-2">
+                    <div class="form-group">
+                        
+                        
+                        <button type="submit" class="btn btn-default" id="btnEscenario">Guardar</button>
+                    </div>
+                </div>
+                <div id="cod_proceso" class="invisible" name="procesoid" >{{request.session.proceso}}</div>
+                <input type="hidden" name="procesoidc" id="subproceso_id" value="{{request.session.proceso}}">
+				<div id="cod_subproceso" class="invisible" >{{subproceso.escenario__codsubproceso__pk}}</div>
+				<div id="cod_control" class="invisible">{{controlid}}</div>
+
+				<div id="cod_procesoact" class="invisible" name="procesoid" >{{subproceso.codactividad__codsubproceso__codproceso__pk}}</div>
+                <input type="hidden" name="procesoidc" id="subproceso_idact" value="{{subproceso.codactividad__codsubproceso__codproceso__pk}}">
+				<div id="cod_subprocesoact" class="invisible" >{{subproceso.codactividad__codsubproceso__pk}}</div>
+				
+           
+        </form>
+							
+		</div>
+		</div>
+	</div>
+</div>
+
+
+
+	<script>
+
+	
+	$(document).ready(function() {
+	//============================================ Criterios de Control=====================================================================================//
+	var valor = $("#cod_subproceso").html();
+	
+	var valorprocesc = $("#cod_proceso").html();
+
+	var controlid= $("#cod_control").html();
+	console.log(controlid);
+
+	 $.ajax({
+	        type: "GET",
+	        data:{ valor :valor,
+	        	  
+	        	   procesoe: valorprocesc,
+	            },
+	        url: "{% url 'ajaxactividad' %}"
+	    }).done(function(response){
+	    	//Frecuencia de las Actividades
+	        $.each(response, function(index, val) {
+	            $('#idcodactividad').append("<option value="+val.pk+">" + val.nombreactividad + "</option>");
+	             
+	                });
+	                  $('#idcodactividad').trigger("chosen:updated");
+	      })
+
+	 $.ajax({
+	        type: "GET",
+	        data:{ controles :controlid,
+	        	   subproceso :valor,
+	        	   
+	        	   procesoe: valorprocesc,
+	        	 },
+	        url: "{% url 'ajaxControles' %}"
+	    }).done(function(response){
+	    	//Escenario de Riesgos
+	        $.each(response.escenarios, function(index, val) {
+	            $('#idescenarioriesgo').append("<option value="+val.pk+">" + val.escenario + "</option>");
+	             
+	                });
+	                  $('#idescenarioriesgo').trigger("chosen:updated");
+	        //Tipo de Control         
+	        $.each(response.tipocontrol, function(index, val) {
+	            $('#id_tipocontrol').append("<option value="+val.pk+">" + val.desctipocontrol + "</option>");
+	             
+	                });    
+
+	                  $('#id_tipocontrol').trigger("chosen:updated");
+	        //Mauraleza del Control          
+	        $.each(response.naturalezacontrol, function(index, val) {
+	            $('#id_codnaturaleza').append("<option value="+val.pk+">" + val.descnaturaleza + "</option>");
+	             
+	                });    
+
+	                  $('#id_codnaturaleza').trigger("chosen:updated");
+	        
+	        //Fecuencia del Control
+	         $.each(response.frecuenciacontrol, function(index, val) {
+	            $('#id_frecuencia').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	                });    
+
+	                  $('#id_frecuencia').trigger("chosen:updated");
+
+	        //Observaciones de Auditoria
+	         $.each(response.observacionesauditoria, function(index, val) {
+	            $('#id_observaciones_auditoria').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	                });    
+
+	                  $('#id_observaciones_auditoria').trigger("chosen:updated");
+
+	        //Actividad a la que pertenece
+	        // $.each(response.codactivdad, function(key, val) {
+	        // 		console.log(val);
+	        // 		$("#idcodactividad option[value="+ val.codactividad +"]").attr("selected",true).trigger('change');
+	        // 	});	
+
+	         $.each(response.controlitems, function(key, val) {
+	        		console.log(val);
+	        		$("#id_observaciones_auditoria option[value="+ val.observaciones_auditoria +"]").attr("selected",true).trigger('change');
+
+	        		$("#id_frecuencia option[value="+ val.frecuencia +"]").attr("selected",true).trigger('change');
+
+	        		$("#id_codnaturaleza option[value="+ val.codnaturaleza +"]").attr("selected",true).trigger('change');
+
+	        		$("#id_tipocontrol option[value="+ val.codtipocontrol +"]").attr("selected",true).trigger('change');
+
+	        		$("#idcodactividad option[value="+ val.codactividad +"]").attr("selected",true).trigger('change');
+
+	        		$("#idescenarioriesgo option[value="+ val.escenario +"]").attr("selected",true).trigger('change');
+	        		});	
+
+	         		
+	        		
+	       	           
+	    }) 
+
+	
+
+
+	});
+   
+	
+	//===================================================== Captura de variables para los calculos ===============================================================//
+
+	//Control
+
+	$('#id_tipocontrol').change(function(event) {
+		var codigo= $(this).val();
+		console.log(codigo);
+
+		if (codigo > 0)  {
+		$.ajax({
+			url: "{% url 'ajaxPonderacion' %}",
+			type: 'GET',
+			data: {bandera: 1,
+				   valor: codigo	
+			},
+		})
+		.done(function(response) {
+			
+			$.each(response.ponderaciones, function(index, val) {
+				
+				$('#tipocontrol_id').val(val.ponderacion)
+				valor=$('#tipocontrol_id').val()
+				sumaControl();
+			});
+		});
+		
+		}
+		else{
+			$('#tipocontrol_id').val(0);
+			sumaControl();
+		}
+		
+	});
+
+	$('#id_codnaturaleza').change(function(event) {
+		var codigo= $(this).val();
+		console.log(codigo);
+
+		if (codigo > 0){
+		$.ajax({
+			url: "{% url 'ajaxPonderacion' %}",
+			type: 'GET',
+			data: {bandera: 2,
+				   valor: codigo	
+			},
+		})
+		.done(function(response) {
+			
+			$.each(response.ponderaciones, function(index, val) {
+				
+				$('#codnaturaleza_id').val(val.ponderacion)
+				valor=$('#codnaturaleza_id').val()
+				sumaControl();
+			});
+		});
+		}
+
+		else {
+			$('#codnaturaleza_id').val(0)
+			sumaControl();
+		}
+		
+	});
+
+	$('#id_frecuencia').change(function(event) {
+
+		var codigo= $(this).val();
+		console.log(codigo);
+
+		if(codigo > 0){
+		$.ajax({
+			url: "{% url 'ajaxPonderacion' %}",
+			type: 'GET',
+			data: {bandera: 3,
+				   valor: codigo	
+			},
+		})
+		.done(function(response) {
+			
+			$.each(response.ponderaciones, function(index, val) {
+				
+				$('#frecuencia_id').val(val.ponderacion)
+				valor=$('#frecuencia_id').val()
+				sumaControl();
+			});
+		});
+		}
+
+		else {
+				$('#frecuencia_id').val(0)
+				sumaControl();
+		}
+
+	});
+
+	$('#id_observaciones_auditoria').change(function(event) {
+
+		var codigo= $(this).val();
+		console.log(codigo);
+
+		if(codigo > 0) {
+		$.ajax({
+			url: "{% url 'ajaxPonderacion' %}",
+			type: 'GET',
+			data: {bandera: 4,
+				   valor: codigo	
+			},
+		})
+		.done(function(response) {
+			
+			$.each(response.ponderaciones, function(index, val) {
+				
+				$('#observaciones_auditoria_id').val(val.ponderacion)
+				valor=$('#observaciones_auditoria_id').val()
+				sumaControl();
+			});
+		});
+		}
+
+		else {
+				$('#observaciones_auditoria_id').val(0)
+				sumaControl();
+		}
+
+	});
+
+
+	
+
+
+	//===================================================== Fin Captura de variables para los calculos =============================================================//
+
+	// function sumProbabilidad(valor){
+ //     total = 0;
+ //     totalprobabilidad =  $('#idtotalprobabilidad').val()
+
+ //     var num= parseFloat(valor); 
+ //     total= parseFloat(totalprobabilidad) + parseFloat(num);
+     
+ //     $('#idtotalprobabilidad').val(total)
+     
+	// }
+
+	function sumaControl(){
+     var add = 0;
+        $(".ctrl").each(function() {
+            add += Number($(this).val());
+        });
+        $("#idtotalcontrol").val(Math.round(add));
+     var total=  $("#idtotalcontrol").val()
+     $.ajax({
+	        type: "GET",
+	        data:{ suma_control :total },
+	        url: "{% url 'ajaxSumaControl' %}"
+	    }).done(function(response){
+	    	$("#idclasifcontrol").val(response.clasificacion)
+	    	$("#idescalacontrol").val(total)
+	    })
+
+	}
+
+	
+	
+
+
+	
+	</script>
+
+{% endblock %}

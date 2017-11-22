@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from .models import *
 from administracion.models import *
+from procesos.models import *
 from django.forms import ModelForm
 from django.forms.widgets import *
 from django import forms
@@ -70,7 +71,7 @@ class PuestosForm(ModelForm):
 		}
 
 class PuestosEditarForm(ModelForm):
-	descpuesto = forms.ModelChoiceField(queryset= Puestos.objects.all(), label="Dueño")
+	descpuesto = forms.ModelMultipleChoiceField(queryset= Puestos.objects.all(), label="Dueño")
 	class Meta:
 		model = Puestos
 		fields = '__all__'
@@ -79,6 +80,8 @@ class PuestosEditarForm(ModelForm):
 					'descpuesto': _('Dueño'),
 					'codarea': _('Area')
 		}
+
+		
 
 class TipoProcesoForm(ModelForm):
 	class Meta:
@@ -148,10 +151,12 @@ class TiposRiesgosForm(ModelForm):
 
 class TiposRiesgosEditarForm(ModelForm):
 	desctiporiesgo = forms.ModelChoiceField(queryset= Tiposriesgos.objects.all(), label= 'Tipo de Riesgo')
+	
 	class Meta:
 		model = Tiposriesgos
 		fields = '__all__'
 
+		
 		labels = {
 					'desctiporiesgo': _('Tipo de Riesgo')
 		}
@@ -228,6 +233,213 @@ class RiesgosEditarForm(ModelForm):
 					'codtiporiesgo': _('Tipo de Riesgo')
 		}
 
+class RiesgoInstitucionalForm(ModelForm):
+	
+	class Meta:
+		model = RiesgoInstitucional
+		fields = '__all__'
+
+		labels = {
+					'descripcion': _('Riesgo')
+		}
+
+class RiesgoInstitucionalEditarForm(ModelForm):
+	descripcion = forms.ModelChoiceField(queryset= RiesgoInstitucional.objects.all(), label='Riesgo Institucional')
+	class Meta:
+		model = RiesgoInstitucional
+		fields = '__all__'
+
+class RiesgoReputacionalForm(ModelForm):
+	
+	class Meta:
+		model = RiesgoReputacional
+		fields = '__all__'
+
+		labels = {
+					'descripcion': _('Riesgo')
+		}
+
+class RiesgoReputacionalEditarForm(ModelForm):
+	descripcion = forms.ModelChoiceField(queryset= RiesgoReputacional.objects.all(), label='Riesgo Reputacional')
+	class Meta:
+		model = RiesgoReputacional
+		fields = '__all__'
+
+class FrecuenciaActividadesRelacionadasRiesgoForm(ModelForm):
+	
+	class Meta:
+		model = FrecuenciaActividadesRelacionadasRiesgo
+		fields = '__all__'
+
+		labels = {
+					'descripcion': _('Frecuencia')
+		}
+
+class FrecuenciaActividadesRelacionadasRiesgoEditarForm(ModelForm):
+	descripcion = forms.ModelChoiceField(queryset= FrecuenciaActividadesRelacionadasRiesgo.objects.all())
+	class Meta:
+		model = FrecuenciaActividadesRelacionadasRiesgo
+		fields = '__all__'
+
+
+class FrecuenciaControlForm(ModelForm):
+	
+	class Meta:
+		model = FrecuenciaControl
+		fields = '__all__'
+
+		labels = {
+					'descripcion': _('Frecuencia')
+		}
+
+class FrecuenciaControlEditarForm(ModelForm):
+	descripcion = forms.ModelChoiceField(queryset= FrecuenciaControl.objects.all(), label='Frecuencia de las actividades relacionadas con el riesgo')
+	class Meta:
+		model = FrecuenciaControl
+		fields = '__all__'
+
+class AreasInvolucradasForm(ModelForm):
+	
+	class Meta:
+		model = AreasInvolucradas
+		fields = '__all__'
+
+		labels = {
+					'descripcion': _('Areas')
+		}
+
+class AreasInvolucradasEditarForm(ModelForm):
+	descripcion = forms.ModelChoiceField(queryset= AreasInvolucradas.objects.all(), label='Áreas Involucradas')
+	class Meta:
+		model = AreasInvolucradas
+		fields = '__all__'
+
+
+class ObservacionesAuditoriaForm(ModelForm):
+	
+	class Meta:
+		model = ObservacionesAuditoria
+		fields = '__all__'
+
+		labels = {
+					'descripcion': _('Descripcion')
+		}
+
+class ObservacionesAuditoriaEditarForm(ModelForm):
+	descripcion = forms.ModelChoiceField(queryset= ObservacionesAuditoria.objects.all())
+	class Meta:
+		model = ObservacionesAuditoria
+		fields = '__all__'
+
+class DefinicionProcesoForm(ModelForm):
+	
+	class Meta:
+		model = DefinicionProceso
+		fields = '__all__'
+
+		labels = {
+					'descripcion': _('Definicion')
+		}
+
+class DefinicionProcesoEditarForm(ModelForm):
+	descripcion = forms.ModelChoiceField(queryset= DefinicionProceso.objects.all(), label='Definición de un proceso')
+	class Meta:
+		model = DefinicionProceso
+		fields = '__all__'
+
+class CumplimientoNormativoForm(ModelForm):
+	
+	class Meta:
+		model = CumplimientoNormativo
+		fields = '__all__'
+
+		labels = {
+					'descripcion': _('Descripcion')
+		}
+
+class CumplimientoNormativoEditarForm(ModelForm):
+	descripcion = forms.ModelChoiceField(queryset= CumplimientoNormativo.objects.all(), label='Cumplimiento normativo')
+	class Meta:
+		model = CumplimientoNormativo
+		fields = '__all__'
+
+class EventosRiesgoForm(ModelForm):
+	
+	class Meta:
+		model = EventosRiesgo
+		fields = '__all__'
+
+		labels = {
+					'descripcion': _('Evento')
+		}
+
+class EventosRiesgoEditarForm(ModelForm):
+	descripcion = forms.ModelChoiceField(queryset= EventosRiesgo.objects.all(), label='Eventos de Riesgo ultimos 12 meses')
+	class Meta:
+		model = EventosRiesgo
+		fields = '__all__'
+
+
+class TransaccionesEstadosFinancierosForm(ModelForm):
+	
+	class Meta:
+		model = TransaccionesEstadosFinancieros
+		fields = '__all__'
+
+		labels = {
+					'descripcion': _('Transaccion')
+		}
+
+class TransaccionesEstadosFinancierosEditarForm(ModelForm):
+	descripcion = forms.ModelChoiceField(queryset= TransaccionesEstadosFinancieros.objects.all(), label='Transacciones relacionadas a los Estados Financieros')
+	class Meta:
+		model = EventosRiesgo
+		fields = '__all__'
+
+class CriteriosControlForm(ModelForm):
+	
+	class Meta:
+		model = Puntajescriterioscontrol
+		fields = '__all__'
+
+class CriteriosImpactoForm(ModelForm):
+	
+	class Meta:
+		model = PuntajesCriteriosImpacto
+		fields = '__all__'
+
+
+class CriteriosProbabilidadForm(ModelForm):
+	
+	class Meta:
+		model = PuntajesCriteriosProbabilidad
+		fields = '__all__'
+
+class EscalaControldForm(ModelForm):
+	
+	class Meta:
+		model = EscalaControl
+		fields = '__all__'
+
+class EscalaImpactoForm(ModelForm):
+	
+	class Meta:
+		model = Escalaimpacto
+		fields = '__all__'
+
+class EscalaProbabilidadForm(ModelForm):
+	
+	class Meta:
+		model = Escalaprobabilidad
+		fields = '__all__'
+
+class ZonariesgoForm(ModelForm):
+	class Meta:
+		model = Zonariesgo
+		fields= '__all__'
+
+
+		
 
 
 

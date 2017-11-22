@@ -1,0 +1,101 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block contenido %}
+<div class="card">
+	<div class="card-header text-center">
+		<p class="page-header"></p>
+		<p class="text-center sub-style2">DIAGRAMA(S) DE SUBPROCESO </p>
+	</div>
+	<div class="card-block">
+	<div class="box box-primary  with-border">
+	<div class="box-body">
+	{% if mensaje %}
+		<div id="mensaje">
+			{% if mensaje == 'exito' %}
+				<h4><span class="badge badge-success">El registro se Actualizo correctamente</span></h4>
+			{% elif mensaje == 'error' %}
+				<h4><span class="badge badge-danger">Error! Contactese con el administrador</span></h4>
+			
+			{% endif %}
+		</div>
+		
+	{% endif %}
+	<div>
+			<a href="{% url 'subprocesos' request.session.proceso %}"><span>Regresar</span></a>
+	</div>
+
+	<div id="diagrama" class="diagrama_copia" style="display: none">
+			<hr>
+			<div class="row">
+                <div class="col-sm-12">
+                {{formulario.diagrama|bootstrap_horizontal:'col-xs-4'}}
+                </div>
+            </div>
+			<div class="col-sm-6">
+                <button type="button" class="btn btn-danger eliminar pull-right">Eliminar</button>
+            </div>
+	  	</div>
+			
+	</div>
+	<form action="" method="POST" accept-charset="utf-8" class="form-horizontal" id="formulario" enctype='multipart/form-data'>
+		{% csrf_token %}
+		<div class="row" >
+        <div class="col-sm-6">
+       <button type="button" class="btn btn-success pull-right" id='agregar_diagrama'>Agregar</button>
+       <br>
+      </div>
+     </div>
+
+	  <div id="diagrama" class="primer_diagrama">
+	  	<hr>
+	  	<div class="row">
+                <div class="col-sm-12">
+                {{formulario.diagrama|bootstrap_horizontal:'col-xs-4'}}
+                </div>
+            </div>
+
+	  	<div class="col-sm-6">
+	  		<button type="button" class="btn btn-danger eliminar pull-right">Eliminar</button>
+	  	</div>
+	  </div>
+
+
+     <div id="diagramas"></div>
+     <br>
+     <button type="submit" class="btn btn-default">Guardar</button>
+	</form>
+	</div>
+	</div>
+	</div>
+</div>
+
+<script>
+
+  
+
+$(document).ready(function() {
+	$('#agregar_diagrama').click(function(){
+  
+        $('#diagrama').clone().removeAttr('style').appendTo( '#diagramas' );
+        $('.eliminar').click(function(){
+            var id = $(this).closest("div#diagrama").remove();
+        })
+
+  
+    })
+
+	$('.eliminar').click(function(){
+	        var id = $(this).closest("div#diagrama").remove();
+	    });
+	$('input[name=diagrama]').attr('name', 'diagrama[]');
+
+});
+
+</script>
+
+
+
+
+{% endblock %}

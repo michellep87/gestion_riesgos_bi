@@ -17,6 +17,7 @@ from .models import *
 
 #from general.models import *
 from administracion.forms import *
+from procesos.forms import *
 
 import smtplib
 from email.MIMEMultipart import MIMEMultipart
@@ -97,9 +98,10 @@ def areas(request):
 	listado = Areas.objects.all()
 	if request.POST:
 		try:
+			print "aqui ta"
 			campos = Areas()
 			campos.descarea = request.POST.get('descarea')
-			campos.codtipoarea = None if request.POST.get('codtipoarea') == '' else Tipoareas.objects.get(pk=request.POST.get('codtipoarea'))
+			campos.codtipoarea = None if request.POST.get('desctipoarea') == '' else Tipoareas.objects.get(pk=request.POST.get('desctipoarea'))
 			campos.save()
 
 			mensaje = 'exito'
@@ -230,6 +232,8 @@ def tipoproceso(request):
 		try:
 			campos = Tipoproceso()
 			campos.desctipoproceso = request.POST.get('desctipoproceso')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
 			campos.save()
 			mensaje = 'exito'
 
@@ -259,6 +263,8 @@ def tipoproceso_editar(request, id):
 		try:
 			campos = Tipoproceso.objects.get(pk=id)
 			campos.desctipoproceso = request.POST.get('desctipoproceso')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
 			campos.save()
 			
 
@@ -347,6 +353,8 @@ def tipocontrol(request):
 		try:
 			campos = Tipocontrol()
 			campos.desctipocontrol = request.POST.get('desctipocontrol')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
 			campos.save()
 			mensaje = 'exito'
 
@@ -376,6 +384,8 @@ def tipocontrol_editar(request, id):
 		try:
 			campos = Tipocontrol.objects.get(pk=id)
 			campos.desctipocontrol = request.POST.get('desctipocontrol')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
 			campos.save()
 			
 
@@ -588,6 +598,8 @@ def naturalezacontrol(request):
 		try:
 			campos = Naturalezacontrol()
 			campos.descnaturaleza = request.POST.get('descnaturaleza')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
 			campos.save()
 
 			mensaje = 'exito'
@@ -616,6 +628,8 @@ def naturalezacontrol_editar(request, id):
 		try:
 			campos = Naturalezacontrol.objects.get(pk=id)
 			campos.descnaturaleza = request.POST.get('descnaturaleza')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
 			campos.save()
 			
 
@@ -699,6 +713,1147 @@ def escenarioriesgos_editar(request, id):
 		}	
 		return render(request,'escenario_riesgos_editar.html', ctx)
 
+@login_required
+def riesgoinstitucional(request):
+	formulario = RiesgoInstitucionalForm()
+	ctx = {}
+	listado = RiesgoInstitucional.objects.all()
+
+	if request.POST:
+		try:
+			campos = RiesgoInstitucional()
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+				'mensaje': mensaje,
+		}
+	else:
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+	return render (request,'RiesgoInstitucional_ingreso.html', ctx)
+
+@login_required
+def riesgoinstitucional_editar(request, id):
+	ctx = {}
+	instancia = RiesgoInstitucional.objects.get(pk=id)
+	formularios = RiesgoInstitucionalForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = RiesgoInstitucional.objects.get(pk=id)
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+			
+
+			formularios = RiesgoInstitucionalForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('riesgoinstitucional'))
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'RiesgoInstitucional_editar.html', ctx)
+
+@login_required
+def riesgoreputacional(request):
+	formulario = RiesgoReputacionalForm()
+	ctx = {}
+	listado = RiesgoReputacional.objects.all()
+
+	if request.POST:
+		try:
+			campos = RiesgoReputacional()
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+				'mensaje': mensaje,
+		}
+	else:
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+	return render (request,'RiesgoReputacional_ingreso.html', ctx)
+
+@login_required
+def riesgoreputacional_editar(request, id):
+	ctx = {}
+	instancia = RiesgoReputacional.objects.get(pk=id)
+	formularios = RiesgoReputacionalForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = RiesgoReputacional.objects.get(pk=id)
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+			
+
+			formularios = RiesgoReputacionalForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('riesgoreputacional'))
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'RiesgoReputacional_editar.html', ctx)
+
+@login_required
+def frecuenciaactividades(request):
+	formulario = FrecuenciaActividadesRelacionadasRiesgoForm()
+	ctx = {}
+	listado = FrecuenciaActividadesRelacionadasRiesgo.objects.all()
+
+	if request.POST:
+		try:
+			campos = FrecuenciaActividadesRelacionadasRiesgo()
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+				'mensaje': mensaje,
+		}
+	else:
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+	return render (request,'frecuencia_actividades_riesgos.html', ctx)
+
+@login_required
+def frecuenciaactividades_editar(request, id):
+	ctx = {}
+	instancia = FrecuenciaActividadesRelacionadasRiesgo.objects.get(pk=id)
+	formularios = FrecuenciaActividadesRelacionadasRiesgoForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = FrecuenciaActividadesRelacionadasRiesgo.objects.get(pk=id)
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+			
+
+			formularios = RiesgoReputacionalForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('frecuenciaactividades'))
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'frecuencia_actividades_riesgos_editar.html', ctx)
+
+@login_required
+def frecuenciacontroles(request):
+	formulario = FrecuenciaControlForm()
+	ctx = {}
+	listado = FrecuenciaControl.objects.all()
+
+	if request.POST:
+		try:
+			campos = FrecuenciaControl()
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+				'mensaje': mensaje,
+		}
+	else:
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+	return render (request,'frecuencia_control.html', ctx)
+
+@login_required
+def frecuenciacontroles_editar(request, id):
+	ctx = {}
+	instancia = FrecuenciaControl.objects.get(pk=id)
+	formularios = FrecuenciaControlForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = FrecuenciaControl.objects.get(pk=id)
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+			
+
+			formularios = FrecuenciaControlForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('frecuenciacontroles'))
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'frecuencia_control_editar.html', ctx)
+
+@login_required
+def areasinvolucradas(request):
+	formulario = AreasInvolucradasForm()
+	ctx = {}
+	listado = AreasInvolucradas.objects.all()
+
+	if request.POST:
+		try:
+			campos = AreasInvolucradas()
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+				'mensaje': mensaje,
+		}
+	else:
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+	return render (request,'areas_involucradas.html', ctx)
+
+@login_required
+def areasinvolucradas_editar(request, id):
+	ctx = {}
+	instancia = AreasInvolucradas.objects.get(pk=id)
+	formularios = AreasInvolucradasForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = AreasInvolucradas.objects.get(pk=id)
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+			
+
+			formularios = AreasInvolucradasForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('areasinvolucradas'))
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'areas_involucradas_editar.html', ctx)
+
+@login_required
+def observacionesauditoria(request):
+	formulario = ObservacionesAuditoriaForm()
+	ctx = {}
+	listado = ObservacionesAuditoria.objects.all()
+
+	if request.POST:
+		try:
+			campos = ObservacionesAuditoria()
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+				'mensaje': mensaje,
+		}
+	else:
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+	return render (request,'observaciones_auditoria.html', ctx)
+
+@login_required
+def observacionesauditoria_editar(request, id):
+	ctx = {}
+	instancia = ObservacionesAuditoria.objects.get(pk=id)
+	formularios = ObservacionesAuditoriaForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = ObservacionesAuditoria.objects.get(pk=id)
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+			
+
+			formularios = ObservacionesAuditoriaForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('observacionesauditoria'))
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'observaciones_auditoria_editar.html', ctx)
+
+@login_required
+def definicionproceso(request):
+	formulario = DefinicionProcesoForm()
+	ctx = {}
+	listado = DefinicionProceso.objects.all()
+
+	if request.POST:
+		try:
+			campos = DefinicionProceso()
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+				'mensaje': mensaje,
+		}
+	else:
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+	return render (request,'definicion_procesos.html', ctx)
+
+@login_required
+def definicionproceso_editar(request, id):
+	ctx = {}
+	instancia = DefinicionProceso.objects.get(pk=id)
+	formularios = DefinicionProcesoForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = DefinicionProceso.objects.get(pk=id)
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+			
+
+			formularios = DefinicionProcesoForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('definicionproceso'))
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'definicion_procesos_editar.html', ctx)
+
+@login_required
+def cumplimientonormativo(request):
+	formulario = CumplimientoNormativoForm()
+	ctx = {}
+	listado = CumplimientoNormativo.objects.all()
+
+	if request.POST:
+		try:
+			campos = CumplimientoNormativo()
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+				'mensaje': mensaje,
+		}
+	else:
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+	return render (request,'cumplimiento_normativo.html', ctx)
+
+@login_required
+def cumplimientonormativo_editar(request, id):
+	ctx = {}
+	instancia = CumplimientoNormativo.objects.get(pk=id)
+	formularios = CumplimientoNormativoForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = CumplimientoNormativo.objects.get(pk=id)
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+			
+
+			formularios = CumplimientoNormativoForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('cumplimientonormativo'))
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'cumplimiento_normativo_editar.html', ctx)
+
+@login_required
+def eventosriesgo(request):
+	formulario = EventosRiesgoForm()
+	ctx = {}
+	listado = EventosRiesgo.objects.all()
+
+	if request.POST:
+		try:
+			campos = EventosRiesgo()
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+				'mensaje': mensaje,
+		}
+	else:
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+	return render (request,'eventos_riesgo.html', ctx)
+
+@login_required
+def eventosriesgo_editar(request, id):
+	ctx = {}
+	instancia = EventosRiesgo.objects.get(pk=id)
+	formularios = EventosRiesgoForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = EventosRiesgo.objects.get(pk=id)
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+			
+
+			formularios = EventosRiesgoForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('eventosriesgo'))
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'eventos_riesgo_editar.html', ctx)
+
+@login_required
+def transaccionesestadosfinancieros(request):
+	formulario = TransaccionesEstadosFinancierosForm()
+	ctx = {}
+	listado = TransaccionesEstadosFinancieros.objects.all()
+
+	if request.POST:
+		try:
+			campos = TransaccionesEstadosFinancieros()
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+				'mensaje': mensaje,
+		}
+	else:
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+	return render (request,'transacciones_estados_financieros.html', ctx)
+
+@login_required
+def transaccionesestadosfinancieros_editar(request, id):
+	ctx = {}
+	instancia = TransaccionesEstadosFinancieros.objects.get(pk=id)
+	formularios = TransaccionesEstadosFinancierosForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = TransaccionesEstadosFinancieros.objects.get(pk=id)
+			campos.descripcion = request.POST.get('descripcion')
+			campos.porcentaje = request.POST.get('porcentaje')
+			campos.ponderacion = request.POST.get('ponderacion')
+			campos.save()
+			
+
+			formularios = TransaccionesEstadosFinancierosForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('transaccionesestadosfinancieros'))
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'transacciones_estados_financieros_editar.html', ctx)
+
+@login_required
+def unidad_medida(request):
+	ctx={}
+	formulario = UnidadesMedidaIngresoForm()
+	listado = UnidadesMedida.objects.all()
+	if request.POST:
+		try:
+
+			campos = UnidadesMedida()
+			campos.descripcion = request.POST.get('descripcion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				'listado': listado,
+		}
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+				
+	return render(request,'unidad_medida_ingreso.html', ctx)
+
+@login_required
+def unidad_medida_editar(request, id):
+	ctx = {}
+	instancia = UnidadesMedida.objects.get(pk=id)
+	formularios = UnidadesMedidaIngresoForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = UnidadesMedida.objects.get(pk=id)
+			campos.descripcion = request.POST.get('descripcion')
+			campos.save()
+			
+
+			formularios = UnidadesMedidaIngresoForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			raise
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('unidad_medida'))
+
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'unidad_medida_editar.html', ctx)
+
+@login_required
+def criterios_control(request):
+	ctx={}
+	formulario = CriteriosControlForm()
+	listado = Puntajescriterioscontrol.objects.all()
+	if request.POST:
+		try:
+
+			campos = Puntajescriterioscontrol()
+			campos.criterio = request.POST.get('criterio')
+			campos.puntaje=request.POST.get('puntaje')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				'listado': listado,
+		}
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+				
+	return render(request,'criterios_control_ingreso.html', ctx)
+
+@login_required
+def criterios_control_editar(request, id):
+	ctx = {}
+	instancia = Puntajescriterioscontrol.objects.get(pk=id)
+	formularios = CriteriosControlForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = Puntajescriterioscontrol.objects.get(pk=id)
+			campos.criterio = request.POST.get('criterio')
+			campos.puntaje=request.POST.get('puntaje')
+			campos.save()
+			
+
+			formularios = CriteriosControlForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			raise
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('criterios_control'))
+
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'criterios_control_editar.html', ctx)
+
+@login_required
+def criterios_impacto(request):
+	ctx={}
+	formulario = CriteriosImpactoForm()
+	listado = PuntajesCriteriosImpacto.objects.all()
+	if request.POST:
+		try:
+
+			campos = PuntajesCriteriosImpacto()
+			campos.criterio = request.POST.get('criterio')
+			campos.puntaje=request.POST.get('puntaje')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				'listado': listado,
+		}
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+				
+	return render(request,'criterios_impacto_ingreso.html', ctx)
+
+@login_required
+def criterios_impacto_editar(request, id):
+	ctx = {}
+	instancia = PuntajesCriteriosImpacto.objects.get(pk=id)
+	formularios = CriteriosImpactoForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = PuntajesCriteriosImpacto.objects.get(pk=id)
+			campos.criterio = request.POST.get('criterio')
+			campos.puntaje=request.POST.get('puntaje')
+			campos.save()
+			
+
+			formularios = CriteriosImpactoForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			raise
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('criterios_impacto'))
+
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'criterios_impacto_editar.html', ctx)
+
+@login_required
+def criterios_probabilidad(request):
+	ctx={}
+	formulario = CriteriosProbabilidadForm()
+	listado = PuntajesCriteriosProbabilidad.objects.all()
+	if request.POST:
+		try:
+
+			campos = PuntajesCriteriosProbabilidad()
+			campos.criterio = request.POST.get('criterio')
+			campos.puntaje=request.POST.get('puntaje')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				'listado': listado,
+		}
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+				
+	return render(request,'criterios_probabilidad_ingreso.html', ctx)
+
+@login_required
+def criterios_probabilidad_editar(request, id):
+	ctx = {}
+	instancia = PuntajesCriteriosProbabilidad.objects.get(pk=id)
+	formularios = CriteriosProbabilidadForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = PuntajesCriteriosProbabilidad.objects.get(pk=id)
+			campos.criterio = request.POST.get('criterio')
+			campos.puntaje=request.POST.get('puntaje')
+			campos.save()
+			
+
+			formularios = CriteriosProbabilidadForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			raise
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('criterios_probabilidad'))
+
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'criterios_probabilidad_editar.html', ctx)
+
+@login_required
+def zonas_ingreso(request):
+	ctx={}
+	formulario = ZonariesgoForm()
+	listado = Zonariesgo.objects.all()
+	if request.POST:
+		try:
+
+			campos = Zonariesgo()
+			campos.escala = request.POST.get('escala')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				'listado': listado,
+		}
+
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+				
+	return render(request,'zona_riesgo.html', ctx)
+
+@login_required
+def zonas_editar(request,id):
+	ctx={}
+	instancia=Zonariesgo.objects.get(pk=id)
+	formulario = ZonariesgoForm(instance=instancia)
+	
+	if request.POST:
+		try:
+
+			campos = Zonariesgo.objects.get(pk=id)
+			campos.escala = request.POST.get('escala')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.save()
+			formulario = ZonariesgoForm(instance=campos)
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				
+		}
+		return HttpResponseRedirect(reverse('zonas_ingreso'))
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				
+		}
+				
+	return render(request,'zona_riesgo_editar.html', ctx)
+
+@login_required
+def escala_control(request):
+	ctx={}
+	formulario = EscalaControldForm()
+	listado = EscalaControl.objects.all()
+	if request.POST:
+		try:
+
+			campos = EscalaControl()
+			campos.escala = None if(request.POST.get('escala'))=="" else request.POST.get('escala')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				'listado': listado,
+		}
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+				
+	return render(request,'escala_control_ingreso.html', ctx)
+
+@login_required
+def escala_control_editar(request, id):
+	ctx = {}
+	instancia = EscalaControl.objects.get(pk=id)
+	formularios = EscalaControldForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = EscalaControl.objects.get(pk=id)
+			campos.escala = None if(request.POST.get('escala'))=='' else request.POST.get('escala')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.save()
+			
+
+			formularios = EscalaControldForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			raise
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('escala_control'))
+
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'escala_control_editar.html', ctx)
+
+
+@login_required
+def escala_impacto(request):
+	ctx={}
+	formulario = EscalaImpactoForm()
+	listado = Escalaimpacto.objects.all()
+	if request.POST:
+		try:
+
+			campos = Escalaimpacto()
+			campos.escala = None if(request.POST.get('escala'))=="" else request.POST.get('escala')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				'listado': listado,
+		}
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+				
+	return render(request,'escala_impacto_ingreso.html', ctx)
+
+@login_required
+def escala_impacto_editar(request, id):
+	ctx = {}
+	instancia = Escalaimpacto.objects.get(pk=id)
+	formularios = EscalaImpactoForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = Escalaimpacto.objects.get(pk=id)
+			campos.escala = None if(request.POST.get('escala'))=='' else request.POST.get('escala')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.save()
+			
+
+			formularios = EscalaImpactoForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			raise
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('escala_impacto'))
+
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'escala_impacto_editar.html', ctx)
+
+
+@login_required
+def escala_probabilidad(request):
+	ctx={}
+	formulario = EscalaProbabilidadForm()
+	listado = Escalaprobabilidad.objects.all()
+	if request.POST:
+		try:
+
+			campos = Escalaprobabilidad()
+			campos.escala = None if(request.POST.get('escala'))=="" else request.POST.get('escala')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				'listado': listado,
+		}
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+				
+	return render(request,'escala_probabilidad_ingreso.html', ctx)
+
+@login_required
+def escala_probabilidad_editar(request, id):
+	ctx = {}
+	instancia = Escalaprobabilidad.objects.get(pk=id)
+	formularios = EscalaProbabilidadForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = Escalaprobabilidad.objects.get(pk=id)
+			campos.escala = None if(request.POST.get('escala'))=='' else request.POST.get('escala')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.save()
+			
+
+			formularios = EscalaProbabilidadForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			raise
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('escala_probabilidad'))
+
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'escala_probabilidad_editar.html', ctx)
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 import json
 def ajax(request):
 	if request.is_ajax():

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block contenido %}
+
+<style type="text/css" media="screen">
+.sub-style2 {
+                        font-family: Tahoma, Verdana, Segoe, sans-serif;
+                        /*color: #0000cc;*/
+                        color:  #b8b894;
+                        font-size: 14;
+                        font-weight: bold;
+                      }
+ .warning {
+    background-color: #ff9800;
+}
+
+#divpadre img{
+    max-width: 100%;
+    }
+</style>
+
+<link rel="stylesheet" href="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.css' %}" />
+<script src="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.js' %}"></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.js' %} "></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.min.js' %}"></script>
+
+
+<div class="card">	
+	
+	<div class="card-block">
+		<div class="box box-primary with-border">
+		<div class="box box-body">
+			{% if mensaje %}
+		<div id="mensaje">
+			{% if mensaje == 'exito' %}
+			<h4><span class="badge badge-success">El registro se guardo correctamente</span></h4>
+			{% elif mensaje == 'error' %}
+			<h4><span class="badge badge-danger">Error! Contactese con el administrador</span></h4>
+
+			{% endif %}
+		</div>
+		{% endif %}
+			<div>
+			<a href="{% url 'subprocesos' request.session.proceso %}"><span>Regresar</span></a>
+			</div>	
+			<br>
+		 <form action="" method="POST" accept-charset="utf-8" enctype='multipart/form-data'>
+                                {% csrf_token %}
+                                <input type="hidden" name="metodo" value="subproceso">
+                           
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                    {{formulario.diagrama|bootstrap_horizontal:'col-xs-4'}}
+                                        
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-default" id="btnsubprocesos">Agregar</button>
+                                <div id="divpadre">
+                                          <img src="/media/{{instanciag.diagrama}}">
+                                      </div>
+                                
+                                
+                            </form>
+							
+		</div>
+		</div>
+	</div>
+<div id="cod_proceso" class="invisible">{{proceso}}</div>
+		
+</div>
+
+
+
+	
+{% endblock %}

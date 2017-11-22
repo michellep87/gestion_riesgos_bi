@@ -14,9 +14,9 @@
 	{% if mensaje %}
 		<div id="mensaje">
 			{% if mensaje == 'exito' %}
-				<h4><span class="label label-success">El registro se Actualizo correctamente</span></h4>
+				<h4><span class="badge badge-success">El registro se Actualizo correctamente</span></h4>
 			{% elif mensaje == 'error' %}
-				<h4><span class="label label-danger">Error! Contactese con el administrador</span></h4>
+				<h4><span class="badge badge-danger">Error! Contactese con el administrador</span></h4>
 			
 			{% endif %}
 		</div>
@@ -35,7 +35,7 @@
 		<div class="col-sm-5"s>
 			{{formulario.descarea|bootstrap_horizontal:'col-xs-4'}}
 		</div>
-		<button type="submit" class="btn btn-default">Editar</button>
+		<button type="submit" class="btn btn-default">Guardar</button>
 	</form>
 	</div>
 	</div>

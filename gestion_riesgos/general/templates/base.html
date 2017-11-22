@@ -21,6 +21,7 @@
         <script src="{% static 'vendors/bower_components/Waves/dist/waves.min.js' %}"></script>
         <script src="{% static 'vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js' %}"></script>
         <script src="{% static 'vendors/bower_components/jquery-scrollLock/jquery-scrollLock.min.js' %}"></script>
+        <script src="{% static 'vendors/bower_components/autosize/dist/autosize.min.js' %}"></script>
 
         <!-- App functions and actions -->
         <script src="{% static 'js/app.min.js' %}"></script>
@@ -71,7 +72,7 @@
                     margin: 0;
                     font-family: Roboto,sans-serif;
                     /*font-size: 1rem;*/
-                    font-size: 16px;
+                    font-size: 13px;
                     font-weight: 400;
                     line-height: 1.5;
                     color: #707070;
@@ -94,6 +95,24 @@
                 font-size: 14px; 
                 color: #FFF;
             }
+
+            
+
+            select.form-control:not([size]):not([multiple]) {
+                 height: calc(2.55rem + 3px); 
+                 border-color: rgb(241, 241, 241);
+            }
+
+            select, select[size="0"], select[size="1"] {
+                border-radius: 0px;
+                border-color: rgb(241, 241, 241);
+            }
+
+            [data-ma-theme=indigo] .header, [data-ma-theme=indigo] .login__block__btn, [data-ma-theme=indigo] .login__block__header {
+    /*background-color: #3F51B5;*/
+    background-color: #1070C0;
+}
+            
         </style>
         <style type="text/css" media="screen">
             .logo-login{
@@ -115,13 +134,19 @@
             </div>
 
             <header class="header">
-                <div class="navigation-trigger toggled" data-ma-action="aside-open" data-ma-target=".sidebar">
+               <!--  <div class="navigation-trigger toggled" data-ma-action="aside-open" data-ma-target=".sidebar">
+                    
+
                     <div class="navigation-trigger__inner">
+                    <i class="md-icon dp48">Esconder Menu</i>
+                         <i class="navigation-trigger__line"></i>
                         <i class="navigation-trigger__line"></i>
-                        <i class="navigation-trigger__line"></i>
-                        <i class="navigation-trigger__line"></i>
+                         <i class="navigation-trigger__line"></i>
+                         <i class="navigation-trigger__line"></i> 
+
                     </div>
-                </div>
+
+                </div> -->
 
                 <div class="header__logo hidden-sm-down">
                     <h1><a href="">Sistema de Gestion de Riesgos</a></h1>
@@ -153,23 +178,24 @@
             </header>
 
             <aside class="sidebar sidebar--hidden toggled">
-                <div class="scroll-wrapper scrollbar-inner" style="position: relative;"><div class="scrollbar-inner scroll-content scroll-scrolly_visible" style="height: auto; margin-bottom: 0px; margin-right: 100px; max-height: 334.5px;">
-                    <div class="text-center logo-login">
+                <div class="scroll-wrapper scrollbar-inner" style="position: relative;"><div class="scrollbar-inner scroll-content scroll-scrolly_visible" style="height: auto; margin-bottom: 0px; margin-right: 80px; max-height: 334.5px;">
+                    <div class="text-left logo-login">
     
-                                <img src="{% static 'img/logo.png' %}" width="190.5px">
+                                <img src="{% static 'img/logo.png' %}" width="150.5px">
                     </div>
                     <br><br>    
                     <ul class="navigation">
-                        <li><a href="{% url 'menu_administracion' %}"><i class="zmdi zmdi-keyboard"></i> Administracion</a></li>
-
-                        <li class="navigation__sub">
+                         <li class="navigation__sub">
                             <a href=""><i class="zmdi zmdi-view-week"></i> Procesos</a>
 
                             <ul>
-                                <li><a href="{% url 'procesos' %}">Listado de Procesos</a></li>
+                                <li><a href="{% url 'procesos' %}"><i class="zmdi zmdi-chevron-right zmdi-hc-lg"></i> Listado de Procesos</a></li>
                                
                             </ul>
                         </li>
+                        <li><a href="{% url 'menu_administracion' %}"><i class="zmdi zmdi-keyboard"></i> Administracion</a></li>
+
+                       
 
                        
                     </ul>
@@ -180,13 +206,13 @@
              <!-- Content Wrapper. Contains page content -->
               <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
-                {% block titulo %}
+                <!-- {% block titulo %}
                   <section class="content-header">
 
                     <h1 class="text-center">Sistema Para la Gestion de Riesgos</h1>
 
                   </section>
-                {% endblock %}
+                {% endblock %} -->
 
                 <!-- Main content -->
                 <section class="content">

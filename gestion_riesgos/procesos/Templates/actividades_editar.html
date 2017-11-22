@@ -1,0 +1,309 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block contenido %}
+<style type="text/css" media="screen">
+.sub-style2 {
+                        font-family: Tahoma, Verdana, Segoe, sans-serif;
+                        /*color: #0000cc;*/
+                        color:  #b8b894;
+                        font-size: 14;
+                        font-weight: bold;
+                      }
+ .warning {
+    background-color: #ff9800;
+}
+
+
+</style>
+<link rel="stylesheet" href="{% static 'vendors/bower_components/select2/dist/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.css' %}" />
+<script src="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.js' %}"></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.js' %} "></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.min.js' %}"></script>
+<script src="{% static 'vendors/bower_components/select2/dist/js/select2.full.min.js' %}"></script>
+
+
+
+<div class="card">  
+  
+  <div class="card-block">
+    <div class="box box-primary with-border">
+    <div class="box box-body">
+      {% if mensaje %}
+    <div id="mensaje">
+      {% if mensaje == 'exito' %}
+      <h4><span class="label label-success">El registro se guardo correctamente</span></h4>
+      {% elif mensaje == 'error' %}
+      <h4><span class="label label-danger">Error! Contactese con el administrador</span></h4>
+
+      {% endif %}
+    </div>
+    {% endif %}
+    <div>
+      <a href="{% url 'subprocesos' request.session.proceso %}"><span>Regresar</span></a>
+      <!-- <input type="hidden"  name="subproceso" value="{{subproc}}" id=id_subproceso> -->
+      </div>  
+<form action="" method="POST" accept-charset="utf-8" enctype="multipart/form-data" class="form-horizontal">
+                                  {% csrf_token %}
+                                  <input type="hidden" name="metodo" value="Inserta_actividad">
+                                  <input type="hidden" name="subproceso_id" id="subproceso_id" value="">
+                                  
+                                  <div class="row">
+                                    <div class="col-sm-10">
+                                        <label for="id_subprocesos" class="col-xs-4 control-label">Subproceso</label>
+                                       <div class="col-xs-8">
+                                          <select class="form-control" id="id_subprocesos" name="codsubproceso" required="True">
+                                             <option value="">---------------</option> 
+                                          </select>
+                                   </div>  
+                                   </div>
+                                   </div>
+                                   <br>
+                                   <div class="row">
+                                     <div class="col-sm-3">
+                                            {{formularioa.ordenactividad|bootstrap_horizontal:'col-xs-4'}}
+                                     </div>
+
+                                     <div class="col-sm-7">
+                                        {{tipoactividad.desctipoactividad|bootstrap_horizontal:'col-xs-4'}}
+                                    </div>
+                                   </div>
+
+                                   <div class="row">
+                                    <div class=" col-sm-10 ">
+                                   <div class="form-group">
+                                   {{formularioa.nombreactividad|bootstrap_horizontal:'col-xs-4'}}
+    
+                                         
+
+                                   </div>
+                                        
+                                    </div>
+                                   </div>
+                                    <div class="row">
+                                    <div class=" col-sm-10 ">
+                                      {{formularioa.descripcionactividad|bootstrap_horizontal:'col-xs-4'}}
+                                    </div>
+                                   </div>
+                                   
+                                   <div class="row">
+                                   <div class="col-sm-5">
+                                     <div class="form-group">
+                                                      <label>Responsable</label>
+                                                       <input type="hidden" name="letraR" value="R">
+                                                      <select class="select2 select2-hidden-accessible" multiple="" data-placeholder="" tabindex="-1" aria-hidden="true" id="idR" name="Responsable" style=" width: 295.55px;height: 34px; ">
+                                                          <option value="">---------------</option> 
+                                                      </select>
+                                                  </div>
+                                   </div> 
+                                   <div class="col-sm-5">
+                                     <div class="form-group">
+                                        <label>A quien le reporta</label>
+                                        <input type="hidden" name="letraA" value="A">
+                                        <select class="select2 select2-hidden-accessible" multiple="" data-placeholder="" tabindex="-1" aria-hidden="true" id="idA" name="Acargo" style=" width: 295.55px;height: 34px; ">
+                                            <option value="">---------------</option> 
+                                        </select>
+                                    </div>
+                                   </div>
+                                   </div>
+
+                                   <div class="row">
+                                        <div class="col-sm-5">
+                                          <div class="form-group">
+                                        <label>Consultado</label>
+                                        <input type="hidden" name="letraC" value="C">
+                                        <select class="select2 select2-hidden-accessible" multiple="" data-placeholder="" tabindex="-1" aria-hidden="true" id="idC" name="Consultar" style=" width: 295.55px;height: 34px; ">
+                                            <option value="">---------------</option> 
+                                        </select>
+                                        </div>
+                                        </div>
+
+                                        <div class="col-sm-5">
+                                          <div class="form-group">
+                                        <label>Informado</label>
+                                        <input type="hidden" name="letraI" value="I">
+                                        <select class="select2 select2-hidden-accessible" multiple="" data-placeholder="" tabindex="-1" aria-hidden="true" id="idI" name="Informar" style=" width: 295.55px;height: 34px; ">
+                                            <option value="">---------------</option> 
+                                        </select>
+                                        </div>
+                                        </div>
+                                   </div>
+
+                                   <div class="row">
+                                        <div class="col-sm-2">
+                                          <div class="form-group">
+                                            {{formularioa.tiempo|bootstrap_horizontal:'col-xs-4'}}
+                                          </div>
+                                        </div>  
+
+                                        <div class="col-sm-2">
+                                         <label for="id_unidadmedida" class="col-xs-4 control-label"><br></label>
+                                          <div class="form-group">
+                                           
+                                          <select class="form-control" id="id_unidadmedida" name="descripcion">
+                                             <option value="">---------------</option> 
+                                          </select>
+                                          </div>
+                                        </div>                                     
+                                   </div>
+
+                                   <div class="col-sm-2">
+                                      <div class="form-group">
+                                          {{formularioa.anexo|bootstrap_horizontal:'col-xs-4'}}
+                                        <!-- <input type="file" id="exampleInputFile" name="anexo"> -->
+                                          
+                                          
+                                      </div>
+                                  </div>
+
+                                  <div class="row">
+                                  <div class="col-sm-2">
+                                      <div class="form-group">
+                                      <label>Habilitado</label>
+                                        <div class="toggle-switch">
+
+                                            <input type="checkbox" class="toggle-switch__checkbox" checked="" name="habilitado" id="id_habilitado">
+                                            <i class="toggle-switch__helper"></i>
+                                        </div>
+                                    </div>
+                                  </div>
+                                   </div>
+              
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-default" id="btnActividad">Guardar</button>
+                            
+                        </div>
+                        <input type="hidden" name="procesoidc" id="proceso_id" value="{{request.session.proceso}}">
+                        <input type="hidden" name="actividadid" id="actividad_id" value="{{actividadid}}">
+                        
+                        </form>
+    </div>
+    </div>
+  </div>
+</div>
+<script>
+
+$(document).ready(function() {
+   $.ajax({
+        type: "GET",
+        data:{ codpuesto :"" },
+        url: "{% url 'ajaxPuestos' %}"
+    }).done(function(response){
+        $.each(response, function(index, val) {
+            $('#idR').append("<option value="+val.pk+">" + val.descpuesto + "</option>");
+            $('#idA').append("<option value="+val.pk+">" + val.descpuesto + "</option>");
+            $('#idC').append("<option value="+val.pk+">" + val.descpuesto + "</option>");
+            $('#idI').append("<option value="+val.pk+">" + val.descpuesto + "</option>");
+                });
+                  // $('#id_actividad').trigger("chosen:updated");
+                  $('#idR').trigger("chosen:updated");
+                  $('#idA').trigger("chosen:updated");
+                  $('#idC').trigger("chosen:updated");
+                  $('#idI').trigger("chosen:updated");  
+           
+    })
+
+  $('#id_unidadmedida').empty();
+          $('#id_unidadmedida').append("<option value=''>---------------</option>");
+          //valor =  $('#subproceso_idr').val($(this).data('id'))
+           $.ajax({
+              type: "GET",
+              data: { valor: "" },
+              url: "{% url 'ajaxUnidadMedida' %}",
+              success: function(response){
+               $.each(response, function(key, val){
+                  // $('#id_actividad').append("<option value="+val.pk+">" + val.descripcionactividad + "</option>");
+                  $('#id_unidadmedida').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+                });
+                  // $('#id_actividad').trigger("chosen:updated");
+                  $('#id_unidadmedida').trigger("chosen:updated");
+            }
+
+
+       });   
+       
+var valorproc = $("#proceso_id").val();
+
+       $('#id_subprocesos').empty();
+          $('#id_subprocesos').append("<option value=''>---------------</option>");
+          //valor =  $('#subproceso_idr').val($(this).data('id'))
+           $.ajax({
+              type: "GET",
+              data: { valor: valorproc },
+              url: "{% url 'ajaxsubprocesos' %}",
+              success: function(response){
+               $.each(response, function(key, val){
+                  // $('#id_actividad').append("<option value="+val.pk+">" + val.descripcionactividad + "</option>");
+                  $('#id_subprocesos').append("<option value="+val.pk+">" + val.descsubproceso + "</option>");
+
+                 
+                });
+                  // $('#id_actividad').trigger("chosen:updated");
+                  $('#id_subprocesos').trigger("chosen:updated");
+                   
+            }
+
+
+       });
+
+  var actividad=$('#actividad_id').val();
+  $('#idR').addClass('select2')
+   $.ajax({
+              type: "GET",
+              data: { actividad: actividad },
+              url: "{% url 'ajaxCargarActividades' %}",
+              success: function(response){
+               $.each(response.actividadess, function(key, val){
+
+                if (val.habilitado == 0){
+                    $("#id_habilitado").prop("checked",false).trigger('change');  
+                }
+
+                if (val.habilitado == 1){
+                    $("#id_habilitado").prop("checked",true).trigger('change');  
+                }
+                  
+                             
+                 $("#id_subprocesos option[value="+ val.codsubproceso +"]").attr("selected",true).trigger('change');
+                 $("#id_desctipoactividad option[value="+ val.codtipoactividad +"]").attr("selected",true).trigger('change');
+                 $("#id_unidadmedida option[value="+ val.unidadmedida +"]").attr("selected",true).trigger('change');
+                 
+                 $.each(val.racir, function(index, data) {
+                  
+                   $("#idR option[value="+ data.codpuesto +"]").attr("selected",true).trigger('change');
+                 });
+
+                 $.each(val.racia, function(index, data) {
+                 
+                   $("#idA option[value="+ data.codpuesto +"]").attr("selected",true).trigger('change');
+                 });
+
+                 $.each(val.racic, function(index, data) {
+                  
+                   $("#idC option[value="+ data.codpuesto +"]").attr("selected",true).trigger('change');
+                 });
+
+                 $.each(val.racii, function(index, data) {
+                  
+                   $("#idI option[value="+ data.codpuesto +"]").attr("selected",true).trigger('change');
+                 });
+                 
+                });
+                 
+                   
+            }
+
+
+       });
+});
+
+
+
+
+</script>
+
+{% endblock %}
