@@ -153,7 +153,7 @@ def subprocesos(request, id):
 	formulario = SubprocesosForm()	
 	formularioProceso = ProcesosForm(instance= instanciap)
 	formularioActividad = ActividadesForm()
-	formularioEscenario = SubprocesosXEscenariosForm()
+	#formularioEscenario = SubprocesosXEscenariosForm()
 	formularioraci = RACIForm()
 	formularioControl = ControlesForm()
 	formularioinfogeneral = InformacionForm()
@@ -164,7 +164,7 @@ def subprocesos(request, id):
 	actividadesedit = ActividadesEditarForm()
 	tipocontrol = TipoControlEditarForm()
 	naturaleza = NaturalezacontrolEditarForm()
-	racie = TipoRaciEditarForm()
+	#racie = TipoRaciEditarForm()
 	unidad = UnidadesMedidaForm()
 	
 	#Listados
@@ -214,6 +214,7 @@ def subprocesos(request, id):
 				arraydiag = {}
 				arraydiag['id'] = diag.pk
 				arraydiag['subproceso'] = diag.subproceso
+				arraydiag['codsubproceso'] = diag.subproceso.pk
 				arraydiag['diagrama'] = diag.diagrama
 				dicdiag.append(arraydiag)
 		array['diagramas'] = dicdiag
@@ -486,7 +487,7 @@ def subprocesos(request, id):
 					'formulario': formulario,
 					'formulariop': formularioProceso,
 					'formularioa': formularioActividad,
-					'formularioe': formularioEscenario,
+					#'formularioe': formularioEscenario,
 					'formularior': formularioraci,
 					'formularioc': formularioControl,
 					'formularioig':formularioinfogeneral,
@@ -500,7 +501,7 @@ def subprocesos(request, id):
 					'actividades_editar': actividadesedit,
 					'tipocontrol': tipocontrol,
 					'naturaleza': naturaleza,
-					'racie': racie,
+					#'racie': racie,
 					'infogeneral': informaciongeneral,
 					'unidad': unidad,
 					'controlespendientes': controlespendientes,
@@ -704,7 +705,7 @@ def subprocesos(request, id):
 			'formulario': formulario,
 			'formulariop': formularioProceso,
 			'formularioa': formularioActividad,
-		 	'formularioe': formularioEscenario,
+		 	#'formularioe': formularioEscenario,
 		 	'formularior': formularioraci,
 		 	'formularioc': formularioControl,
 		 	'formularioig':formularioinfogeneral,
@@ -718,7 +719,7 @@ def subprocesos(request, id):
 			'actividades_editar': actividadesedit,
 			'tipocontrol': tipocontrol,
 			'naturaleza': naturaleza,
-			'racie': racie,
+			# 'racie': racie,
 			'infogeneral': informaciongeneral,
 			'unidad': unidad,
 			'controlespendientes': controlespendientes,
@@ -2580,8 +2581,8 @@ def ajaxTablaActividades(request):
 
 		subprocesos = Subprocesos.objects.filter(pk=subproceso)
 		duenosubproceso = DuenosSubproceso.objects.filter(subproceso=subproceso)
-		actividad=Actividades.objects.filter(codsubproceso=subproceso).order_by('ordenactividad')
-		actividades= list(Actividades.objects.values('pk','nombreactividad','descripcionactividad','codtipoactividad__desctipoactividad','ordenactividad','tiempo','unidadmedida__descripcion','codsubproceso__due_osubproceso').filter(codsubproceso=subproceso).order_by('ordenactividad'))
+		actividad=Actividades.objects.filter(codsubproceso=subproceso,habilitado=True).order_by('ordenactividad')
+		actividades= list(Actividades.objects.values('pk','nombreactividad','descripcionactividad','codtipoactividad__desctipoactividad','ordenactividad','tiempo','unidadmedida__descripcion','codsubproceso__due_osubproceso').filter(codsubproceso=subproceso,habilitado=True).order_by('ordenactividad'))
 
 		subproceso = []
 

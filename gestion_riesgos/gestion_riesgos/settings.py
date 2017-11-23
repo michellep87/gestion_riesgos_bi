@@ -25,7 +25,7 @@ SECRET_KEY = '+hh+-*p(=f^$1p9y9y78u&p16)qye2539fjs8vo&am!*!w7(wj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['52.90.156.149']
+ALLOWED_HOSTS = []#['52.90.156.149']
 
 
 # Application definition
@@ -77,6 +77,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'gestion_riesgos.wsgi.application'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'sql_server.pyodbc', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'Procesos2',                      # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': 'DESKTOP-P4PU9JU',
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -98,33 +107,47 @@ WSGI_APPLICATION = 'gestion_riesgos.wsgi.application'
 #     }
 # }
 
+
+
 os.environ["ODBCSYSINI"] = "/etc"
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'sql_server.pyodbc', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'Procesos2',                      # Or path to database file if using sqlite3.
-        'USER': 'bidss',                      # Not used with sqlite3.
-        'PASSWORD': 'admin123',                  # Not used with sqlite3.
-        'HOST': 'sqlserverdatasource',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '1433',                      # Set to empty string for default. Not used with sqlite3.
-        'OPTIONS': {
-                'host_is_server': False,
-                'dsn': 'sqlserverdatasource',
-        },
-    }
-}
-DATABASE_NAME = 'Procesos2'
-DATABASE_HOST = 'sqlserverdatasource'
-DATABASE_PORT = '1433'
-DATABASE_USER = 'bidss'
-DATABASE_PASSWORD = 'admin123'
-DATABASE_OPTIONS = {
-        'host_is_server': False,
-        'dsn': 'sqlserverdatasource',
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'sql_server.pyodbc', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+#         'NAME': 'Procesos2',                      # Or path to database file if using sqlite3.
+#         'USER': 'bidss',                      # Not used with sqlite3.
+#         'PASSWORD': 'admin123',                  # Not used with sqlite3.
+#         'HOST': 'sqlserverdatasource',                      # Set to empty string for localhost. Not used with sqlite3.
+#         'PORT': '1433',                      # Set to empty string for default. Not used with sqlite3.
+#         'OPTIONS': {
+#                 'host_is_server': False,
+#                 'dsn': 'sqlserverdatasource',
+#         },
+#     }
+# }
+# DATABASE_NAME = 'Procesos2'
+# DATABASE_HOST = 'sqlserverdatasource'
+# DATABASE_PORT = '1433'
+# DATABASE_USER = 'bidss'
+# DATABASE_PASSWORD = 'admin123'
+# DATABASE_OPTIONS = {
+#         'host_is_server': False,
+#         'dsn': 'sqlserverdatasource',
+# }
 
+# Database
+# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'sql_server.pyodbc', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+#         'NAME': 'Procesos2',                      # Or path to database file if using sqlite3.
+#         'USER': 'bidss',                      # Not used with sqlite3.
+#         'PASSWORD': 'admin123',                  # Not used with sqlite3.
+#         'HOST': 'mssqlserver.canbbevbcgld.us-west-2.rds.amazonaws.com',
+#     }
+# }
 
 
 # Password validation
@@ -168,10 +191,10 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/').replace('\\', '/')
+#MEDIA_ROOT =  os.path.join(BASE_DIR, 'media/')
 
 
 # MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media', 'upload')

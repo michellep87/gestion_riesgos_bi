@@ -973,16 +973,22 @@
                                       <!-- <img src="/media/{{dataimg.diagrama}}" class="img-responsive img-gallery" alt="diagrama"> -->
 
                                       <div class="card widget-pictures">
+                                     
                         <div class="card-header">
                             <h2 class="card-title"></h2>
                             <small class="card-subtitle"></small>
                         </div>
 
                         <div class="widget-pictures__body row">
-                            {% for data in subproceso %}
-                            {% for dataimg in data.diagramas %}
+
+                            {% for datas in subproceso %}
+                            {% if data.pk == datas.pk%}
+                            {% for dataimg in datas.diagramas %}
+                            
                             <a href="{% url 'ver_diagramas' dataimg.id %}" target="_blank" class="col-4" ><img src="/media/{{dataimg.diagrama}}" class="img-responsive img-gallery" alt="diagrama"></a>
+                            
                             {% endfor %}
+                            {% endif %}
                             {% endfor %}
                         </div>
                           </div>
@@ -1094,92 +1100,9 @@
 
 </div>
 
-<!-- ========================================= SUBPROCESOS==================================================== -->
-        <!-- Modal -->
-            <div id="modalagrega" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <!-- Modal Content -->
-                    <div class="modal-content">
-                        <div class="modal-header center-block">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Ingreso Subprocesos</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" method="POST" accept-charset="utf-8">
-                                {% csrf_token %}
-                                <input type="hidden" name="metodo" value="subproceso">
-                                <div class="row">
-                                <div class="col-sm-6">
-                                    {{puesto.descpuesto|bootstrap_horizontal:'col-xs-4'}}
-                                </div>
-                                <div class="col-sm-6">
-                                    {{formulario.orden_subproceso|bootstrap_horizontal:'col-xs-4'}}
-                                </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                    {{formulario.descsubproceso|bootstrap_horizontal:'col-xs-4'}}
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                    {{formulario.observaciones|bootstrap_horizontal:'col-xs-4'}}
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                    <label for="fecha_implementacion">Fecha de Implementacion</label>
-                                    <!-- <input type="text" class="form-control datetime-picker flatpickr-input active" placeholder="Pick a date &amp; time" readonly="readonly" name="fecha_implementacion" id="fecha_implementacion"> -->
-                                    <input type="text" class="form-control date-picker flatpickr-input active" placeholder="Pick a date" readonly="readonly" name="fecha_implementacion" id="fecha_implementacion">
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        {{formulario.narrativa|bootstrap_horizontal:'col-xs-4'}}
-                                    </div>
-                                </div>
-
-
-                                
-                                <button type="submit" class="btn btn-default" id="btnsubprocesos">Agregar</button>
-                            </form>
-                            
-                            
-                        </div>
-                        <div class="modal-footer">
-                            
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-<!-- ==================================================Diagramas ============================================= -->
-  <div class="modal fade" id="modalGallery" tabindex="-1" role="dialog" aria-labelledby="modalGalleryLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h4 class="modal-title" id="modalGalleryLabel">Gallery</h4>
-        </div> <!-- /.modal-header -->
-
-        <div class="modal-body">
-          <div id="carouselGallery" class="carousel slide" data-ride="carousel" data-interval="false">
-            <div class="carousel-inner">
-            </div> <!-- /.carousel-inner -->
-          </div> <!-- /.carousel -->
-        </div> <!-- /.modal-body -->
-
-        <div class="modal-footer">
-          <ul class="pagination">
-          </ul>
-        </div> <!-- /.modal-footer -->
-      </div> <!-- /.modal-content -->
-    </div> <!-- /.modal-dialog -->
-  </div> <!-- /.modal -->
+  
+<!-- ==================================================Modals================================================= -->
+ 
 <!-- ================================================== PROCESOS ============================================= -->
                 <!-- Modal Editar Procesos-->
             <div id="modaledita" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -1391,118 +1314,7 @@
    
  <!-- =========================================================================================================== -->        
      
-
-
-                   <!-- Modal Agregar Escenarios-->
-            <div id="modalescenario" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <!-- Modal Content -->
-                    <div class="modal-content">
-                        <div class="modal-header center-block">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Ingresar Escenarios</h4>
-                        </div>
-                        <div class="modal-body">
-          <form action="" method="POST" accept-charset="utf-8" enctype="multipart/form-data" class="form-horizontal">
-            {% csrf_token %}
-            <input type="hidden" name="metodo" value="Inserta_escenario">
-            <input type="hidden" name="subproceso_ide" id="subproceso_ide" value="">
-           
-                <div class="col-sm-10">
-                    {{formularioe.probabilidad|bootstrap_horizontal:'col-sm-4'}}
-                </div>
-            
-                <div class="col-sm-10">
-                    {{escenario.descescenario|bootstrap_horizontal:'col-sm-4'}}
-                </div>
-                <div class="col-sm-10">
-                    {{formularioe.impacto|bootstrap_horizontal:'col-sm-4'}}
-                </div>
-                <div class="col-sm-10">
-                    {{formularioe.nivel_riesgo_inherente|bootstrap_horizontal:'col-sm-4'}}
-                </div>
-                <div class="col-sm-10">
-                    {{formularioe.observaciones|bootstrap_horizontal:'col-sm-4'}}
-                </div>
-            
-            
-            <div class="col-sm-2">
-                    <div class="form-group">
-                        
-                        
-                        <button type="submit" class="btn btn-default" id="btnEscenario">Guardar</button>
-                    </div>
-                </div>
-            
-        </form>
-                            
-                            
-                        </div>
-                        <div class="modal-footer">
-                            
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-        </div>
-
-         <!-- Modal Agregar RACI-->
-            <div id="modalraci" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <!-- Modal Content -->
-                    <div class="modal-content">
-                        <div class="modal-header center-block">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Ingresar RACI</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" method="POST" accept-charset="utf-8" enctype="multipart/form-data" class="form-horizontal">
-                                {% csrf_token %}
-                                <input type="hidden" name="metodo" value="Inserta_raci">
-                                <input type="hidden" name="subproceso_idr" id="subproceso_idr" value="">
-                               
-                                    <div class="col-sm-10">
-                                        <label for="id_actividad" class="col-xs-4 control-label">Actividad</label>
-                                       <div class="col-xs-8">
-                                          <select class="form-control" id="id_actividad" name="actividad">
-                                             <option value="">---------------</option> 
-                                          </select>
-                                    </div>  
-                                    </div>
-                                    <div class="col-sm-10">
-                                        {{racie.letra|bootstrap_horizontal:'col-xs-10'}}
-                                    </div>
-                                    <div class="col-sm-10">
-                                        {{puesto.descpuesto|bootstrap_horizontal:'col-xs-10'}}
-                                    </div>
-                                    <div class="col-sm-10">
-                                    <label for="id_observaciones" class="col-xs-4 control-label">Observaciones</label>
-                                        <textarea class="form-control" rows="3" id="id_observaciones" name="observaciones"></textarea>
-                                        
-                                    </div>
-                                <br><br>
-                                
-                                <div class="col-sm-2">
-                                        <div class="form-group">
-                                            
-                                            
-                                            <button type="submit" class="btn btn-default" id="btnRACII">Guardar</button>
-                                        </div>
-                                    </div>
-                                
-                            </form>
-                            
-                            
-                        </div>
-                        <div class="modal-footer">
-                            
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-
-        <input type="hidden" name="procesoidc" id="proceso_id" value="{{request.session.proceso}}">
+    <input type="hidden" name="procesoidc" id="proceso_id" value="{{request.session.proceso}}">
 
   
     
@@ -1715,15 +1527,7 @@
 
     });
 
-    $(".btnescenario").click(function(){
-        $("#modalescenario").modal(); 
-
-    });
-
-    $(".btnraci").click(function(){
-        $("#modalraci").modal(); 
-
-    });
+  
 
      $(".btncontrol").click(function(){
         $("#modalcontrol").modal(); 
