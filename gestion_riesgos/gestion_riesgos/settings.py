@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'gestion_riesgos.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'Procesos2',                      # Or path to database file if using sqlite3.
+        'NAME': 'Procesos3',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': 'DESKTOP-P4PU9JU',

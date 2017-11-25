@@ -1013,6 +1013,23 @@ def actividades_editar(request,id):
 
 				#-------Control-----------------------------------------------
 				
+				#-------- Verificar si existen controles para esta actividad--------------------------------
+
+				try:
+					ctrlactividad= Controles.objects.filter(codactividad=id)
+				except Controles.DoesNotExist:
+					ctrlactividad= None
+
+				if 	not (request.POST.get('habilitado'))=="on" and ctrlactividad != None:
+					from django.db import connection
+					with connection.cursor() as cursor:
+						try:
+							query="exec [dbo].[spInhabilitarcontroles] %s"%(id)
+						 	cursor.execute(query)
+						 	cursor.close()
+						except Exception as e:
+							raise e
+					
 				
 				# if request.POST.get('desctipoactividad') == "1":
 				# 	print 'controool!!!!'
@@ -1743,6 +1760,7 @@ def matrizcontrol_editar(request,id):
 			campos.zona_riesgo =None if (zonariesgo) == 0 else Zonariesgo.objects.get(pk=zonariesgo) 
 			campos.escala = request.POST.get('escalacontrol')
 			campos.clasificacion = request.POST.get('clasifcontrol')
+			campos.habilitado= "True" if (request.POST.get('habilitado'))=="on" else "False"
 			campos.save()
 			ControlesForm(instance=campos)
 
@@ -2753,7 +2771,7 @@ def ajaxControles(request):
 		frecuenciacontrol=list(FrecuenciaControl.objects.values('pk','descripcion'))
 		observacionesauditoria=list(ObservacionesAuditoria.objects.values('pk','descripcion'))
 		# codactividad = list(Controles.objects.values('codactividad').filter(codcontrol=control))
-		controlitems = list(Controles.objects.values('escenario','codactividad','codtipocontrol','efectividad','codnaturaleza','descripcion','frecuencia','observaciones_auditoria').filter(pk=control))
+		controlitems = list(Controles.objects.values('escenario','codactividad','codtipocontrol','efectividad','codnaturaleza','descripcion','frecuencia','observaciones_auditoria','habilitado').filter(pk=control))
 
 		data ={
 			'escenarios':escenarios,

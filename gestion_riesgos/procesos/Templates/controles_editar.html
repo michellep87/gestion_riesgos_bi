@@ -55,6 +55,19 @@
 	            </p>
 	            <p class="page-header"></p>
 	            <br>
+	                <div class="row">
+                     <div class="col-sm-2">
+                          <div class="form-group">
+                                <label>Habilitado</label>
+                          <div class="toggle-switch">
+
+                              <input type="checkbox" class="toggle-switch__checkbox" checked="" name="habilitado" id="id_habilitado">
+                              <i class="toggle-switch__helper"></i>
+                          </div>
+                          </div>
+                      </div>
+                  </div>
+	            <br>
 	            <div class="row">
              	
              	<div class="col-sm-5">
@@ -68,7 +81,8 @@
              		
              	</div>
 
-             </div>
+              </div>
+
              <div class="row hide">
              	<div class="col-sm-5">
              		<div class="form-group">
@@ -173,8 +187,7 @@
 
             </div>
 
-               
-            
+                        
             
             <div class="col-sm-2">
                     <div class="form-group">
@@ -283,6 +296,14 @@
 	        // 	});	
 
 	         $.each(response.controlitems, function(key, val) {
+
+	         		if (val.habilitado == 0){
+                    $("#id_habilitado").prop("checked",false).trigger('change');  
+                }
+
+                if (val.habilitado == 1){
+                    $("#id_habilitado").prop("checked",true).trigger('change');  
+                }
 	        		console.log(val);
 	        		$("#id_observaciones_auditoria option[value="+ val.observaciones_auditoria +"]").attr("selected",true).trigger('change');
 

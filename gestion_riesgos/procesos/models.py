@@ -136,6 +136,7 @@ class Controles(models.Model):
     escenario = models.ForeignKey('Subprocesosxescenarios', models.DO_NOTHING, db_column='CodSubProcesoEscenario', blank=True, null=True)  # Field name made lowercase.
     escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
     clasificacion = models.CharField(db_column='Clasificacion', max_length=200, blank=True, null=True)
+    habilitado = models.NullBooleanField()
     
     class Meta:
         managed = False
