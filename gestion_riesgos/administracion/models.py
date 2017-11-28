@@ -380,6 +380,32 @@ class Zonariesgo(models.Model):
     def __unicode__(self):
         return u'%s' % (self.clasificacion)
 
+class Criterios(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    criterio = models.CharField(db_column='Criterio', max_length=200, blank=True, null=True)  # Field name made lowercase.
+    tipo = models.CharField(db_column='Tipo', max_length=200, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Criterios'
+
+    def __unicode__(self):
+        return u'%s' % (self.criterio)
+
+class Puntajesxcriterios(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    criterio = models.ForeignKey('Criterios', models.DO_NOTHING, db_column='CodCriterio', blank=True, null=True)
+    puntaje = models.DecimalField(db_column='Puntaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    puntaje_especial = models.DecimalField(db_column='PuntajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True, auto_now=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField()
+    
+    class Meta:
+        managed = False
+        db_table = 'PuntajesXCriterios'
+
+    def __unicode__(self):
+        return u'%s' % (self.criterio)
 
 
 

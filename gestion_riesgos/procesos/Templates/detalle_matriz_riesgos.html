@@ -403,15 +403,15 @@
 	            		<tr>
 	            			<input type="hidden" name="frecuenciaact" id="frecuenciaact_id" value="" disabled="True">
 	            			<th>Total Probabilidad</th>
-	            			<td><input name="totalprobabilidad" id="idtotalprobabilidad" value="" disabled="True"></td>
+	            			<td><input name="totalprobabilidad" id="idtotalprobabilidad" value="{{instancia.total_probabilidad}}" disabled="True"></td>
 	            		</tr>
 	            		<tr>
 	            			<th>Clasificacion</th>
-	            			<td><input name="clasifprobabilidad" id="idclasifprobabilidad" value="" disabled="True"></td>
+	            			<td><input name="clasifprobabilidad" id="idclasifprobabilidad" value="{{instancia.clasificacion_probabilidad}}" disabled="True"></td>
 	            		</tr>
 	            		<tr>
 	            			<th>Escala</th>
-	            			<td><input name="escalaprobabilidad" id="idescalaprobabilidad" value="0" disabled="True"></td>
+	            			<td><input name="escalaprobabilidad" id="idescalaprobabilidad" value="{{instancia.escala_probabilidad}}" disabled="True"></td>
 	            		</tr>
 	            	</tbody>
 	            </table>
@@ -480,15 +480,15 @@
 	            		</tr>
 	            		<tr>
 	            			<th>Total Impacto</th>
-	            			<td><input name="totalimpacto" id="idtotalimpacto" value="" disabled="True"></td>
+	            			<td><input name="totalimpacto" id="idtotalimpacto" value="{{instancia.total_impacto}}" disabled="True"></td>
 	            		</tr>
 	            		<tr>
 	            			<th>Clasificacion</th>
-	            			<td><input name="clasifimpacto" id="idclasifimpacto" value="" disabled="True"></td>
+	            			<td><input name="clasifimpacto" id="idclasifimpacto" value="{{instancia.clasificacion_impacto}}" disabled="True"></td>
 	            		</tr>
 	            		<tr>
 	            			<th>Escala</th>
-	            			<td><input name="escalaimpacto" id="idescalaimpacto" value="0" disabled="True"></td>
+	            			<td><input name="escalaimpacto" id="idescalaimpacto" value="{{instancia.escala_impacto}}" disabled="True"></td>
 	            		</tr>
 
 	            	</tbody>
@@ -577,308 +577,308 @@
 
 	//Probabilidad
 
-	$('#id_frecuenciaact').change(function(event) {
+	// $('#id_frecuenciaact').change(function(event) {
 
-		var codigo= $(this).val();
-		// console.log(codigo);
+	// 	var codigo= $(this).val();
+	// 	// console.log(codigo);
 
-		if (codigo > 0)  {
-		$.ajax({
-			url: "{% url 'ajaxPonderacion' %}",
-			type: 'GET',
-			data: {bandera: 5,
-				   valor: codigo	
-			},
-		})
-		.done(function(response) {
+	// 	if (codigo > 0)  {
+	// 	$.ajax({
+	// 		url: "{% url 'ajaxPonderacion' %}",
+	// 		type: 'GET',
+	// 		data: {bandera: 5,
+	// 			   valor: codigo	
+	// 		},
+	// 	})
+	// 	.done(function(response) {
 			
-			$.each(response.ponderaciones, function(index, val) {
+	// 		$.each(response.ponderaciones, function(index, val) {
 				
-				$('#frecuenciaact_id').val(val.ponderacion)
-				valor=$('#frecuenciaact_id').val()
-				sumaProbabilidad();
-			});
-		});
+	// 			$('#frecuenciaact_id').val(val.ponderacion)
+	// 			valor=$('#frecuenciaact_id').val()
+	// 			sumaProbabilidad();
+	// 		});
+	// 	});
 		
-		}
-		else{
+	// 	}
+	// 	else{
 
-			    $('#frecuenciaact_id').val(0);
-			    // $("#idclasifprobabilidad").val('')
-	    		// $("#idescalaprobabilidad").val(0)
-				sumaProbabilidad();
-		}
-	});
+	// 		    $('#frecuenciaact_id').val(0);
+	// 		    // $("#idclasifprobabilidad").val('')
+	//     		// $("#idescalaprobabilidad").val(0)
+	// 			sumaProbabilidad();
+	// 	}
+	// });
 
-	$('#id_defproceso').change(function(event) {
-		var codigo= $(this).val();
-		// console.log(codigo);
+	// $('#id_defproceso').change(function(event) {
+	// 	var codigo= $(this).val();
+	// 	// console.log(codigo);
 
-		if (codigo > 0)  {
-		$.ajax({
-			url: "{% url 'ajaxPonderacion' %}",
-			type: 'GET',
-			data: {bandera: 6,
-				   valor: codigo	
-			},
-		})
-		.done(function(response) {
+	// 	if (codigo > 0)  {
+	// 	$.ajax({
+	// 		url: "{% url 'ajaxPonderacion' %}",
+	// 		type: 'GET',
+	// 		data: {bandera: 6,
+	// 			   valor: codigo	
+	// 		},
+	// 	})
+	// 	.done(function(response) {
 			
-			$.each(response.ponderaciones, function(index, val) {
+	// 		$.each(response.ponderaciones, function(index, val) {
 				
-				$('#defproceso_id').val(val.ponderacion)
-				valor=$('#defproceso_id').val()
-				sumaProbabilidad();
+	// 			$('#defproceso_id').val(val.ponderacion)
+	// 			valor=$('#defproceso_id').val()
+	// 			sumaProbabilidad();
 			
-			});
-		});
+	// 		});
+	// 	});
 		
-		}
-		else{
+	// 	}
+	// 	else{
 				
-			$('#defproceso_id').val(0);
-			sumaProbabilidad();
+	// 		$('#defproceso_id').val(0);
+	// 		sumaProbabilidad();
 
 			
-		}
+	// 	}
 		
-	});
+	// });
 
-	$('#id_areasinvolucradas').change(function(event) {
+	// $('#id_areasinvolucradas').change(function(event) {
 
-		var codigo= $(this).val();
-		// console.log(codigo);
+	// 	var codigo= $(this).val();
+	// 	// console.log(codigo);
 
-		if (codigo > 0)  {
-		$.ajax({
-			url: "{% url 'ajaxPonderacion' %}",
-			type: 'GET',
-			data: {bandera: 7,
-				   valor: codigo	
-			},
-		})
-		.done(function(response) {
+	// 	if (codigo > 0)  {
+	// 	$.ajax({
+	// 		url: "{% url 'ajaxPonderacion' %}",
+	// 		type: 'GET',
+	// 		data: {bandera: 7,
+	// 			   valor: codigo	
+	// 		},
+	// 	})
+	// 	.done(function(response) {
 			
-			$.each(response.ponderaciones, function(index, val) {
+	// 		$.each(response.ponderaciones, function(index, val) {
 				
-				$('#areasinvolucradas_id').val(val.ponderacion)
-				valor=$('#areasinvolucradas_id').val()
-				sumaProbabilidad();
+	// 			$('#areasinvolucradas_id').val(val.ponderacion)
+	// 			valor=$('#areasinvolucradas_id').val()
+	// 			sumaProbabilidad();
 			
-			});
-		});
+	// 		});
+	// 	});
 		
-		}
-		else{
+	// 	}
+	// 	else{
 				
-			$('#areasinvolucradas_id').val(0);
-			sumaProbabilidad();
+	// 		$('#areasinvolucradas_id').val(0);
+	// 		sumaProbabilidad();
 
-		}
+	// 	}
 
-	});
+	// });
 
-	$('#id_eventosriesgo').change(function(event) {
+	// $('#id_eventosriesgo').change(function(event) {
 
-		var codigo= $(this).val();
-		// console.log(codigo);
+	// 	var codigo= $(this).val();
+	// 	// console.log(codigo);
 
-		if (codigo > 0)  {
-		$.ajax({
-			url: "{% url 'ajaxPonderacion' %}",
-			type: 'GET',
-			data: {bandera: 8,
-				   valor: codigo	
-			},
-		})
-		.done(function(response) {
+	// 	if (codigo > 0)  {
+	// 	$.ajax({
+	// 		url: "{% url 'ajaxPonderacion' %}",
+	// 		type: 'GET',
+	// 		data: {bandera: 8,
+	// 			   valor: codigo	
+	// 		},
+	// 	})
+	// 	.done(function(response) {
 			
-			$.each(response.ponderaciones, function(index, val) {
+	// 		$.each(response.ponderaciones, function(index, val) {
 				
-				$('#eventosriesgo_id').val(val.ponderacion)
-				valor=$('#eventosriesgo_id').val()
-				sumaProbabilidad();
+	// 			$('#eventosriesgo_id').val(val.ponderacion)
+	// 			valor=$('#eventosriesgo_id').val()
+	// 			sumaProbabilidad();
 			
-			});
-		});
+	// 		});
+	// 	});
 		
-		}
-		else{
+	// 	}
+	// 	else{
 				
-			$('#eventosriesgo_id').val(0);
-			sumaProbabilidad();
+	// 		$('#eventosriesgo_id').val(0);
+	// 		sumaProbabilidad();
 
-		}
+	// 	}
 
-	});
+	// });
 
 
 	//Impacto
 
-	$('#id_riesgoreputacional').change(function(event) {
+	// $('#id_riesgoreputacional').change(function(event) {
 
-		var codigo= $(this).val();
-		// console.log(codigo);
+	// 	var codigo= $(this).val();
+	// 	// console.log(codigo);
 
-		if (codigo > 0)  {
-		$.ajax({
-			url: "{% url 'ajaxPonderacion' %}",
-			type: 'GET',
-			data: {bandera: 9,
-				   valor: codigo	
-			},
-		})
-		.done(function(response) {
+	// 	if (codigo > 0)  {
+	// 	$.ajax({
+	// 		url: "{% url 'ajaxPonderacion' %}",
+	// 		type: 'GET',
+	// 		data: {bandera: 9,
+	// 			   valor: codigo	
+	// 		},
+	// 	})
+	// 	.done(function(response) {
 			
-			$.each(response.ponderaciones, function(index, val) {
+	// 		$.each(response.ponderaciones, function(index, val) {
 				
-				$('#riesgoreputacional_id').val(val.ponderacion)
-				valor=$('#riesgoreputacional_id').val()
-				sumaImpacto();
+	// 			$('#riesgoreputacional_id').val(val.ponderacion)
+	// 			valor=$('#riesgoreputacional_id').val()
+	// 			sumaImpacto();
 			
-			});
-		});
+	// 		});
+	// 	});
 		
-		}
-		else{
+	// 	}
+	// 	else{
 				
-			$('#riesgoreputacional_id').val(0);
-			sumaImpacto();
+	// 		$('#riesgoreputacional_id').val(0);
+	// 		sumaImpacto();
 
-		}
-	});
+	// 	}
+	// });
 
-	$('#id_riesgoinstitucional').change(function(event) {
+	// $('#id_riesgoinstitucional').change(function(event) {
 
-		var codigo= $(this).val();
-		// console.log(codigo);
+	// 	var codigo= $(this).val();
+	// 	// console.log(codigo);
 
-		if (codigo > 0)  {
-		$.ajax({
-			url: "{% url 'ajaxPonderacion' %}",
-			type: 'GET',
-			data: {bandera: 10,
-				   valor: codigo	
-			},
-		})
-		.done(function(response) {
+	// 	if (codigo > 0)  {
+	// 	$.ajax({
+	// 		url: "{% url 'ajaxPonderacion' %}",
+	// 		type: 'GET',
+	// 		data: {bandera: 10,
+	// 			   valor: codigo	
+	// 		},
+	// 	})
+	// 	.done(function(response) {
 			
-			$.each(response.ponderaciones, function(index, val) {
+	// 		$.each(response.ponderaciones, function(index, val) {
 				
-				$('#riesgoinstitucional_id').val(val.ponderacion)
-				valor=$('#riesgoinstitucional_id').val()
-				sumaImpacto();
+	// 			$('#riesgoinstitucional_id').val(val.ponderacion)
+	// 			valor=$('#riesgoinstitucional_id').val()
+	// 			sumaImpacto();
 			
-			});
-		});
+	// 		});
+	// 	});
 		
-		}
-		else{
+	// 	}
+	// 	else{
 				
-			$('#riesgoinstitucional_id').val(0);
-			sumaImpacto();
+	// 		$('#riesgoinstitucional_id').val(0);
+	// 		sumaImpacto();
 
-		}
-	});
+	// 	}
+	// });
 
-	$('#id_transaccionesef').change(function(event) {
+	// $('#id_transaccionesef').change(function(event) {
 
-		var codigo= $(this).val();
-		// console.log(codigo);
+	// 	var codigo= $(this).val();
+	// 	// console.log(codigo);
 
-		if (codigo > 0)  {
-		$.ajax({
-			url: "{% url 'ajaxPonderacion' %}",
-			type: 'GET',
-			data: {bandera: 11,
-				   valor: codigo	
-			},
-		})
-		.done(function(response) {
+	// 	if (codigo > 0)  {
+	// 	$.ajax({
+	// 		url: "{% url 'ajaxPonderacion' %}",
+	// 		type: 'GET',
+	// 		data: {bandera: 11,
+	// 			   valor: codigo	
+	// 		},
+	// 	})
+	// 	.done(function(response) {
 			
-			$.each(response.ponderaciones, function(index, val) {
+	// 		$.each(response.ponderaciones, function(index, val) {
 				
-				$('#transaccionesef_id').val(val.ponderacion)
-				valor=$('#transaccionesef_id').val()
-				sumaImpacto();
+	// 			$('#transaccionesef_id').val(val.ponderacion)
+	// 			valor=$('#transaccionesef_id').val()
+	// 			sumaImpacto();
 			
-			});
-		});
+	// 		});
+	// 	});
 		
-		}
-		else{
+	// 	}
+	// 	else{
 				
-			$('#transaccionesef_id').val(0);
-			sumaImpacto();
+	// 		$('#transaccionesef_id').val(0);
+	// 		sumaImpacto();
 
-		}
-	});
+	// 	}
+	// });
 
-	$('#id_cumplimientonormativo').change(function(event) {
+	// $('#id_cumplimientonormativo').change(function(event) {
 
-		var codigo= $(this).val();
-		// console.log(codigo);
+	// 	var codigo= $(this).val();
+	// 	// console.log(codigo);
 
-		if (codigo > 0)  {
-		$.ajax({
-			url: "{% url 'ajaxPonderacion' %}",
-			type: 'GET',
-			data: {bandera: 12,
-				   valor: codigo	
-			},
-		})
-		.done(function(response) {
+	// 	if (codigo > 0)  {
+	// 	$.ajax({
+	// 		url: "{% url 'ajaxPonderacion' %}",
+	// 		type: 'GET',
+	// 		data: {bandera: 12,
+	// 			   valor: codigo	
+	// 		},
+	// 	})
+	// 	.done(function(response) {
 			
-			$.each(response.ponderaciones, function(index, val) {
+	// 		$.each(response.ponderaciones, function(index, val) {
 				
-				$('#cumplimientonormativo_id').val(val.ponderacion)
-				valor=$('#cumplimientonormativo_id').val()
-				sumaImpacto();
+	// 			$('#cumplimientonormativo_id').val(val.ponderacion)
+	// 			valor=$('#cumplimientonormativo_id').val()
+	// 			sumaImpacto();
 			
-			});
-		});
+	// 		});
+	// 	});
 		
-		}
-		else{
+	// 	}
+	// 	else{
 				
-			$('#cumplimientonormativo_id').val(0);
-			sumaImpacto();
+	// 		$('#cumplimientonormativo_id').val(0);
+	// 		sumaImpacto();
 
-		}
-	});
+	// 	}
+	// });
 
-	$('#id_tipoproceso').change(function(event) {
+	// $('#id_tipoproceso').change(function(event) {
 
-		var codigo= $(this).val();
-		// console.log(codigo);
+	// 	var codigo= $(this).val();
+	// 	// console.log(codigo);
 
-		if (codigo > 0)  {
-		$.ajax({
-			url: "{% url 'ajaxPonderacion' %}",
-			type: 'GET',
-			data: {bandera: 13,
-				   valor: codigo	
-			},
-		})
-		.done(function(response) {
+	// 	if (codigo > 0)  {
+	// 	$.ajax({
+	// 		url: "{% url 'ajaxPonderacion' %}",
+	// 		type: 'GET',
+	// 		data: {bandera: 13,
+	// 			   valor: codigo	
+	// 		},
+	// 	})
+	// 	.done(function(response) {
 			
-			$.each(response.ponderaciones, function(index, val) {
+	// 		$.each(response.ponderaciones, function(index, val) {
 				
-				$('#tipoproceso_id').val(val.ponderacion)
-				valor=$('#tipoproceso_id').val()
-				sumaImpacto();
+	// 			$('#tipoproceso_id').val(val.ponderacion)
+	// 			valor=$('#tipoproceso_id').val()
+	// 			sumaImpacto();
 			
-			});
-		});
+	// 		});
+	// 	});
 		
-		}
-		else{
+	// 	}
+	// 	else{
 				
-			$('#tipoproceso_id').val(0);
-			sumaImpacto();
+	// 		$('#tipoproceso_id').val(0);
+	// 		sumaImpacto();
 
-		}
-	});
+	// 	}
+	// });
 
 
 	
@@ -897,60 +897,60 @@
      
 	// }
 
-	function sumaProbabilidad(){
-     var add = 0;
-        $(".probl").each(function() {
-            add += Number($(this).val());
-        });
-        $("#idtotalprobabilidad").val(Math.round(add));
+	// function sumaProbabilidad(){
+ //     var add = 0;
+ //        $(".probl").each(function() {
+ //            add += Number($(this).val());
+ //        });
+ //        $("#idtotalprobabilidad").val(Math.round(add));
 
-     var total=  $("#idtotalprobabilidad").val()
-     if (total >= 0){
-     	$.ajax({
-	        type: "GET",
-	        data:{ suma_prob :total },
-	        url: "{% url 'ajaxSumaProbabilidad' %}"
-	    }).done(function(response){
+ //     var total=  $("#idtotalprobabilidad").val()
+ //     if (total >= 0){
+ //     	$.ajax({
+	//         type: "GET",
+	//         data:{ suma_prob :total },
+	//         url: "{% url 'ajaxSumaProbabilidad' %}"
+	//     }).done(function(response){
 	    		
-	    		$("#idclasifprobabilidad").val(response.clasificacion)
-	    		$("#idescalaprobabilidad").val(response.escala)
+	//     		$("#idclasifprobabilidad").val(response.clasificacion)
+	//     		$("#idescalaprobabilidad").val(response.escala)
 	    		    	
-	    })
-     }
-     else{
-     		$("#idtotalprobabilidad").val(0)
-     		$("#idclasifprobabilidad").val('')
-	    	$("#idescalaprobabilidad").val(0)
-     }
+	//     })
+ //     }
+ //     else{
+ //     		$("#idtotalprobabilidad").val(0)
+ //     		$("#idclasifprobabilidad").val('')
+	//     	$("#idescalaprobabilidad").val(0)
+ //     }
      
 
-	}
+	// }
 
-	function sumaImpacto(){
-     var add = 0;
-        $(".impac").each(function() {
-            add += Number($(this).val());
-        });
-        $("#idtotalimpacto").val(Math.round(add));
-     var total=  $("#idtotalimpacto").val()
-     if(total >= 0){
-     	 $.ajax({
-	        type: "GET",
-	        data:{ suma_impact :total },
-	        url: "{% url 'ajaxSumaImpacto' %}"
-	    }).done(function(response){
-	    	$("#idclasifimpacto").val(response.clasificacion)
-	    	$("#idescalaimpacto").val(response.escala)
-	    })
-     }
-     else{
-     		$("#idtotalimpacto").val(0)
-     		$("#idclasifimpacto").val('')
-	    	$("#idescalaimpacto").val(0)
-     }
+	// function sumaImpacto(){
+ //     var add = 0;
+ //        $(".impac").each(function() {
+ //            add += Number($(this).val());
+ //        });
+ //        $("#idtotalimpacto").val(Math.round(add));
+ //     var total=  $("#idtotalimpacto").val()
+ //     if(total >= 0){
+ //     	 $.ajax({
+	//         type: "GET",
+	//         data:{ suma_impact :total },
+	//         url: "{% url 'ajaxSumaImpacto' %}"
+	//     }).done(function(response){
+	//     	$("#idclasifimpacto").val(response.clasificacion)
+	//     	$("#idescalaimpacto").val(response.escala)
+	//     })
+ //     }
+ //     else{
+ //     		$("#idtotalimpacto").val(0)
+ //     		$("#idclasifimpacto").val('')
+	//     	$("#idescalaimpacto").val(0)
+ //     }
     
 
-	}
+	// }
 // });
 	
 

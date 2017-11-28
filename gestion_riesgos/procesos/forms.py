@@ -188,3 +188,10 @@ class ImagenesSubprocesosForm(ModelForm):
 	class Meta:
 		model = ImagenesSubprocesos
 		fields = '__all__'
+
+class PuntajesxcriteriosForm(ModelForm):
+	
+
+	class Meta:
+		model = Puntajesxcriterios
+		fields = '__all__'

@@ -1388,14 +1388,26 @@ def unidad_medida_editar(request, id):
 @login_required
 def criterios_control(request):
 	ctx={}
-	formulario = CriteriosControlForm()
-	listado = Puntajescriterioscontrol.objects.all()
+	#formulario = CriteriosControlForm()
+	#fechaMax=Puntajesxcriterios.objects.latest('periodo')
+	listado = Puntajesxcriterios.objects.filter(criterio__tipo="CONTROL",habilitado=True).order_by('criterio',)
 	if request.POST:
 		try:
 
-			campos = Puntajescriterioscontrol()
-			campos.criterio = request.POST.get('criterio')
+			# Guardar Criterio
+			campo=Criterios()
+			campo.criterio=request.POST.get('criterio')
+			campo.tipo="CONTROL"
+			campo.save()
+
+			#Ingresar su Puntaje
+			
+			campos = Puntajesxcriterios()
+			campos.criterio = None if(campo.pk)=="" else Criterios.objects.get(pk=campo.pk) 
 			campos.puntaje=request.POST.get('puntaje')
+			campos.puntaje_especial=request.POST.get('puntajeespecial')
+			campos.habilitado=True
+			#campos.periodo=request.POST.get('periodo')
 			campos.save()
 
 			mensaje = 'exito'
@@ -1403,14 +1415,14 @@ def criterios_control(request):
 			mensaje = e
 
 		ctx = {
-				'formulario': formulario,
+				#'formulario': formulario,
 				'mensaje': mensaje,
 				'listado': listado,
 		}
 	else:
 		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
 		ctx = {
-				'formulario': formulario,
+				#'formulario': formulario,
 				'listado': listado,
 		}
 				
@@ -1419,19 +1431,32 @@ def criterios_control(request):
 @login_required
 def criterios_control_editar(request, id):
 	ctx = {}
-	instancia = Puntajescriterioscontrol.objects.get(pk=id)
-	formularios = CriteriosControlForm(instance= instancia)
+	instancia = Puntajesxcriterios.objects.get(pk=id)#Puntajescriterioscontrol.objects.get(pk=id)
+	formularios = PuntajesxcriteriosForm(instance=instancia)#CriteriosControlForm(instance= instancia)
 
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = Puntajescriterioscontrol.objects.get(pk=id)
-			campos.criterio = request.POST.get('criterio')
+			#Guardar Criterio
+			# campo=Criterios.objects.get(pk=request.POST.get('criterio'))
+			# campo.criterio=request.POST.get('criterioname')
+			# campo.save()
+
+			#Inhabilitamos la opcion anterior
+			campo = Puntajesxcriterios.objects.get(pk=id)
+			campo.habilitado=False
+			campo.save()
+
+			campos = Puntajesxcriterios()#Puntajesxcriterios.objects.get(pk=id)
+			campos.criterio = None if(request.POST.get('criterio'))=="" else Criterios.objects.get(pk=request.POST.get('criterio')) 
 			campos.puntaje=request.POST.get('puntaje')
+			campos.puntaje_especial=request.POST.get('puntaje_especial')
+			campos.habilitado=True
+			# campos.periodo=request.POST.get('periodo')
 			campos.save()
 			
 
-			formularios = CriteriosControlForm(instance=campos)
+			formularios = PuntajesxcriteriosForm(instance=campos)
 			mensaje = 'exito'
 		except Exception as e:
 			raise
@@ -1439,6 +1464,7 @@ def criterios_control_editar(request, id):
 		ctx = {
 				'formulario': formularios,
 				'mensaje': mensaje,
+				'instancia': instancia,
 		}
 		return HttpResponseRedirect(reverse('criterios_control'))
 
@@ -1446,20 +1472,32 @@ def criterios_control_editar(request, id):
 		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
 		ctx = {
 				'formulario': formularios,
+				'instancia': instancia,
 		}	
 		return render(request,'criterios_control_editar.html', ctx)
 
 @login_required
 def criterios_impacto(request):
 	ctx={}
-	formulario = CriteriosImpactoForm()
-	listado = PuntajesCriteriosImpacto.objects.all()
+	#formulario = CriteriosImpactoForm()
+	listado = listado = Puntajesxcriterios.objects.filter(criterio__tipo="IMPACTO",habilitado=True).order_by('criterio',)
 	if request.POST:
 		try:
 
-			campos = PuntajesCriteriosImpacto()
-			campos.criterio = request.POST.get('criterio')
+			# Guardar Criterio
+			campo=Criterios()
+			campo.criterio=request.POST.get('criterio')
+			campo.tipo="IMPACTO"
+			campo.save()
+
+			#Ingresar su Puntaje
+			
+			campos = Puntajesxcriterios()
+			campos.criterio = None if(campo.pk)=="" else Criterios.objects.get(pk=campo.pk) 
 			campos.puntaje=request.POST.get('puntaje')
+			campos.puntaje_especial=request.POST.get('puntajeespecial')
+			#campos.periodo=request.POST.get('periodo')
+			campos.habilitado=True
 			campos.save()
 
 			mensaje = 'exito'
@@ -1467,14 +1505,14 @@ def criterios_impacto(request):
 			mensaje = e
 
 		ctx = {
-				'formulario': formulario,
+				#'formulario': formulario,
 				'mensaje': mensaje,
 				'listado': listado,
 		}
 	else:
 		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
 		ctx = {
-				'formulario': formulario,
+				#'formulario': formulario,
 				'listado': listado,
 		}
 				
@@ -1483,19 +1521,33 @@ def criterios_impacto(request):
 @login_required
 def criterios_impacto_editar(request, id):
 	ctx = {}
-	instancia = PuntajesCriteriosImpacto.objects.get(pk=id)
-	formularios = CriteriosImpactoForm(instance= instancia)
+	instancia = Puntajesxcriterios.objects.get(pk=id)
+	formularios = PuntajesxcriteriosForm(instance=instancia)#CriteriosImpactoForm(instance= instancia)
 
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = PuntajesCriteriosImpacto.objects.get(pk=id)
-			campos.criterio = request.POST.get('criterio')
+			#Guardar Criterio
+			# campo=Criterios.objects.get(pk=request.POST.get('criterio'))
+			# campo.criterio=request.POST.get('criterioname')
+			# campo.save()
+
+			#Inhabilitamos la opcion anterior
+			campo = Puntajesxcriterios.objects.get(pk=id)
+			campo.habilitado=False
+			campo.save()
+
+			campos = Puntajesxcriterios()
+			campos.criterio = None if(request.POST.get('criterio'))=="" else Criterios.objects.get(pk=request.POST.get('criterio')) 
 			campos.puntaje=request.POST.get('puntaje')
+			campos.puntaje_especial=request.POST.get('puntaje_especial')
+			campos.habilitado=True
+			#campos.periodo=request.POST.get('periodo')
+
 			campos.save()
 			
 
-			formularios = CriteriosImpactoForm(instance=campos)
+			formularios = PuntajesxcriteriosForm(instance=campos)
 			mensaje = 'exito'
 		except Exception as e:
 			raise
@@ -1503,6 +1555,7 @@ def criterios_impacto_editar(request, id):
 		ctx = {
 				'formulario': formularios,
 				'mensaje': mensaje,
+				'instancia': instancia,
 		}
 		return HttpResponseRedirect(reverse('criterios_impacto'))
 
@@ -1510,6 +1563,7 @@ def criterios_impacto_editar(request, id):
 		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
 		ctx = {
 				'formulario': formularios,
+				'instancia': instancia,
 		}	
 		return render(request,'criterios_impacto_editar.html', ctx)
 

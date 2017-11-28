@@ -36,14 +36,18 @@
 					<tr>
 						<th>Criterio</th>
 						<th>Puntaje</th>
+						<th>Puntaje Especial</th>
+						<th>Periodo</th>
 					</tr>
 				</thead>
 				<tbody>
 				
 				{% for l in listado %}
 				<tr>
-					<td>{{l.criterio}}</td>
+					<td>{{l.criterio.criterio}}</td>
 					<td>{{l.puntaje}}</td>
+					<td>{{l.puntaje_especial}}</td>
+					<td>{{l.periodo|date:"Y-m-d"}}</td>
 					<td>
 		 					<a href="{% url 'criterios_control_editar' l.id %}"><span>Editar</span></a>
 		 						
@@ -71,23 +75,87 @@
 					<h4 class="modal-title">Criterios de Control</h4>
 				</div>
 				<div class="modal-body">
-					<form action="" method="POST" accept-charset="utf-8">
-						{% csrf_token %}
-						<div class="row">
-						
-					<div class="col-sm-12">
-						{{formulario.criterio|bootstrap_horizontal:'col-xs-4'}}
-					</div>
-					</div>
-					<div class="row">
-						
-					<div class="col-sm-12">
-						{{formulario.puntaje|bootstrap_horizontal:'col-xs-4'}}
-					</div>
-					</div>
-					<button type="submit" class="btn btn-default">Agregar</button>
-					</form>
-					
+								<form action="" method="POST" accept-charset="utf-8">
+										{% csrf_token %}
+									
+									<div class="row">
+									
+									<div class="col-sm-12">
+									
+
+									<div class="form-group">
+			    
+			        
+			            			<label class="control-label col-xs-4 " for="id_criterio">Criterio</label>
+			        
+
+			        				<div class=" col-xs-8 ">
+			            			<input class=" form-control" id="id_criterio" maxlength="200" name="criterio" type="text" required="">
+
+			            
+
+			            
+			        				</div>
+			    
+									</div>
+
+								</div>
+								</div>
+								<div class="row">
+									
+								<div class="col-sm-12">
+									
+
+			<div class="form-group">
+			    
+			        
+			            <label class="control-label col-xs-4 " for="id_puntaje">Puntaje</label>
+			        
+
+			        <div class=" col-xs-8 ">
+			            <input class=" form-control" id="id_puntaje" name="puntaje" step="0.1" type="number">
+
+			            
+
+			            
+			        </div>
+			    
+			</div>
+			<div class="form-group">
+			    
+			        
+			            <label class="control-label col-xs-4 " for="id_puntaje_especial">Puntaje Especial</label>
+			        
+
+			        <div class=" col-xs-8 ">
+			            <input class=" form-control" id="id_puntaje_especial" name="puntajeespecial" step="0.1" type="number">
+
+			            
+
+			            
+			        </div>
+			    
+			</div>
+			<!-- <div class="form-group">
+			    
+			        
+			            <label class="control-label col-xs-4 " for="id_periodo">Periodo</label>
+			        
+
+			        <div class=" col-xs-8 ">
+			            <input class=" form-control" id="id_periodo" name="periodo" type="number">
+
+			            
+
+			            
+			        </div>
+			    
+			</div> -->
+
+								</div>
+								</div>
+								<button type="submit" class="btn btn-default waves-effect">Agregar</button>
+								</form>
 					
 				</div>
 				<div class="modal-footer">

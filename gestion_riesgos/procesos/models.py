@@ -72,7 +72,7 @@ class Subprocesosxescenarios(models.Model):
     clasificacion_probabilidad = models.CharField(db_column='ClasificacionProbabilidad', max_length=200, blank=True, null=True)
     escala_impacto = models.IntegerField(db_column='EscalaImpacto', blank=True, null=True)  # Field name made lowercase.
     clasificacion_impacto = models.CharField(db_column='ClasificacionImpacto', max_length=200, blank=True, null=True)
-
+    fecha_implementacion = models.DateTimeField(db_column='FechaImplementacion', auto_now=True)
     class Meta:
         managed = False
         db_table = 'SubProcesosXEscenarios'
@@ -127,7 +127,7 @@ class Controles(models.Model):
     realiza = models.ForeignKey(Puestos, models.DO_NOTHING, db_column='Realiza', blank=True, null=True, related_name='realiza')  # Field name made lowercase.
     ejecuta = models.ForeignKey(Puestos, models.DO_NOTHING, db_column='Ejecuta', blank=True, null=True, related_name='ejecuta')  # Field name made lowercase.
     revisa = models.ForeignKey(Puestos, models.DO_NOTHING, db_column='Revisa', blank=True, null=True, related_name='revisa')  # Field name made lowercase.
-    fecha_implementacion = models.DateTimeField(db_column='FechaImplementacion', blank=True, null=True)  # Field name made lowercase.
+    fecha_implementacion = models.DateTimeField(db_column='FechaImplementacion', blank=True, null=True, auto_now=True)  # Field name made lowercase.
     descripcion = models.TextField(db_column='Descripcion', blank=True, null=True)  # Field name made lowercase.
     frecuencia = models.ForeignKey(FrecuenciaControl, models.DO_NOTHING, db_column='Frecuencia', blank=True, null=True)  # Field name made lowercase.
     observaciones_auditoria = models.ForeignKey(ObservacionesAuditoria, models.DO_NOTHING, db_column='ObservacionesAuditoria', blank=True, null=True)  # Field name made lowercase.
