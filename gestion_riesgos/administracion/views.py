@@ -14,6 +14,8 @@ from django.contrib.auth.hashers  import make_password
 from django.contrib.auth.models import *
 from .models import *
 
+from datetime import datetime, date,time, timedelta
+
 
 #from general.models import *
 from administracion.forms import *
@@ -225,15 +227,20 @@ def puestos_editar(request, id):
 @login_required
 def tipoproceso(request):
 	formulario = TipoProcesoForm()
-	listado = Tipoproceso.objects.all()
+	
+	listado = Tipoproceso.objects.filter(habilitado=True).order_by('-periodo')
 	ctx = {}
 
 	if request.POST:
 		try:
 			campos = Tipoproceso()
 			campos.desctipoproceso = request.POST.get('desctipoproceso')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 			mensaje = 'exito'
 
@@ -261,10 +268,19 @@ def tipoproceso_editar(request, id):
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = Tipoproceso.objects.get(pk=id)
+
+			campo = Tipoproceso.objects.get(pk=id)
+			campo.habilitado= False
+			campo.save()
+
+			campos = Tipoproceso()
 			campos.desctipoproceso = request.POST.get('desctipoproceso')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 			
 
@@ -346,15 +362,20 @@ def tipoactividad_editar(request, id):
 @login_required
 def tipocontrol(request):
 	formulario = TipoControlForm()
-	listado = Tipocontrol.objects.all()
+	
+	listado = Tipocontrol.objects.filter(habilitado=True).order_by('-periodo')
 	ctx = {}
 
 	if request.POST:
 		try:
 			campos = Tipocontrol()
 			campos.desctipocontrol = request.POST.get('desctipocontrol')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 			mensaje = 'exito'
 
@@ -382,10 +403,19 @@ def tipocontrol_editar(request, id):
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = Tipocontrol.objects.get(pk=id)
+
+			campo = Tipocontrol.objects.get(pk=id)
+			campo.habilitado= False
+			campo.save()
+
+			campos = Tipocontrol()
 			campos.desctipocontrol = request.POST.get('desctipocontrol')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 			
 
@@ -525,17 +555,16 @@ def tiporiesgos_editar(request, id):
 		return render(request,'tipo_riesgos_editar.html', ctx)
 
 @login_required
-def riesgos(request):
-	formulario = RiesgosForm()
-	tiporiesgo = TiposRiesgosEditarForm()
-	listado = Riesgos.objects.all()
+def categoriariesgos(request):
+	formulario = CategoriaRiesgosForm()
+	listado = CategoriaRiesgos.objects.all()
 	ctx = {}
 
 	if request.POST:
 		try:
-			campos = Riesgos()
-			campos.codtiporiesgo =  None if request.POST.get('codtiporiesgo') == '' else Tiposriesgos.objects.get(pk=request.POST.get('codtiporiesgo'))
-			campos.descriesgo = request.POST.get('descriesgo')
+			campos = CategoriaRiesgos()
+			campos.codcategoria = request.POST.get('codcategoria') 
+			campos.descripcion = request.POST.get('descripcion')
 			campos.save()
 			mensaje = 'exito'
 
@@ -555,36 +584,36 @@ def riesgos(request):
 	return render(request,'riesgos_ingreso.html',ctx)
 
 @login_required
-def riesgos_editar(request, id):
+def categoriariesgos_editar(request, id):
 	ctx = {}
-	instancia = Riesgos.objects.get(pk=id)
-	formularios = RiesgosForm(instance= instancia)
-	tiporiesgo = TiposRiesgosEditarForm()
+	instancia = CategoriaRiesgos.objects.get(pk=id)
+	formularios = CategoriaRiesgosForm(instance= instancia)
+	
 
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = Riesgos.objects.get(pk=id)
-			campos.codtiporiesgo =  None if request.POST.get('codtiporiesgo') == '' else Tiposriesgos.objects.get(pk=request.POST.get('codtiporiesgo'))
-			campos.descriesgo = request.POST.get('descriesgo')
+			campos = CategoriaRiesgos.objects.get(pk=id)
+			campos.codcategoria = request.POST.get('codcategoria') 
+			campos.descripcion = request.POST.get('descripcion')
 			campos.save()
 			
 
-			formularios = RiesgosForm(instance=campos)
+			formularios = CategoriaRiesgosForm(instance=campos)
 			mensaje = 'exito'
 		except Exception as e:
 			mensaje = e
 		ctx = {
 				'formulario': formularios,
 				'mensaje': mensaje,
-				'tiporiesgo': tiporiesgo,
+				
 		}
-		return HttpResponseRedirect(reverse('riesgos'))
+		return HttpResponseRedirect(reverse('categoriariesgos'))
 	else:
 		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
 		ctx = {
 				'formulario': formularios,
-				'tiporiesgo': tiporiesgo,
+				
 		}	
 		return render(request,'riesgos_editar.html', ctx)
 
@@ -592,14 +621,19 @@ def riesgos_editar(request, id):
 def naturalezacontrol(request):
 	formulario = NaturalezacontrolForm()
 	ctx = {}
-	listado = Naturalezacontrol.objects.all()
+	
+	listado = Naturalezacontrol.objects.filter(habilitado=True).order_by('-periodo')
 
 	if request.POST:
 		try:
 			campos = Naturalezacontrol()
 			campos.descnaturaleza = request.POST.get('descnaturaleza')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 
 			mensaje = 'exito'
@@ -626,10 +660,19 @@ def naturalezacontrol_editar(request, id):
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = Naturalezacontrol.objects.get(pk=id)
+
+			campo = Naturalezacontrol.objects.get(pk=id)
+			campo.habilitado= False
+			campo.save()
+
+			campos = Naturalezacontrol()
 			campos.descnaturaleza = request.POST.get('descnaturaleza')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 			
 
@@ -717,14 +760,18 @@ def escenarioriesgos_editar(request, id):
 def riesgoinstitucional(request):
 	formulario = RiesgoInstitucionalForm()
 	ctx = {}
-	listado = RiesgoInstitucional.objects.all()
+	listado = RiesgoInstitucional.objects.filter(habilitado=True).order_by('-periodo')
 
 	if request.POST:
 		try:
 			campos = RiesgoInstitucional()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 
 			mensaje = 'exito'
@@ -751,10 +798,19 @@ def riesgoinstitucional_editar(request, id):
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = RiesgoInstitucional.objects.get(pk=id)
+
+			campo = RiesgoInstitucional.objects.get(pk=id)
+			campo.habilitado= False
+			campo.save()
+
+			campos = RiesgoInstitucional()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 			
 
@@ -778,14 +834,19 @@ def riesgoinstitucional_editar(request, id):
 def riesgoreputacional(request):
 	formulario = RiesgoReputacionalForm()
 	ctx = {}
-	listado = RiesgoReputacional.objects.all()
+	listado = RiesgoReputacional.objects.filter(habilitado=True).order_by('-periodo')
+
 
 	if request.POST:
 		try:
 			campos = RiesgoReputacional()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 
 			mensaje = 'exito'
@@ -812,10 +873,19 @@ def riesgoreputacional_editar(request, id):
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = RiesgoReputacional.objects.get(pk=id)
+
+			campo = RiesgoReputacional.objects.get(pk=id)
+			campo.habilitado= False
+			campo.save()
+
+			campos = RiesgoReputacional()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 			
 
@@ -839,14 +909,18 @@ def riesgoreputacional_editar(request, id):
 def frecuenciaactividades(request):
 	formulario = FrecuenciaActividadesRelacionadasRiesgoForm()
 	ctx = {}
-	listado = FrecuenciaActividadesRelacionadasRiesgo.objects.all()
-
+	listado = FrecuenciaActividadesRelacionadasRiesgo.objects.filter(habilitado=True).order_by('-periodo')
+	
 	if request.POST:
 		try:
 			campos = FrecuenciaActividadesRelacionadasRiesgo()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 
 			mensaje = 'exito'
@@ -873,11 +947,20 @@ def frecuenciaactividades_editar(request, id):
 	if request.POST:
 		print 'Paso por aqui'
 		try:
+
 			campos = FrecuenciaActividadesRelacionadasRiesgo.objects.get(pk=id)
-			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.habilitado= False
 			campos.save()
+
+			campo = FrecuenciaActividadesRelacionadasRiesgo()
+			campo.descripcion = request.POST.get('descripcion')
+			campo.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campo.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campo.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campo.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campo.habilitado= True
+			campo.periodo = datetime.now()
+			campo.save()
 			
 
 			formularios = RiesgoReputacionalForm(instance=campos)
@@ -900,14 +983,18 @@ def frecuenciaactividades_editar(request, id):
 def frecuenciacontroles(request):
 	formulario = FrecuenciaControlForm()
 	ctx = {}
-	listado = FrecuenciaControl.objects.all()
-
+	listado = FrecuenciaControl.objects.filter(habilitado=True).order_by('-periodo')
+	
 	if request.POST:
 		try:
 			campos = FrecuenciaControl()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 
 			mensaje = 'exito'
@@ -934,10 +1021,20 @@ def frecuenciacontroles_editar(request, id):
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = FrecuenciaControl.objects.get(pk=id)
+
+
+			campo = FrecuenciaControl.objects.get(pk=id)
+			campo.habilitado= False
+			campo.save()
+
+			campos = FrecuenciaControl()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 			
 
@@ -961,14 +1058,19 @@ def frecuenciacontroles_editar(request, id):
 def areasinvolucradas(request):
 	formulario = AreasInvolucradasForm()
 	ctx = {}
-	listado = AreasInvolucradas.objects.all()
+	#listado = AreasInvolucradas.objects.all()
+	listado = AreasInvolucradas.objects.filter(habilitado=True).order_by('-periodo')
 
 	if request.POST:
 		try:
 			campos = AreasInvolucradas()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 
 			mensaje = 'exito'
@@ -996,10 +1098,18 @@ def areasinvolucradas_editar(request, id):
 		print 'Paso por aqui'
 		try:
 			campos = AreasInvolucradas.objects.get(pk=id)
-			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.habilitado= False
 			campos.save()
+
+			campo = AreasInvolucradas()
+			campo.descripcion = request.POST.get('descripcion')
+			campo.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campo.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campo.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campo.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campo.habilitado= True
+			campo.periodo = datetime.now()
+			campo.save()
 			
 
 			formularios = AreasInvolucradasForm(instance=campos)
@@ -1009,12 +1119,14 @@ def areasinvolucradas_editar(request, id):
 		ctx = {
 				'formulario': formularios,
 				'mensaje': mensaje,
+				'instancia': instancia,
 		}
 		return HttpResponseRedirect(reverse('areasinvolucradas'))
 	else:
 		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
 		ctx = {
 				'formulario': formularios,
+				'instancia': instancia,
 		}	
 		return render(request,'areas_involucradas_editar.html', ctx)
 
@@ -1022,14 +1134,19 @@ def areasinvolucradas_editar(request, id):
 def observacionesauditoria(request):
 	formulario = ObservacionesAuditoriaForm()
 	ctx = {}
-	listado = ObservacionesAuditoria.objects.all()
+	listado = ObservacionesAuditoria.objects.filter(habilitado=True).order_by('-periodo')
+	
 
 	if request.POST:
 		try:
 			campos = ObservacionesAuditoria()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 
 			mensaje = 'exito'
@@ -1056,10 +1173,19 @@ def observacionesauditoria_editar(request, id):
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = ObservacionesAuditoria.objects.get(pk=id)
+
+			campo = ObservacionesAuditoria.objects.get(pk=id)
+			campo.habilitado= False
+			campo.save()
+
+			campos = ObservacionesAuditoria()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 			
 
@@ -1083,14 +1209,19 @@ def observacionesauditoria_editar(request, id):
 def definicionproceso(request):
 	formulario = DefinicionProcesoForm()
 	ctx = {}
-	listado = DefinicionProceso.objects.all()
+	listado = DefinicionProceso.objects.filter(habilitado=True).order_by('-periodo')
+
 
 	if request.POST:
 		try:
 			campos = DefinicionProceso()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 
 			mensaje = 'exito'
@@ -1117,10 +1248,19 @@ def definicionproceso_editar(request, id):
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = DefinicionProceso.objects.get(pk=id)
+			campo = DefinicionProceso.objects.get(pk=id)
+			campo.habilitado= False
+			campo.save()
+
+
+			campos = DefinicionProceso()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 			
 
@@ -1144,14 +1284,18 @@ def definicionproceso_editar(request, id):
 def cumplimientonormativo(request):
 	formulario = CumplimientoNormativoForm()
 	ctx = {}
-	listado = CumplimientoNormativo.objects.all()
+	listado = CumplimientoNormativo.objects.filter(habilitado=True).order_by('-periodo')
 
 	if request.POST:
 		try:
 			campos = CumplimientoNormativo()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 
 			mensaje = 'exito'
@@ -1178,11 +1322,20 @@ def cumplimientonormativo_editar(request, id):
 	if request.POST:
 		print 'Paso por aqui'
 		try:
+
 			campos = CumplimientoNormativo.objects.get(pk=id)
-			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.habilitado= False
 			campos.save()
+
+			campo = CumplimientoNormativo()
+			campo.descripcion = request.POST.get('descripcion')
+			campo.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campo.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campo.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campo.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campo.habilitado= True
+			campo.periodo = datetime.now()
+			campo.save()
 			
 
 			formularios = CumplimientoNormativoForm(instance=campos)
@@ -1205,14 +1358,19 @@ def cumplimientonormativo_editar(request, id):
 def eventosriesgo(request):
 	formulario = EventosRiesgoForm()
 	ctx = {}
-	listado = EventosRiesgo.objects.all()
+	listado = EventosRiesgo.objects.filter(habilitado=True).order_by('-periodo')
+
 
 	if request.POST:
 		try:
 			campos = EventosRiesgo()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 
 			mensaje = 'exito'
@@ -1239,10 +1397,18 @@ def eventosriesgo_editar(request, id):
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = EventosRiesgo.objects.get(pk=id)
+			campo = EventosRiesgo.objects.get(pk=id)
+			campo.habilitado= False
+			campo.save()
+
+			campos = EventosRiesgo()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 			
 
@@ -1266,14 +1432,19 @@ def eventosriesgo_editar(request, id):
 def transaccionesestadosfinancieros(request):
 	formulario = TransaccionesEstadosFinancierosForm()
 	ctx = {}
-	listado = TransaccionesEstadosFinancieros.objects.all()
+	listado = TransaccionesEstadosFinancieros.objects.filter(habilitado=True).order_by('-periodo')
+
 
 	if request.POST:
 		try:
 			campos = TransaccionesEstadosFinancieros()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 
 			mensaje = 'exito'
@@ -1300,10 +1471,19 @@ def transaccionesestadosfinancieros_editar(request, id):
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = TransaccionesEstadosFinancieros.objects.get(pk=id)
+
+			campo = TransaccionesEstadosFinancieros.objects.get(pk=id)
+			campo.habilitado= False
+			campo.save()
+
+			campos = TransaccionesEstadosFinancieros()
 			campos.descripcion = request.POST.get('descripcion')
-			campos.porcentaje = request.POST.get('porcentaje')
-			campos.ponderacion = request.POST.get('ponderacion')
+			campos.porcentaje = None if(request.POST.get('porcentaje'))=="" else request.POST.get('porcentaje')
+			campos.ponderacion = None if(request.POST.get('ponderacion'))=="" else request.POST.get('ponderacion')
+			campos.porcentaje_especial= None if(request.POST.get('porcentaje_especial'))== "" else request.POST.get('porcentaje_especial')
+			campos.ponderacion_especial = None if(request.POST.get('ponderacion_especial'))== "" else request.POST.get('ponderacion_especial')
+			campos.habilitado= True
+			campos.periodo = datetime.now()
 			campos.save()
 			
 
@@ -1407,6 +1587,7 @@ def criterios_control(request):
 			campos.puntaje=request.POST.get('puntaje')
 			campos.puntaje_especial=request.POST.get('puntajeespecial')
 			campos.habilitado=True
+			campos.periodo = datetime.now()
 			#campos.periodo=request.POST.get('periodo')
 			campos.save()
 
@@ -1452,6 +1633,7 @@ def criterios_control_editar(request, id):
 			campos.puntaje=request.POST.get('puntaje')
 			campos.puntaje_especial=request.POST.get('puntaje_especial')
 			campos.habilitado=True
+			campos.periodo = datetime.now()
 			# campos.periodo=request.POST.get('periodo')
 			campos.save()
 			
@@ -1498,6 +1680,7 @@ def criterios_impacto(request):
 			campos.puntaje_especial=request.POST.get('puntajeespecial')
 			#campos.periodo=request.POST.get('periodo')
 			campos.habilitado=True
+			campos.periodo = datetime.now()
 			campos.save()
 
 			mensaje = 'exito'
@@ -1542,6 +1725,7 @@ def criterios_impacto_editar(request, id):
 			campos.puntaje=request.POST.get('puntaje')
 			campos.puntaje_especial=request.POST.get('puntaje_especial')
 			campos.habilitado=True
+			campos.periodo = datetime.now()
 			#campos.periodo=request.POST.get('periodo')
 
 			campos.save()
@@ -1570,14 +1754,26 @@ def criterios_impacto_editar(request, id):
 @login_required
 def criterios_probabilidad(request):
 	ctx={}
-	formulario = CriteriosProbabilidadForm()
-	listado = PuntajesCriteriosProbabilidad.objects.all()
+	#formulario = CriteriosProbabilidadForm()
+	listado = listado = Puntajesxcriterios.objects.filter(criterio__tipo="PROBABILIDAD",habilitado=True).order_by('criterio',)
+	#listado = PuntajesCriteriosProbabilidad.objects.all()
 	if request.POST:
 		try:
 
-			campos = PuntajesCriteriosProbabilidad()
-			campos.criterio = request.POST.get('criterio')
+			# Guardar Criterio
+			campo=Criterios()
+			campo.criterio=request.POST.get('criterio')
+			campo.tipo="PROBABILIDAD"
+			campo.save()
+
+			#Ingresar su Puntaje
+			
+			campos = Puntajesxcriterios()
+			campos.criterio = None if(campo.pk)=="" else Criterios.objects.get(pk=campo.pk) 
 			campos.puntaje=request.POST.get('puntaje')
+			campos.puntaje_especial=request.POST.get('puntajeespecial')
+			#campos.periodo=request.POST.get('periodo')
+			campos.habilitado=True
 			campos.save()
 
 			mensaje = 'exito'
@@ -1585,14 +1781,14 @@ def criterios_probabilidad(request):
 			mensaje = e
 
 		ctx = {
-				'formulario': formulario,
+				#'formulario': formulario,
 				'mensaje': mensaje,
 				'listado': listado,
 		}
 	else:
 		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
 		ctx = {
-				'formulario': formulario,
+				#'formulario': formulario,
 				'listado': listado,
 		}
 				
@@ -1601,19 +1797,33 @@ def criterios_probabilidad(request):
 @login_required
 def criterios_probabilidad_editar(request, id):
 	ctx = {}
-	instancia = PuntajesCriteriosProbabilidad.objects.get(pk=id)
-	formularios = CriteriosProbabilidadForm(instance= instancia)
+	instancia = Puntajesxcriterios.objects.get(pk=id)
+	formularios = PuntajesxcriteriosForm(instance=instancia)#CriteriosProbabilidadForm(instance= instancia)
 
 	if request.POST:
 		print 'Paso por aqui'
 		try:
-			campos = PuntajesCriteriosProbabilidad.objects.get(pk=id)
-			campos.criterio = request.POST.get('criterio')
+			#Guardar Criterio
+			# campo=Criterios.objects.get(pk=request.POST.get('criterio'))
+			# campo.criterio=request.POST.get('criterioname')
+			# campo.save()
+
+			#Inhabilitamos la opcion anterior
+			campo = Puntajesxcriterios.objects.get(pk=id)
+			campo.habilitado=False
+			campo.save()
+
+			campos = Puntajesxcriterios()
+			campos.criterio = None if(request.POST.get('criterio'))=="" else Criterios.objects.get(pk=request.POST.get('criterio')) 
 			campos.puntaje=request.POST.get('puntaje')
+			campos.puntaje_especial=request.POST.get('puntaje_especial')
+			campos.habilitado=True
+			#campos.periodo=request.POST.get('periodo')
+
 			campos.save()
 			
 
-			formularios = CriteriosProbabilidadForm(instance=campos)
+			formularios = PuntajesxcriteriosForm(instance=campos)
 			mensaje = 'exito'
 		except Exception as e:
 			raise
@@ -1621,6 +1831,7 @@ def criterios_probabilidad_editar(request, id):
 		ctx = {
 				'formulario': formularios,
 				'mensaje': mensaje,
+				'instancia': instancia,
 		}
 		return HttpResponseRedirect(reverse('criterios_probabilidad'))
 
@@ -1628,6 +1839,7 @@ def criterios_probabilidad_editar(request, id):
 		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
 		ctx = {
 				'formulario': formularios,
+				'instancia': instancia,
 		}	
 		return render(request,'criterios_probabilidad_editar.html', ctx)
 

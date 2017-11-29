@@ -67,6 +67,10 @@ class Areasinvolucradas(models.Model):
     descripcionareasinvolucradas = models.CharField(db_column='DescripcionAreasInvolucradas', max_length=150)  # Field name made lowercase.
     porcentaje = models.DecimalField(db_column='Porcentaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
     ponderacion = models.DecimalField(db_column='Ponderacion', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -83,6 +87,10 @@ class AreasinvolucradasAudit(models.Model):
     audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
     auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
     updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -243,6 +251,10 @@ class Cumplimientonormativo(models.Model):
     descripcioncumplimientonormativo = models.CharField(db_column='DescripcionCumplimientoNormativo', max_length=150)  # Field name made lowercase.
     porcentaje = models.DecimalField(db_column='Porcentaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
     ponderacion = models.DecimalField(db_column='Ponderacion', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -259,6 +271,10 @@ class CumplimientonormativoAudit(models.Model):
     audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
     auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
     updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -270,6 +286,10 @@ class Definicionproceso(models.Model):
     descripciondefinicionproceso = models.CharField(db_column='DescripcionDefinicionProceso', max_length=150)  # Field name made lowercase.
     porcentaje = models.DecimalField(db_column='Porcentaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
     ponderacion = models.DecimalField(db_column='Ponderacion', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -286,6 +306,10 @@ class DefinicionprocesoAudit(models.Model):
     audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
     auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
     updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -393,6 +417,35 @@ class Escalacontrol(models.Model):
         db_table = 'EscalaControl'
 
 
+class Escalacontrolespecial(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
+    desde = models.DecimalField(db_column='Desde', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    hasta = models.DecimalField(db_column='Hasta', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    clasificacion = models.CharField(db_column='Clasificacion', max_length=100, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'EscalaControlEspecial'
+
+
+class EscalacontrolespecialAudit(models.Model):
+    id = models.IntegerField(db_column='Id', blank=True, null=True)  # Field name made lowercase.
+    escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
+    desde = models.DecimalField(db_column='Desde', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    hasta = models.DecimalField(db_column='Hasta', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    clasificacion = models.CharField(db_column='Clasificacion', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    auditdatastate = models.CharField(db_column='AuditDataState', max_length=10, blank=True, null=True)  # Field name made lowercase.
+    auditdmlaction = models.CharField(db_column='AuditDMLAction', max_length=10, blank=True, null=True)  # Field name made lowercase.
+    audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
+    auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
+    updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+
+    class Meta:
+        managed = False
+        db_table = 'EscalaControlEspecial_Audit'
+
+
 class EscalacontrolAudit(models.Model):
     id = models.IntegerField(db_column='Id', blank=True, null=True)  # Field name made lowercase.
     escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
@@ -422,6 +475,35 @@ class Escalaimpacto(models.Model):
         db_table = 'EscalaImpacto'
 
 
+class Escalaimpactoespecial(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
+    desde = models.DecimalField(db_column='Desde', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    hasta = models.DecimalField(db_column='Hasta', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    clasificacion = models.CharField(db_column='Clasificacion', max_length=100, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'EscalaImpactoEspecial'
+
+
+class EscalaimpactoespecialAudit(models.Model):
+    id = models.IntegerField(db_column='Id', blank=True, null=True)  # Field name made lowercase.
+    escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
+    desde = models.DecimalField(db_column='Desde', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    hasta = models.DecimalField(db_column='Hasta', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    clasificacion = models.CharField(db_column='Clasificacion', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    auditdatastate = models.CharField(db_column='AuditDataState', max_length=10, blank=True, null=True)  # Field name made lowercase.
+    auditdmlaction = models.CharField(db_column='AuditDMLAction', max_length=10, blank=True, null=True)  # Field name made lowercase.
+    audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
+    auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
+    updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+
+    class Meta:
+        managed = False
+        db_table = 'EscalaImpactoEspecial_Audit'
+
+
 class EscalaimpactoAudit(models.Model):
     id = models.IntegerField(db_column='Id', blank=True, null=True)  # Field name made lowercase.
     escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
@@ -449,6 +531,35 @@ class Escalaprobabilidad(models.Model):
     class Meta:
         managed = False
         db_table = 'EscalaProbabilidad'
+
+
+class Escalaprobabilidadespecial(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
+    desde = models.DecimalField(db_column='Desde', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    hasta = models.DecimalField(db_column='Hasta', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    clasificacion = models.CharField(db_column='Clasificacion', max_length=100, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'EscalaProbabilidadEspecial'
+
+
+class EscalaprobabilidadespecialAudit(models.Model):
+    id = models.IntegerField(db_column='Id', blank=True, null=True)  # Field name made lowercase.
+    escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
+    desde = models.DecimalField(db_column='Desde', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    hasta = models.DecimalField(db_column='Hasta', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    clasificacion = models.CharField(db_column='Clasificacion', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    auditdatastate = models.CharField(db_column='AuditDataState', max_length=10, blank=True, null=True)  # Field name made lowercase.
+    auditdmlaction = models.CharField(db_column='AuditDMLAction', max_length=10, blank=True, null=True)  # Field name made lowercase.
+    audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
+    auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
+    updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+
+    class Meta:
+        managed = False
+        db_table = 'EscalaProbabilidadEspecial_Audit'
 
 
 class EscalaprobabilidadAudit(models.Model):
@@ -521,6 +632,10 @@ class Eventosriesgo(models.Model):
     descripcioneventoriesgo = models.CharField(db_column='DescripcionEventoRiesgo', max_length=150)  # Field name made lowercase.
     porcentaje = models.DecimalField(db_column='Porcentaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
     ponderacion = models.DecimalField(db_column='Ponderacion', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -537,6 +652,10 @@ class EventosriesgoAudit(models.Model):
     audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
     auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
     updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -583,6 +702,10 @@ class Frecuenciaactividadesrelacionadasriesgo(models.Model):
     descripcionfrecuencia = models.CharField(db_column='DescripcionFrecuencia', max_length=150)  # Field name made lowercase.
     porcentaje = models.DecimalField(db_column='Porcentaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
     ponderacion = models.DecimalField(db_column='Ponderacion', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -599,6 +722,10 @@ class FrecuenciaactividadesrelacionadasriesgoAudit(models.Model):
     audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
     auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
     updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -610,6 +737,10 @@ class Frecuenciacontrol(models.Model):
     descripcionfrecuenciacontrol = models.CharField(db_column='DescripcionFrecuenciaControl', max_length=150)  # Field name made lowercase.
     porcentaje = models.DecimalField(db_column='Porcentaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
     ponderacion = models.DecimalField(db_column='Ponderacion', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -626,6 +757,10 @@ class FrecuenciacontrolAudit(models.Model):
     audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
     auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
     updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -770,6 +905,10 @@ class Naturalezacontrol(models.Model):
     descnaturaleza = models.CharField(db_column='DescNaturaleza', max_length=150, blank=True, null=True)  # Field name made lowercase.
     porcentaje = models.DecimalField(db_column='Porcentaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
     ponderacion = models.DecimalField(db_column='Ponderacion', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -786,6 +925,10 @@ class NaturalezacontrolAudit(models.Model):
     audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
     auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
     updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -797,6 +940,10 @@ class Observacionesauditoria(models.Model):
     descripcionobservacionesauditoria = models.CharField(db_column='DescripcionObservacionesAuditoria', max_length=150)  # Field name made lowercase.
     porcentaje = models.DecimalField(db_column='Porcentaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
     ponderacion = models.DecimalField(db_column='Ponderacion', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -813,6 +960,10 @@ class ObservacionesauditoriaAudit(models.Model):
     audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
     auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
     updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -1021,6 +1172,10 @@ class Riesgoinstitucional(models.Model):
     descripcionriesgoinstitucional = models.CharField(db_column='DescripcionRiesgoInstitucional', max_length=150)  # Field name made lowercase.
     porcentaje = models.DecimalField(db_column='Porcentaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
     ponderacion = models.DecimalField(db_column='Ponderacion', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -1037,6 +1192,10 @@ class RiesgoinstitucionalAudit(models.Model):
     audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
     auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
     updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -1048,6 +1207,10 @@ class Riesgoreputacional(models.Model):
     descripcionriesgorepudial = models.CharField(db_column='DescripcionRiesgoRepudial', max_length=150)  # Field name made lowercase.
     porcentaje = models.DecimalField(db_column='Porcentaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
     ponderacion = models.DecimalField(db_column='Ponderacion', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -1064,6 +1227,10 @@ class RiesgoreputacionalAudit(models.Model):
     audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
     auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
     updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -1266,6 +1433,10 @@ class Tipocontrol(models.Model):
     desctipocontrol = models.CharField(db_column='DescTipoControl', max_length=150, blank=True, null=True)  # Field name made lowercase.
     porcentaje = models.DecimalField(db_column='Porcentaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
     ponderacion = models.DecimalField(db_column='Ponderacion', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -1282,6 +1453,10 @@ class TipocontrolAudit(models.Model):
     audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
     auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
     updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -1293,6 +1468,10 @@ class Tipoproceso(models.Model):
     desctipoproceso = models.CharField(db_column='DescTipoProceso', max_length=75, blank=True, null=True)  # Field name made lowercase.
     porcentaje = models.DecimalField(db_column='Porcentaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
     ponderacion = models.DecimalField(db_column='Ponderacion', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -1309,6 +1488,10 @@ class TipoprocesoAudit(models.Model):
     audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
     auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
     updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -1392,6 +1575,10 @@ class Transaccionesestadosfinancieros(models.Model):
     descripciontransaccionesestadosfinancieros = models.CharField(db_column='DescripcionTransaccionesEstadosFinancieros', max_length=150)  # Field name made lowercase.
     porcentaje = models.DecimalField(db_column='Porcentaje', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
     ponderacion = models.DecimalField(db_column='Ponderacion', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -1408,6 +1595,10 @@ class TransaccionesestadosfinancierosAudit(models.Model):
     audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
     auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
     updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    porcentajeespecial = models.DecimalField(db_column='PorcentajeEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    ponderacionespecial = models.DecimalField(db_column='PonderacionEspecial', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    periodo = models.DateTimeField(db_column='Periodo', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -1445,6 +1636,35 @@ class Zonariesgo(models.Model):
     class Meta:
         managed = False
         db_table = 'ZonaRiesgo'
+
+
+class Zonariesgoespecial(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
+    desde = models.DecimalField(db_column='Desde', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    hasta = models.DecimalField(db_column='Hasta', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    clasificacion = models.CharField(db_column='Clasificacion', max_length=100, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'ZonaRiesgoEspecial'
+
+
+class ZonariesgoespecialAudit(models.Model):
+    id = models.IntegerField(db_column='Id', blank=True, null=True)  # Field name made lowercase.
+    escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
+    desde = models.DecimalField(db_column='Desde', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    hasta = models.DecimalField(db_column='Hasta', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    clasificacion = models.CharField(db_column='Clasificacion', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    auditdatastate = models.CharField(db_column='AuditDataState', max_length=10, blank=True, null=True)  # Field name made lowercase.
+    auditdmlaction = models.CharField(db_column='AuditDMLAction', max_length=10, blank=True, null=True)  # Field name made lowercase.
+    audituser = models.CharField(db_column='AuditUser', max_length=128, blank=True, null=True)  # Field name made lowercase.
+    auditdatetime = models.DateTimeField(db_column='AuditDateTime', blank=True, null=True)  # Field name made lowercase.
+    updatecolumns = models.TextField(db_column='UpdateColumns', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+
+    class Meta:
+        managed = False
+        db_table = 'ZonaRiesgoEspecial_Audit'
 
 
 class ZonariesgoAudit(models.Model):

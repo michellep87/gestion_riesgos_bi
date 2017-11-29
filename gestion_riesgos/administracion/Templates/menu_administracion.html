@@ -3,7 +3,7 @@
 {% load bootstrap %}
 
 {% block contenido %}
-	
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 	<style type="text/css" media="screen">
    
    .largo{
@@ -14,6 +14,12 @@
    .sub-style2 {
                         font-family: Tahoma, Verdana, Segoe, sans-serif;
                         color: #0000cc;
+                        font-size: 14;
+                        font-weight: bold;
+                      }
+    .sub-style3 {
+                        font-family: Tahoma, Verdana, Segoe, sans-serif;
+                        color: #9999ff;
                         font-size: 14;
                         font-weight: bold;
                       }
@@ -29,55 +35,130 @@
 		<p >
 		<h3 class="text-center sub-style2">Menu de Administracion de Catalogos</h3>
 	</p>
-	<p><br></p>
+	
 	</div>
-	<div class="card-block text-center">
-		
-		<button class="btn btn-success btn-lg largo" type="button" id="btnTipoarea">Tipos de Areas</button>
-		
-		<button class="btn btn-success btn-lg largo" type="button" id="btnArea">Areas</button>
-		
-		<button class="btn btn-success btn-lg largo" type="button" id="btnPuesto">Puestos</button>
-		
-		<button class="btn btn-success btn-lg largo" type="button" id="btnTipoproceso">Tipos de Procesos</button>
-        <br>
-        <br>
-		
-		<button class="btn btn-success btn-lg largo" type="button" id="btnTipoactividad">Tipos de Actividades</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnTipocontrol">Tipos de Controles</button>
+    <p >
+        
+    </p>
+
+    <div class="container">
+      <h5 class="text-center sub-style3">General</h5>
+      <br>
+      <div class="panel panel-default">
+        <div class="panel-body">
+            <button class="btn btn-success btn-lg largo" type="button" id="btnTipoarea">Tipos de Areas</button>
+        
+        <button class="btn btn-success btn-lg largo" type="button" id="btnArea">Areas</button>
+        
+        <button class="btn btn-success btn-lg largo" type="button" id="btnPuesto">Puestos</button>
+
         <button class="btn btn-success btn-lg largo" type="button" id="btnTiporaci">Roles de Matriz RACI</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnTiporiesgo">Tipos de Riesgos</button>
-		<br>
-		<br>
-		
-		<button class="btn btn-success btn-lg largo" type="button" id="btnriesgos">Riesgos</button>
-		<button class="btn btn-success btn-lg largo" type="button" id="btnNaturalezacontrol">Naturaleza de Controles</button>
+        
+        
+        <br>
+        <br>
+        
+        <button class="btn btn-success btn-lg largo" type="button" id="btnTipoactividad">Tipos de Actividades</button>
+
+        <button class="btn btn-success btn-lg largo" type="button" id="btnriesgos">Categoria de Riesgos</button>
+
         <button class="btn btn-success btn-lg largo" type="button" id="btnEscenariosriesgos">Escenarios de Riesgos</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnRiesgoInstitucional">Riesgo Institucional</button>
-        <br><br>
-		
-        <button class="btn btn-success btn-lg largo" type="button" id="btnRiesgoReputacional">Riesgo Reputacional</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnFrecuenciaActividadesRiesgo">Frecuencia de Actividades de Riesgos</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnFrecuenciaControles">Frecuencia de Controles</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnAreasInvolucradas">Areas Involucradas</button>
-        <br><br>
-       
-        <button class="btn btn-success btn-lg largo" type="button" id="btnObservacionesAuditoria">Observaciones de Auditoria</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnDefinicionProcesos">Definicion de Procesos</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnCumplimientoNormativo">Cumplimiento Normativo</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnEventosRiesgo">Eventos de Riesgo</button>
+
+        <button class="btn btn-success btn-lg largo" type="button" id="btnTiporiesgo">Tipos de Riesgos</button>
         <br><br>
         <button class="btn btn-success btn-lg largo" type="button" id="btnUnidadesMedida">Unidades de Medida</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnTransaccionesEstadosFinancieros">Transacciones de Estados Financieros</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnCriteriosProbabilidad">Criterios Probabilidad</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnCriteriosImpacto">Criterios Impacto</button>
-        <br><br>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnCriteriosControl">Criterios de Control</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaControl">Escala de Control</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaImpacto">Escala de Impacto</button>
-        <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaProbabilidad">Escala de Probabilidad</button>
-        <br><br>
         <button class="btn btn-success btn-lg largo" type="button" id="btnZonasRiesgo">Zonas de Riesgo</button>
+        <br>
+        <br>
+        <br>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h5 class="text-center sub-style3">Probabilidad</h5>
+      <br>
+      <div class="panel panel-default">
+        <div class="panel-body">
+        <button class="btn btn-success btn-lg largo" type="button" id="btnCriteriosProbabilidad">Criterios Probabilidad</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnFrecuenciaActividadesRiesgo">Frecuencia de Actividades de Riesgos</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnAreasInvolucradas">Areas Involucradas</button>
+         <button class="btn btn-success btn-lg largo" type="button" id="btnDefinicionProcesos">Definicion de Procesos</button>
+         <br><br>
+          <button class="btn btn-success btn-lg largo" type="button" id="btnEventosRiesgo">Eventos de Riesgo</button>
+          <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaProbabilidad">Escala de Probabilidad</button>
+        <br><br><br>
+        </div>
+        </div>
+        </div>
+        
+        <div class="container">
+      <h5 class="text-center sub-style3">Impacto</h5>
+      <br>
+      <div class="panel panel-default">
+        <div class="panel-body">
+            <button class="btn btn-success btn-lg largo" type="button" id="btnCriteriosImpacto">Criterios Impacto</button>
+            <button class="btn btn-success btn-lg largo" type="button" id="btnRiesgoReputacional">Riesgo Reputacional</button>
+            <button class="btn btn-success btn-lg largo" type="button" id="btnRiesgoInstitucional">Riesgo Institucional</button>
+            <button class="btn btn-success btn-lg largo" type="button" id="btnTipoproceso">Tipos de Procesos</button>
+            <br><br>
+             <button class="btn btn-success btn-lg largo" type="button" id="btnTransaccionesEstadosFinancieros">Transacciones de Estados Financieros</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnCumplimientoNormativo">Cumplimiento Normativo</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaImpacto">Escala de Impacto</button>
+        <br><br><br>
+        </div>
+       </div>
+    </div>
+
+    <div class="container">
+      <h5 class="text-center sub-style3">Controles</h5>
+      <br>
+      <div class="panel panel-default">
+        <div class="panel-body">
+        <button class="btn btn-success btn-lg largo" type="button" id="btnCriteriosControl">Criterios de Control</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnTipocontrol">Tipos de Controles</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnNaturalezacontrol">Naturaleza de Controles</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnFrecuenciaControles">Frecuencia de Controles</button>
+        <br><br>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnObservacionesAuditoria">Observaciones de Auditoria</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaControl">Escala de Control</button>
+        </div>
+      </div>
+    </div>    
+
+
+
+
+
+	<div class="card-block text-center">
+	
+        
+		
+      
+       
+        
+        
+        
+        <br><br>
+        <p >
+        
+    </p>
+       
+        
+       
+       
+       
+        
+       
+        
+       
+        <br><br>
+        
+        
+        
+        <br><br>
+        
         
 		
 	</div>
@@ -115,7 +196,7 @@
     		window.location.href = "{% url 'tiporiesgos' %}";
     	})
     	$('#btnriesgos').click(function () {
-    		window.location.href = "{% url 'riesgos' %}";
+    		window.location.href = "{% url 'categoriariesgos' %}";
     	})
     	$('#btnNaturalezacontrol').click(function () {
     		window.location.href = "{% url 'naturalezacontrol' %}";

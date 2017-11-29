@@ -438,6 +438,15 @@ class ZonariesgoForm(ModelForm):
 		model = Zonariesgo
 		fields= '__all__'
 
+class CategoriaRiesgosForm(ModelForm):
+	class Meta:
+		model = CategoriaRiesgos
+		fields= '__all__'
+
+		labels = {
+					'codcategoria': _('Codigo de Categoria')
+		}
+
 
 		
 

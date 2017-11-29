@@ -35,6 +35,9 @@
 				<thead>
 					<tr>
 						<th>Descripcion</th>
+						<th>Porcentaje</th>
+						<th>Porcentaje Especial</th>
+						<th>Periodo</th>
 						
 					</tr>
 				</thead>
@@ -43,6 +46,9 @@
 				{% for l in listado %}
 				<tr>
 					<td>{{l.descnaturaleza}}</td>
+					<td>{{l.porcentaje}}</td>
+					<td>{{l.porcentaje_especial}}</td>
+					<td>{{l.periodo|date:"Y-m-d"}}</td>
 					
 					<td>
 		 					<a href="{% url 'naturalezacontrol_editar' l.codnaturaleza %}"><span>Editar</span></a>
@@ -89,8 +95,19 @@
 						</div>
 						</div>
 						<div class="row">
+						
+					<div class="col-sm-12">
+						{{formulario.porcentaje_especial|bootstrap_horizontal:'col-xs-4'}}
+					</div>
+					</div>
+						<div class="row">
 						<div class="col-sm-12">
 						{{formulario.ponderacion|bootstrap_horizontal:'col-xs-4'}}
+					</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+						{{formulario.ponderacion_especial|bootstrap_horizontal:'col-xs-4'}}
 					</div>
 					</div>
 					<button type="submit" class="btn btn-default">Agregar</button>
