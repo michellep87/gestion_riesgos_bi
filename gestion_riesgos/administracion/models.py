@@ -464,8 +464,61 @@ class Puntajesxcriterios(models.Model):
     def __unicode__(self):
         return u'%s' % (self.criterio)
 
+class EscalaControlEspecial(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
+    desde = models.DecimalField(db_column='Desde', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    hasta = models.DecimalField(db_column='Hasta', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    clasificacion = models.CharField(db_column='Clasificacion', max_length=100, blank=True, null=True)  # Field name made lowercase.
 
+    class Meta:
+        managed = False
+        db_table = 'EscalaControlEspecial'
 
+    def __unicode__(self):
+        return u'%s' % (self.clasificacion)
+
+class EscalaImpactoEspecial(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
+    desde = models.DecimalField(db_column='Desde', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    hasta = models.DecimalField(db_column='Hasta', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    clasificacion = models.CharField(db_column='Clasificacion', max_length=100, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'EscalaImpactoEspecial' 
+
+    def __unicode__(self):
+        return u'%s' % (self.clasificacion)  
+
+class EscalaProbabilidadEspecial(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
+    desde = models.DecimalField(db_column='Desde', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    hasta = models.DecimalField(db_column='Hasta', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    clasificacion = models.CharField(db_column='Clasificacion', max_length=100, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'EscalaProbabilidadEspecial'
+
+    def __unicode__(self):
+        return u'%s' % (self.clasificacion)
+
+class ZonaRiesgoEspecial(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
+    desde = models.DecimalField(db_column='Desde', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    hasta = models.DecimalField(db_column='Hasta', max_digits=5, decimal_places=1, blank=True, null=True)  # Field name made lowercase.
+    clasificacion = models.CharField(db_column='Clasificacion', max_length=100, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'ZonaRiesgoEspecial'
+
+    def __unicode__(self):
+        return u'%s' % (self.clasificacion)  
 
 
 

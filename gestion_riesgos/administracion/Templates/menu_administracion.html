@@ -68,6 +68,7 @@
         <br><br>
         <button class="btn btn-success btn-lg largo" type="button" id="btnUnidadesMedida">Unidades de Medida</button>
         <button class="btn btn-success btn-lg largo" type="button" id="btnZonasRiesgo">Zonas de Riesgo</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnZonasRiesgoEspecial">Zonas de Riesgo Especial</button>
         <br>
         <br>
         <br>
@@ -88,6 +89,7 @@
          <br><br>
           <button class="btn btn-success btn-lg largo" type="button" id="btnEventosRiesgo">Eventos de Riesgo</button>
           <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaProbabilidad">Escala de Probabilidad</button>
+           <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaProbabilidadEspecial">Escala de Probabilidad Especial</button>
         <br><br><br>
         </div>
         </div>
@@ -106,6 +108,7 @@
              <button class="btn btn-success btn-lg largo" type="button" id="btnTransaccionesEstadosFinancieros">Transacciones de Estados Financieros</button>
         <button class="btn btn-success btn-lg largo" type="button" id="btnCumplimientoNormativo">Cumplimiento Normativo</button>
         <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaImpacto">Escala de Impacto</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaImpactoEspecial">Escala de Impacto Especial</button>
         <br><br><br>
         </div>
        </div>
@@ -123,6 +126,7 @@
         <br><br>
         <button class="btn btn-success btn-lg largo" type="button" id="btnObservacionesAuditoria">Observaciones de Auditoria</button>
         <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaControl">Escala de Control</button>
+        <button class="btn btn-success btn-lg largo" type="button" id="btnEscalaControlEspecial">Escala de Control Especial</button>
         </div>
       </div>
     </div>    
@@ -262,15 +266,32 @@
             window.location.href = "{% url 'escala_control' %}"
         });  
 
+           $('#btnEscalaControlEspecial').click(function(event) {
+            window.location.href = "{% url 'escala_control_especial' %}"
+        });  
+
             $('#btnEscalaImpacto').click(function(event) {
             window.location.href = "{% url 'escala_impacto' %}"
+        }); 
+
+            $('#btnEscalaImpactoEspecial').click(function(event) {
+            window.location.href = "{% url 'escala_impacto_especial' %}"
         }); 
 
              $('#btnEscalaProbabilidad').click(function(event) {
             window.location.href = "{% url 'escala_probabilidad' %}"
         }); 
+
+             $('#btnEscalaProbabilidadEspecial').click(function(event) {
+            window.location.href = "{% url 'escala_probabilidad_especial' %}"
+        }); 
+
             $('#btnZonasRiesgo').click(function(event) {
             window.location.href = "{% url 'zonas_ingreso' %}"
+        });  
+
+            $('#btnZonasRiesgoEspecial').click(function(event) {
+            window.location.href = "{% url 'zonas_especiales' %}"
         });  
             
             

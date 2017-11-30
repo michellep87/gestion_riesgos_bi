@@ -1,0 +1,63 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block contenido %}
+<div class="card">
+	<div class="card-header text-center">
+		<p class="page-header"></p>
+		<p class="text-center sub-style2">EDITAR ZONAS DE RIESGO ESPECIALES</p>
+	</div>
+	<div class="card-block">
+		<div class="box box-primary  with-border">
+	<div class="box-body">
+	{% if mensaje %}
+		<div id="mensaje">
+			{% if mensaje == 'exito' %}
+				<h4><span class="badge badge-success">El registro se Actualizo correctamente</span></h4>
+			{% elif mensaje == 'error' %}
+				<h4><span class="badge badge-danger">Error! Contactese con el administrador</span></h4>
+			
+			{% endif %}
+		</div>
+		
+	{% endif %}
+	<div>
+			<a href="{% url 'zonas_especiales' %}"><span>Regresar</span></a>
+	</div>
+	<form action="" method="POST" accept-charset="utf-8" class="form-horizontal">
+		{% csrf_token %}
+				
+		<div class="col-sm-5">
+			{{formulario.escala|bootstrap_horizontal:'col-xs-4'}}
+			
+		</div>
+		<div class="col-sm-5">
+			{{formulario.clasificacion|bootstrap_horizontal:'col-xs-4'}}
+			
+		</div>
+		<div class="col-sm-5"s>
+			{{formulario.desde|bootstrap_horizontal:'col-xs-4'}}
+		</div>
+		<div class="col-sm-5"s>
+			{{formulario.hasta|bootstrap_horizontal:'col-xs-4'}}
+		</div>
+		<button type="submit" class="btn btn-default">Guardar</button>
+	</form>
+	</div>
+	</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function(){
+    $("#btnagrega").click(function(){
+        $("#modalagrega").modal();
+    });
+
+    $("#btnedita").click(function(){
+    	$("#modaledita").modal();	
+    });
+});
+</script>
+{% endblock %}

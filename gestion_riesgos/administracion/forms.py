@@ -421,10 +421,22 @@ class EscalaControldForm(ModelForm):
 		model = EscalaControl
 		fields = '__all__'
 
+class EscalaControlEspecialForm(ModelForm):
+	
+	class Meta:
+		model = EscalaControlEspecial
+		fields = '__all__'
+
 class EscalaImpactoForm(ModelForm):
 	
 	class Meta:
 		model = Escalaimpacto
+		fields = '__all__'
+
+class EscalaImpactoEspecialForm(ModelForm):
+	
+	class Meta:
+		model = EscalaImpactoEspecial
 		fields = '__all__'
 
 class EscalaProbabilidadForm(ModelForm):
@@ -433,9 +445,20 @@ class EscalaProbabilidadForm(ModelForm):
 		model = Escalaprobabilidad
 		fields = '__all__'
 
+class EscalaProbabilidadEspecialForm(ModelForm):
+	
+	class Meta:
+		model = EscalaProbabilidadEspecial
+		fields = '__all__'
+
 class ZonariesgoForm(ModelForm):
 	class Meta:
 		model = Zonariesgo
+		fields= '__all__'
+
+class ZonaRiesgoEspecialForm(ModelForm):
+	class Meta:
+		model = ZonaRiesgoEspecial
 		fields= '__all__'
 
 class CategoriaRiesgosForm(ModelForm):

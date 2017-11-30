@@ -1772,6 +1772,7 @@ def criterios_probabilidad(request):
 			campos.criterio = None if(campo.pk)=="" else Criterios.objects.get(pk=campo.pk) 
 			campos.puntaje=request.POST.get('puntaje')
 			campos.puntaje_especial=request.POST.get('puntajeespecial')
+			campos.periodo = datetime.now()
 			#campos.periodo=request.POST.get('periodo')
 			campos.habilitado=True
 			campos.save()
@@ -1818,6 +1819,7 @@ def criterios_probabilidad_editar(request, id):
 			campos.puntaje=request.POST.get('puntaje')
 			campos.puntaje_especial=request.POST.get('puntaje_especial')
 			campos.habilitado=True
+			campos.periodo = datetime.now()
 			#campos.periodo=request.POST.get('periodo')
 
 			campos.save()
@@ -2119,6 +2121,282 @@ def escala_probabilidad_editar(request, id):
 		}	
 		return render(request,'escala_probabilidad_editar.html', ctx)
 
+
+@login_required
+def escala_control_especial(request):
+	ctx={}
+	formulario = EscalaControlEspecialForm()
+	listado = EscalaControlEspecial.objects.all()
+	if request.POST:
+		try:
+
+			campos = EscalaControlEspecial()
+			campos.escala = None if(request.POST.get('escala'))=="" else request.POST.get('escala')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				'listado': listado,
+		}
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+				
+	return render(request,'escala_control_especial.html', ctx)
+
+@login_required
+def escala_control_especial_editar(request, id):
+	ctx = {}
+	instancia = EscalaControlEspecial.objects.get(pk=id)
+	formularios = EscalaControlEspecialForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = EscalaControlEspecial.objects.get(pk=id)
+			campos.escala = None if(request.POST.get('escala'))=='' else request.POST.get('escala')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.save()
+			
+
+			formularios = EscalaControlEspecialForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			raise
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('escala_control_especial'))
+
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'escala_control_editar.html', ctx)
+
+@login_required
+def escala_impacto_especial(request):
+	ctx={}
+	formulario = EscalaImpactoEspecialForm()
+	listado = EscalaImpactoEspecial.objects.all()
+	if request.POST:
+		try:
+
+			campos = EscalaImpactoEspecial()
+			campos.escala = None if(request.POST.get('escala'))=="" else request.POST.get('escala')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				'listado': listado,
+		}
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+				
+	return render(request,'escala_impacto_especial.html', ctx)
+
+@login_required
+def escala_impacto_especial_editar(request, id):
+	ctx = {}
+	instancia = EscalaImpactoEspecial.objects.get(pk=id)
+	formularios = EscalaImpactoEspecialForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = EscalaImpactoEspecial.objects.get(pk=id)
+			campos.escala = None if(request.POST.get('escala'))=='' else request.POST.get('escala')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.save()
+			
+
+			formularios = EscalaImpactoForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			raise
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('escala_impacto_especial'))
+
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'escala_impacto_especial_editar.html', ctx)
+
+
+@login_required
+def escala_probabilidad_especial(request):
+	ctx={}
+	formulario = EscalaProbabilidadEspecialForm()
+	listado = EscalaProbabilidadEspecial.objects.all()
+	if request.POST:
+		try:
+
+			campos = EscalaProbabilidadEspecial()
+			campos.escala = None if(request.POST.get('escala'))=="" else request.POST.get('escala')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				'listado': listado,
+		}
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+				
+	return render(request,'escala_probabilidad_especial.html', ctx)
+
+@login_required
+def escala_probabilidad_especial_editar(request, id):
+	ctx = {}
+	instancia = EscalaProbabilidadEspecial.objects.get(pk=id)
+	formularios = EscalaProbabilidadEspecialForm(instance= instancia)
+
+	if request.POST:
+		print 'Paso por aqui'
+		try:
+			campos = EscalaProbabilidadEspecial.objects.get(pk=id)
+			campos.escala = None if(request.POST.get('escala'))=='' else request.POST.get('escala')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.save()
+			
+
+			formularios = EscalaProbabilidadEspecialForm(instance=campos)
+			mensaje = 'exito'
+		except Exception as e:
+			raise
+			mensaje = e
+		ctx = {
+				'formulario': formularios,
+				'mensaje': mensaje,
+		}
+		return HttpResponseRedirect(reverse('escala_probabilidad_especial'))
+
+	else:
+		#formularios.fields['descarea'] = forms.ModelChoiceField(queryset=Areas.objects.all(), label="Area")
+		ctx = {
+				'formulario': formularios,
+		}	
+		return render(request,'escala_probabilidad_especial_editar.html', ctx)
+
+
+@login_required
+def zonas_especiales(request):
+	ctx={}
+	formulario = ZonaRiesgoEspecialForm()
+	listado = ZonaRiesgoEspecial.objects.all()
+	if request.POST:
+		try:
+
+			campos = ZonaRiesgoEspecial()
+			campos.escala = request.POST.get('escala')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.save()
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				'listado': listado,
+		}
+
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				'listado': listado,
+		}
+				
+	return render(request,'zona_especial.html', ctx)
+
+@login_required
+def zonas_especiales_editar(request,id):
+	ctx={}
+	instancia=ZonaRiesgoEspecial.objects.get(pk=id)
+	formulario = ZonaRiesgoEspecialForm(instance=instancia)
+	
+	if request.POST:
+		try:
+
+			campos = ZonaRiesgoEspecial.objects.get(pk=id)
+			campos.escala = request.POST.get('escala')
+			campos.clasificacion=request.POST.get('clasificacion')
+			campos.desde=request.POST.get('desde')
+			campos.hasta=request.POST.get('hasta')
+			campos.save()
+			formulario = ZonaRiesgoEspecialForm(instance=campos)
+
+			mensaje = 'exito'
+		except Exception as e:
+			mensaje = e
+
+		ctx = {
+				'formulario': formulario,
+				'mensaje': mensaje,
+				
+		}
+		return HttpResponseRedirect(reverse('zonas_especiales'))
+	else:
+		#formulario.fields['desctipoarea'] = forms.ModelChoiceField(queryset=Tipoareas.objects.all(), label="Tipo de Area")
+		ctx = {
+				'formulario': formulario,
+				
+		}
+				
+	return render(request,'zona_especial_editar.html', ctx)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 import json
 def ajax(request):
