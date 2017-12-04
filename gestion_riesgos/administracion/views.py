@@ -242,6 +242,17 @@ def tipoproceso(request):
 			campos.habilitado= True
 			campos.periodo = datetime.now()
 			campos.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("TipoProceso",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
+			
 			mensaje = 'exito'
 
 		except Exception as e:
@@ -283,6 +294,15 @@ def tipoproceso_editar(request, id):
 			campos.periodo = datetime.now()
 			campos.save()
 			
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("TipoProceso",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			formularios = TipoProcesoForm(instance=campos)
 			mensaje = 'exito'
@@ -377,6 +397,17 @@ def tipocontrol(request):
 			campos.habilitado= True
 			campos.periodo = datetime.now()
 			campos.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("TipoControl",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
+			
 			mensaje = 'exito'
 
 		except Exception as e:
@@ -418,6 +449,15 @@ def tipocontrol_editar(request, id):
 			campos.periodo = datetime.now()
 			campos.save()
 			
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("TipoControl",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			formularios = TipoControlForm(instance=campos)
 			mensaje = 'exito'
@@ -636,6 +676,16 @@ def naturalezacontrol(request):
 			campos.periodo = datetime.now()
 			campos.save()
 
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("NaturalezaControl",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
+
 			mensaje = 'exito'
 		except Exception as e:
 			mensaje = e
@@ -675,6 +725,15 @@ def naturalezacontrol_editar(request, id):
 			campos.periodo = datetime.now()
 			campos.save()
 			
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("NaturalezaControl",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			formularios = NaturalezacontrolForm(instance=campos)
 			mensaje = 'exito'
@@ -774,6 +833,16 @@ def riesgoinstitucional(request):
 			campos.periodo = datetime.now()
 			campos.save()
 
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("RiesgoInstitucional",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
+
 			mensaje = 'exito'
 		except Exception as e:
 			mensaje = e
@@ -813,6 +882,15 @@ def riesgoinstitucional_editar(request, id):
 			campos.periodo = datetime.now()
 			campos.save()
 			
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("RiesgoInstitucional",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			formularios = RiesgoInstitucionalForm(instance=campos)
 			mensaje = 'exito'
@@ -848,6 +926,16 @@ def riesgoreputacional(request):
 			campos.habilitado= True
 			campos.periodo = datetime.now()
 			campos.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("RiesgoReputacional",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			mensaje = 'exito'
 		except Exception as e:
@@ -888,6 +976,15 @@ def riesgoreputacional_editar(request, id):
 			campos.periodo = datetime.now()
 			campos.save()
 			
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("RiesgoReputacional",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			formularios = RiesgoReputacionalForm(instance=campos)
 			mensaje = 'exito'
@@ -922,6 +1019,16 @@ def frecuenciaactividades(request):
 			campos.habilitado= True
 			campos.periodo = datetime.now()
 			campos.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("FrecuenciaActividadesRelacionadasRiesgo",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			mensaje = 'exito'
 		except Exception as e:
@@ -962,6 +1069,15 @@ def frecuenciaactividades_editar(request, id):
 			campo.periodo = datetime.now()
 			campo.save()
 			
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campo.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("FrecuenciaActividadesRelacionadasRiesgo",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			formularios = RiesgoReputacionalForm(instance=campos)
 			mensaje = 'exito'
@@ -996,6 +1112,16 @@ def frecuenciacontroles(request):
 			campos.habilitado= True
 			campos.periodo = datetime.now()
 			campos.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("FrecuenciaControl",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			mensaje = 'exito'
 		except Exception as e:
@@ -1037,6 +1163,15 @@ def frecuenciacontroles_editar(request, id):
 			campos.periodo = datetime.now()
 			campos.save()
 			
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("FrecuenciaControl",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			formularios = FrecuenciaControlForm(instance=campos)
 			mensaje = 'exito'
@@ -1072,6 +1207,16 @@ def areasinvolucradas(request):
 			campos.habilitado= True
 			campos.periodo = datetime.now()
 			campos.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("AreasInvolucradas",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			mensaje = 'exito'
 		except Exception as e:
@@ -1110,6 +1255,16 @@ def areasinvolucradas_editar(request, id):
 			campo.habilitado= True
 			campo.periodo = datetime.now()
 			campo.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campo.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("AreasInvolucradas",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 			
 
 			formularios = AreasInvolucradasForm(instance=campos)
@@ -1148,6 +1303,16 @@ def observacionesauditoria(request):
 			campos.habilitado= True
 			campos.periodo = datetime.now()
 			campos.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("ObservacionesAuditoria",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			mensaje = 'exito'
 		except Exception as e:
@@ -1188,6 +1353,15 @@ def observacionesauditoria_editar(request, id):
 			campos.periodo = datetime.now()
 			campos.save()
 			
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("ObservacionesAuditoria",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			formularios = ObservacionesAuditoriaForm(instance=campos)
 			mensaje = 'exito'
@@ -1223,6 +1397,16 @@ def definicionproceso(request):
 			campos.habilitado= True
 			campos.periodo = datetime.now()
 			campos.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("DefinicionProceso",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			mensaje = 'exito'
 		except Exception as e:
@@ -1263,6 +1447,15 @@ def definicionproceso_editar(request, id):
 			campos.periodo = datetime.now()
 			campos.save()
 			
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("DefinicionProceso",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			formularios = DefinicionProcesoForm(instance=campos)
 			mensaje = 'exito'
@@ -1297,6 +1490,16 @@ def cumplimientonormativo(request):
 			campos.habilitado= True
 			campos.periodo = datetime.now()
 			campos.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("CumplimientoNormativo",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			mensaje = 'exito'
 		except Exception as e:
@@ -1336,6 +1539,16 @@ def cumplimientonormativo_editar(request, id):
 			campo.habilitado= True
 			campo.periodo = datetime.now()
 			campo.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campo.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("CumplimientoNormativo",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 			
 
 			formularios = CumplimientoNormativoForm(instance=campos)
@@ -1372,6 +1585,16 @@ def eventosriesgo(request):
 			campos.habilitado= True
 			campos.periodo = datetime.now()
 			campos.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("EventosRiesgo",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			mensaje = 'exito'
 		except Exception as e:
@@ -1411,6 +1634,15 @@ def eventosriesgo_editar(request, id):
 			campos.periodo = datetime.now()
 			campos.save()
 			
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("EventosRiesgo",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			formularios = EventosRiesgoForm(instance=campos)
 			mensaje = 'exito'
@@ -1446,6 +1678,17 @@ def transaccionesestadosfinancieros(request):
 			campos.habilitado= True
 			campos.periodo = datetime.now()
 			campos.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("TransaccionesEstadosFinancieros",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
+
 
 			mensaje = 'exito'
 		except Exception as e:
@@ -1486,6 +1729,15 @@ def transaccionesestadosfinancieros_editar(request, id):
 			campos.periodo = datetime.now()
 			campos.save()
 			
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					llave=campos.pk
+					query="exec [dbo].[spActualizarPonderacionesXTabla] %s,%s"%("TransaccionesEstadosFinancieros",llave)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			formularios = TransaccionesEstadosFinancierosForm(instance=campos)
 			mensaje = 'exito'
@@ -1591,6 +1843,16 @@ def criterios_control(request):
 			#campos.periodo=request.POST.get('periodo')
 			campos.save()
 
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					criterio=campo.pk
+					query="exec [dbo].[spActualizarPonderacionesXCriterios] %s"%(criterio)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
+
 			mensaje = 'exito'
 		except Exception as e:
 			mensaje = e
@@ -1637,6 +1899,15 @@ def criterios_control_editar(request, id):
 			# campos.periodo=request.POST.get('periodo')
 			campos.save()
 			
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					criterio=request.POST.get('criterio')
+					query="exec [dbo].[spActualizarPonderacionesXCriterios] %s"%(criterio)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			formularios = PuntajesxcriteriosForm(instance=campos)
 			mensaje = 'exito'
@@ -1682,6 +1953,16 @@ def criterios_impacto(request):
 			campos.habilitado=True
 			campos.periodo = datetime.now()
 			campos.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					criterio=campo.pk
+					query="exec [dbo].[spActualizarPonderacionesXCriterios] %s"%(criterio)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 
 			mensaje = 'exito'
 		except Exception as e:
@@ -1729,6 +2010,17 @@ def criterios_impacto_editar(request, id):
 			#campos.periodo=request.POST.get('periodo')
 
 			campos.save()
+
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					criterio=request.POST.get('criterio')
+					print criterio
+					query="exec [dbo].[spActualizarPonderacionesXCriterios] %s"%(criterio)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 			
 
 			formularios = PuntajesxcriteriosForm(instance=campos)
@@ -1777,6 +2069,17 @@ def criterios_probabilidad(request):
 			campos.habilitado=True
 			campos.save()
 
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					criterio=campo.pk
+					print criterio
+					query="exec [dbo].[spActualizarPonderacionesXCriterios] %s"%(criterio)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
+
 			mensaje = 'exito'
 		except Exception as e:
 			mensaje = e
@@ -1823,6 +2126,17 @@ def criterios_probabilidad_editar(request, id):
 			#campos.periodo=request.POST.get('periodo')
 
 			campos.save()
+			
+			from django.db import connection
+			with connection.cursor() as cursor:
+				try:
+					criterio=request.POST.get('criterio')
+					print criterio
+					query="exec [dbo].[spActualizarPonderacionesXCriterios] %s"%(criterio)
+					cursor.execute(query)
+					cursor.close()
+				except Exception as e:
+					raise e
 			
 
 			formularios = PuntajesxcriteriosForm(instance=campos)

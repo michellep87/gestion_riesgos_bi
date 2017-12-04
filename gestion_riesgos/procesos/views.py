@@ -2692,10 +2692,32 @@ def ajaxEscenarios(request):
 
 def ajaxProbabilidad(request):
 	if request.is_ajax():
-		frecuencia_act= list(FrecuenciaActividadesRelacionadasRiesgo.objects.values('pk','descripcion'))
-		def_proceso=list(DefinicionProceso.objects.values('pk','descripcion'))
-		areas_involucradas=list(AreasInvolucradas.objects.values('pk','descripcion'))
-		eventos_riesgo=list(EventosRiesgo.objects.values('pk','descripcion'))
+		frecuencia_act= list(FrecuenciaActividadesRelacionadasRiesgo.objects.values('pk','descripcion').filter(habilitado=True))
+		def_proceso=list(DefinicionProceso.objects.values('pk','descripcion').filter(habilitado=True))
+		areas_involucradas=list(AreasInvolucradas.objects.values('pk','descripcion').filter(habilitado=True))
+		eventos_riesgo=list(EventosRiesgo.objects.values('pk','descripcion').filter(habilitado=True))
+
+		data ={
+			'frecuencia_act': frecuencia_act,
+			'def_proceso': def_proceso,
+			'areas_involucradas': areas_involucradas,
+			'eventos_riesgo': eventos_riesgo,
+		}
+	return HttpResponse(json.dumps(data, default=decimal_default), content_type='application/json')
+
+def ajaxProbabilidadEdicion(request):
+	if request.is_ajax():
+		escenario=request.GET['cod_escenario']
+		s=Subprocesosxescenarios.objects.get(pk=escenario)
+		periodo=s.fecha_implementacion.strftime('%Y-%m-%d')
+		maxim=FrecuenciaActividadesRelacionadasRiesgo.objects.filter(periodo__date__lte=periodo).aggregate(Max('periodo')).get('periodo__max')
+		frecuencia_act= list(FrecuenciaActividadesRelacionadasRiesgo.objects.values('pk','descripcion').filter(periodo__date=maxim))
+		maxim=DefinicionProceso.objects.filter(periodo__date__lte=periodo).aggregate(Max('periodo')).get('periodo__max')
+		def_proceso=list(DefinicionProceso.objects.values('pk','descripcion').filter(periodo__date=maxim))
+		maxim=AreasInvolucradas.objects.filter(periodo__date__lte=periodo).aggregate(Max('periodo')).get('periodo__max')
+		areas_involucradas=list(AreasInvolucradas.objects.values('pk','descripcion').filter(periodo__date=maxim))
+		maxim=EventosRiesgo.objects.filter(periodo__date__lte=periodo).aggregate(Max('periodo')).get('periodo__max')
+		eventos_riesgo=list(EventosRiesgo.objects.values('pk','descripcion').filter(periodo__date=maxim))
 
 		data ={
 			'frecuencia_act': frecuencia_act,

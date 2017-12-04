@@ -92,6 +92,46 @@
 	           
 	    })
 
+	//============================================ Criterios de Probabilidad============================================//
+	 var escenarioid= $("#cod_escenario").html();
+	 $.ajax({
+	        type: "GET",
+	        data:{ cod_escenario :escenarioid },
+	        url: "{% url 'ajaxProbabilidadEdicion' %}"
+	    }).done(function(response){
+	    	//Frecuencia de las Actividades
+	        $.each(response.frecuencia_act, function(index, val) {
+	        	
+	            $('#id_frecuenciaact').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	                });
+	                  $('#id_frecuenciaact').trigger("chosen:updated");
+	        //Definicion de Procesos          
+	        $.each(response.def_proceso, function(index, val) {
+	            $('#id_defproceso').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	                });    
+
+	                  $('#id_defproceso').trigger("chosen:updated");
+	        //Areas Involucradas          
+	        $.each(response.areas_involucradas, function(index, val) {
+	            $('#id_areasinvolucradas').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	                });    
+
+	                  $('#id_areasinvolucradas').trigger("chosen:updated");
+	        
+	        //Eventos de Riesgo
+	         $.each(response.eventos_riesgo, function(index, val) {
+	            $('#id_eventosriesgo').append("<option value="+val.pk+">" + val.descripcion + "</option>");
+	             
+	                });    
+
+	                  $('#id_eventosriesgo').trigger("chosen:updated");
+	       	           
+	    })    
+    
+
 	$('#idtiporiesgo').addClass('select2')
 	var escenarioid= $("#cod_escenario").html();
 	
@@ -101,7 +141,7 @@
 	        url: "{% url 'ajaxEscenarios' %}"
 	    }).done(function(response){
 	        $.each(response.escenarios, function(key, val) {
-
+	        	alert(val.frecuencia_actividad)
 	           $("#idcategoriariesgo option[value="+ val.categoria_riesgo +"]").attr("selected",true).trigger('change');
 
 	           $("#id_frecuenciaact option[value="+ val.frecuencia_actividad +"]").attr("selected",true).trigger('change');
@@ -136,43 +176,9 @@
 	           
 	    });
 
+
+	 
 	
-//============================================ Criterios de Probabilidad============================================//
-	 $.ajax({
-	        type: "GET",
-	        data:{ frecuenciaact :"" },
-	        url: "{% url 'ajaxProbabilidad' %}"
-	    }).done(function(response){
-	    	//Frecuencia de las Actividades
-	        $.each(response.frecuencia_act, function(index, val) {
-	            $('#id_frecuenciaact').append("<option value="+val.pk+">" + val.descripcion + "</option>");
-	             
-	                });
-	                  $('#id_frecuenciaact').trigger("chosen:updated");
-	        //Definicion de Procesos          
-	        $.each(response.def_proceso, function(index, val) {
-	            $('#id_defproceso').append("<option value="+val.pk+">" + val.descripcion + "</option>");
-	             
-	                });    
-
-	                  $('#id_defproceso').trigger("chosen:updated");
-	        //Areas Involucradas          
-	        $.each(response.areas_involucradas, function(index, val) {
-	            $('#id_areasinvolucradas').append("<option value="+val.pk+">" + val.descripcion + "</option>");
-	             
-	                });    
-
-	                  $('#id_areasinvolucradas').trigger("chosen:updated");
-	        
-	        //Eventos de Riesgo
-	         $.each(response.eventos_riesgo, function(index, val) {
-	            $('#id_eventosriesgo').append("<option value="+val.pk+">" + val.descripcion + "</option>");
-	             
-	                });    
-
-	                  $('#id_eventosriesgo').trigger("chosen:updated");
-	       	           
-	    }) 
 
 	//============================================ Criterios de Impacto ===========================================//  
 	 $.ajax({
