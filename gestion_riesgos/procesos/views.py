@@ -2729,11 +2729,40 @@ def ajaxProbabilidadEdicion(request):
 
 def ajaxImpacto(request):
 	if request.is_ajax():
-		riesgo_reputacional=list(RiesgoReputacional.objects.values('pk','descripcion'))
-		riesgo_institucional=list(RiesgoInstitucional.objects.values('pk','descripcion'))
-		transacciones_EF=list(TransaccionesEstadosFinancieros.objects.values('pk','descripcion'))
-		cumplimiento_normativo=list(CumplimientoNormativo.objects.values('pk','descripcion'))
-		tipo_proceso=list(Tipoproceso.objects.values('pk','desctipoproceso'))
+		
+		riesgo_reputacional=list(RiesgoReputacional.objects.values('pk','descripcion').filter(habilitado=True))
+		riesgo_institucional=list(RiesgoInstitucional.objects.values('pk','descripcion').filter(habilitado=True))
+		transacciones_EF=list(TransaccionesEstadosFinancieros.objects.values('pk','descripcion').filter(habilitado=True))
+		cumplimiento_normativo=list(CumplimientoNormativo.objects.values('pk','descripcion').filter(habilitado=True))
+		tipo_proceso=list(Tipoproceso.objects.values('pk','desctipoproceso').filter(habilitado=True))
+		
+		
+		data ={
+			'riesgo_reputacional': riesgo_reputacional,
+			'riesgo_institucional': riesgo_institucional,
+			'transacciones_EF': transacciones_EF,
+			'cumplimiento_normativo': cumplimiento_normativo,
+			'tipo_proceso': tipo_proceso,
+			
+		}
+	return HttpResponse(json.dumps(data, default=decimal_default), content_type='application/json')
+
+
+def ajaxImpactoEdicion(request):
+	if request.is_ajax():
+		escenario=request.GET['cod_escenario']
+		s=Subprocesosxescenarios.objects.get(pk=escenario)
+		periodo=s.fecha_implementacion.strftime('%Y-%m-%d')
+		maxim=RiesgoReputacional.objects.filter(periodo__date__lte=periodo).aggregate(Max('periodo')).get('periodo__max')
+		riesgo_reputacional=list(RiesgoReputacional.objects.values('pk','descripcion').filter(periodo__date=maxim))
+		maxim=RiesgoInstitucional.objects.filter(periodo__date__lte=periodo).aggregate(Max('periodo')).get('periodo__max')
+		riesgo_institucional=list(RiesgoInstitucional.objects.values('pk','descripcion').filter(periodo__date=maxim))
+		maxim=TransaccionesEstadosFinancieros.objects.filter(periodo__date__lte=periodo).aggregate(Max('periodo')).get('periodo__max')
+		transacciones_EF=list(TransaccionesEstadosFinancieros.objects.values('pk','descripcion').filter(periodo__date=maxim))
+		maxim=CumplimientoNormativo.objects.filter(periodo__date__lte=periodo).aggregate(Max('periodo')).get('periodo__max')
+		cumplimiento_normativo=list(CumplimientoNormativo.objects.values('pk','descripcion').filter(periodo__date=maxim))
+		maxim=Tipoproceso.objects.filter(periodo__date__lte=periodo).aggregate(Max('periodo')).get('periodo__max')
+		tipo_proceso=list(Tipoproceso.objects.values('pk','desctipoproceso').filter(periodo__date=maxim))
 		
 		
 		data ={

@@ -41,6 +41,7 @@ urlpatterns = [
 	url(r'^ajaxProbabilidad/$', views.ajaxProbabilidad, name='ajaxProbabilidad'),
 	url(r'^ajaxProbabilidadEdicion/$', views.ajaxProbabilidadEdicion, name='ajaxProbabilidadEdicion'),
 	url(r'^ajaxImpacto/$', views.ajaxImpacto, name='ajaxImpacto'),
+	url(r'^ajaxImpactoEdicion/$', views.ajaxImpactoEdicion, name='ajaxImpactoEdicion'),
 	url(r'^ajaxSumaProbabilidad/$', views.ajaxSumaProbabilidad, name='ajaxSumaProbabilidad'),
 	url(r'^ajaxSumaImpacto/$', views.ajaxSumaImpacto, name='ajaxSumaImpacto'),
 	url(r'^ajaxUnidadMedida/$', views.ajaxUnidadMedida, name='ajaxUnidadMedida'),
