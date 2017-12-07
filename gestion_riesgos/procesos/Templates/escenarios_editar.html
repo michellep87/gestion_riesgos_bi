@@ -46,7 +46,6 @@
 
 </style>
 
-
 <script>
 	$(document).ready(function(){
 
@@ -142,6 +141,12 @@
 
 	
 </script>
+<link rel="stylesheet" href="{% static 'vendors/bower_components/select2/dist/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.css' %}" />
+<script src="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.js' %}"></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.js' %} "></script>
+<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.min.js' %}"></script>
+<script src="{% static 'vendors/bower_components/select2/dist/js/select2.full.min.js' %}"></script>
 
 <div class="card">	
 	
@@ -258,17 +263,19 @@
              </div><br>
              
             <div class="row">
-                                  <div class="col-sm-2">
-                                      <div class="form-group">
-                                      <label>Parametros Especiales</label>
-                                        <div class="toggle-switch">
-
-                                            <input type="checkbox" class="toggle-switch__checkbox" checked="" name="habilitado" id="id_especial">
-                                            <i class="toggle-switch__helper"></i>
-                                        </div>
-                                    </div>
-                                  </div>
-                                  </div>
+            	<div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Parametros Especiales</label>
+                            <div class="toggle-switch">
+                            	<!-- <input name="especial" id="checkbox" type="checkbox" value="1" />  	 -->
+                                <input type="checkbox" class="toggle-switch__checkbox" checked="" name="especial" id="id_especial" > 
+                                <i class="toggle-switch__helper"></i>
+                            </div>
+                    </div>
+                </div>
+            </div>
+                
+       
              
 
   <div>
@@ -456,12 +463,7 @@
 </div>
 
 
-<link rel="stylesheet" href="{% static 'vendors/bower_components/select2/dist/css/select2.min.css' %}">
-<link rel="stylesheet" href="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.css' %}" />
-<script src="{% static 'vendors/bower_components/flatpickr/dist/flatpickr.min.js' %}"></script>
-<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.js' %} "></script>
-<script src="{% static 'vendors/bower_components/trumbowyg/dist/plugins/table/trumbowyg.table.min.js' %}"></script>
-<script src="{% static 'vendors/bower_components/select2/dist/js/select2.full.min.js' %}"></script>
+
 	<script>
 	 $('#subproceso_id').val($('#codsubproceso').val())	
 	
@@ -610,7 +612,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 6,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -939,8 +942,19 @@
     
 
 	}
-
-	
+	var especial="No"
+	$(document).ready(function() {
+		$("#id_especial").click(function() {
+			if($("#id_especial").is(':checked')){
+				especial="Si"
+				//alert("Esta Activado");
+			} else {
+				//alert("No Activo");
+				 especial="No"
+			}
+			//alert(especial);
+		});
+	});
 	
 	</script>
 {% endblock %}

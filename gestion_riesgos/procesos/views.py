@@ -1370,18 +1370,32 @@ def matrizriesgo_ingreso(request,id):
 			print impacto
 			nivelriesgoinherente= float(probabilidad) * float(impacto)
 			zonariesgo=''
-			if nivelriesgoinherente == 1:
-				zonariesgo=1
-			elif nivelriesgoinherente == 2 or nivelriesgoinherente == 3:
-				zonariesgo = 2
-			elif nivelriesgoinherente == 4 or nivelriesgoinherente == 5 or nivelriesgoinherente == 6:
-				zonariesgo = 3
-			elif nivelriesgoinherente == 8 or nivelriesgoinherente == 9 or nivelriesgoinherente == 10 or nivelriesgoinherente == 12:
-				zonariesgo = 4
-			elif nivelriesgoinherente == 15 or nivelriesgoinherente == 16 or nivelriesgoinherente == 20 or nivelriesgoinherente == 25:
-				zonariesgo = 5
-			else:
+				
+			try:
+				if request.POST.get('especial') == "on":
+					zonariesgo=Zonariesgo.objects.get(desde__lte=nivelriesgoinherente,hasta__gte=nivelriesgoinherente)
+				else: #request.POST.get('especial') == "Si":
+					zonariesgo=ZonaRiesgoEspecial.objects.get(desde__lte=nivelriesgoinherente,hasta__gte=nivelriesgoinherente)
+			except Exception as e:
 				zonariesgo=0
+			print request.POST.get('especial')	
+			print "Nivel riesgo"
+			print nivelriesgoinherente
+			print "zonaaaa"	
+			print zonariesgo
+
+			# if nivelriesgoinherente == 1:
+			# 	zonariesgo=1
+			# elif nivelriesgoinherente == 2 or nivelriesgoinherente == 3:
+			# 	zonariesgo = 2
+			# elif nivelriesgoinherente == 4 or nivelriesgoinherente == 5 or nivelriesgoinherente == 6:
+			# 	zonariesgo = 3
+			# elif nivelriesgoinherente == 8 or nivelriesgoinherente == 9 or nivelriesgoinherente == 10 or nivelriesgoinherente == 12:
+			# 	zonariesgo = 4
+			# elif nivelriesgoinherente == 15 or nivelriesgoinherente == 16 or nivelriesgoinherente == 20 or nivelriesgoinherente == 25:
+			# 	zonariesgo = 5
+			# else:
+			# 	zonariesgo=0
 
 			campos = Subprocesosxescenarios()
 			campos.escenario = request.POST.get('escenario') #None if (request.POST.get('descescenario')) =="" else Escnariosriesgos.objects.get(pk=request.POST.get('descescenario'))
@@ -1401,13 +1415,15 @@ def matrizriesgo_ingreso(request,id):
 			campos.cumplimiento_normativo=None if (request.POST.get('cumplimiento_normativo')) =="" else CumplimientoNormativo.objects.get(pk=request.POST.get('cumplimiento_normativo'))
 			campos.tipo_proceso=None if (request.POST.get('tipo_proceso')) =="" else Tipoproceso.objects.get(pk=request.POST.get('tipo_proceso'))
 			campos.categoria_riesgo = None if (request.POST.get('categoriariesgo')) =="" else CategoriaRiesgos.objects.get(pk=request.POST.get('categoriariesgo'))
-			campos.zonariesgo =None if (zonariesgo) == 0 else Zonariesgo.objects.get(pk=zonariesgo) 
+			campos.zonariesgo =None if (zonariesgo) == 0 else Zonariesgo.objects.get(pk=zonariesgo.pk) 
 			campos.total_probabilidad = request.POST.get('totalprobabilidad')
 			campos.total_impacto = request.POST.get('totalimpacto')
 			campos.escala_probabilidad = request.POST.get('escalaprobabilidad')
 			campos.clasificacion_probabilidad = request.POST.get('clasifprobabilidad')
 			campos.escala_impacto = request.POST.get('escalaimpacto')
 			campos.clasificacion_impacto = request.POST.get('clasifimpacto')
+			campos.especial="True" if (request.POST.get('especial'))=="on" else "False"
+			#.fecha_implementacion	=now.strftime("%Y-%m-%d %H:%M:%S")
 			campos.save()
 
 			tr = request.POST.getlist('TipoRiesgo')	
@@ -1421,8 +1437,8 @@ def matrizriesgo_ingreso(request,id):
 			mensaje='exito'
 
 		except Exception as e:
-			
-			mensaje= e
+			raise e
+			#mensaje= e
 
 		ctx = {
 			'subprocesos': subprocesos,
@@ -1484,18 +1500,26 @@ def matrizriesgo_editar(request,id):
 			print request.POST.get('codsubproceso')
 			nivelriesgoinherente= float(probabilidad) * float(impacto)
 			zonariesgo=''
-			if nivelriesgoinherente == 1:
-				zonariesgo=1
-			elif nivelriesgoinherente == 2 or nivelriesgoinherente == 3:
-				zonariesgo = 2
-			elif nivelriesgoinherente == 4 or nivelriesgoinherente == 5 or nivelriesgoinherente == 6:
-				zonariesgo = 3
-			elif nivelriesgoinherente == 8 or nivelriesgoinherente == 9 or nivelriesgoinherente == 10 or nivelriesgoinherente == 12:
-				zonariesgo = 4
-			elif nivelriesgoinherente == 15 or nivelriesgoinherente == 16 or nivelriesgoinherente == 20 or nivelriesgoinherente == 25:
-				zonariesgo = 5
-			else:
+
+			try:
+				if request.POST.get('especial') == "No":
+					zonariesgo=Zonariesgo.objects.get(desde__lte=nivelriesgoinherente,hasta__gte=nivelriesgoinherente)
+				elif request.POST.get('especial') == "Si":
+					zonariesgo=ZonaRiesgoEspecial.objects.get(desde__lte=nivelriesgoinherente,hasta__gte=nivelriesgoinherente)
+			except Exception as e:
 				zonariesgo=0
+			# if nivelriesgoinherente == 1:
+			# 	zonariesgo=1
+			# elif nivelriesgoinherente == 2 or nivelriesgoinherente == 3:
+			# 	zonariesgo = 2
+			# elif nivelriesgoinherente == 4 or nivelriesgoinherente == 5 or nivelriesgoinherente == 6:
+			# 	zonariesgo = 3
+			# elif nivelriesgoinherente == 8 or nivelriesgoinherente == 9 or nivelriesgoinherente == 10 or nivelriesgoinherente == 12:
+			# 	zonariesgo = 4
+			# elif nivelriesgoinherente == 15 or nivelriesgoinherente == 16 or nivelriesgoinherente == 20 or nivelriesgoinherente == 25:
+			# 	zonariesgo = 5
+			# else:
+			# 	zonariesgo=0
 
 			campos = Subprocesosxescenarios.objects.get(pk=id)
 			campos.escenario = request.POST.get('escenario') #None if (request.POST.get('descescenario')) =="" else Escnariosriesgos.objects.get(pk=request.POST.get('descescenario'))
@@ -1594,7 +1618,7 @@ def control_ingreso(request):
 				nivelriesgoinherente = 0
 				
 
-			promedio = Controles.objects.filter(escenario=request.POST.get('escenarioriesgo')).aggregate(Avg('valoracion_control')).values()[0]
+			promedio = Controles.objects.filter(escenario=request.POST.get('escenarioriesgo'),habilitado=True).aggregate(Avg('valoracion_control')).values()[0]
 			print 'prom'	
 			print promedio
 
@@ -1625,18 +1649,27 @@ def control_ingreso(request):
 			# YA con el riesgo residual se obtiene la zona de riesgo residual
 
 			zonariesgo=''
-			if nivelriesgoresidual <= 1:
-				zonariesgo=1
-			elif nivelriesgoresidual == 2 or nivelriesgoresidual == 3:
-				zonariesgo = 2
-			elif nivelriesgoresidual == 4 or nivelriesgoresidual == 5 or nivelriesgoresidual == 6 or nivelriesgoresidual == 7 :
-				zonariesgo = 3
-			elif nivelriesgoresidual == 8 or nivelriesgoresidual == 9 or nivelriesgoresidual == 10 or nivelriesgoresidual == 11 or nivelriesgoresidual == 12 or nivelriesgoresidual == 13 or nivelriesgoresidual == 14:
-				zonariesgo = 4
-			elif nivelriesgoresidual == 15 or nivelriesgoresidual == 16 or nivelriesgoresidual ==17 or nivelriesgoresidual ==18 or nivelriesgoresidual ==19 or nivelriesgoresidual ==20 or nivelriesgoresidual ==21 or nivelriesgoresidual ==22 or nivelriesgoresidual ==23 or nivelriesgoresidual ==24 or nivelriesgoresidual ==25:
-				zonariesgo = 5
-			else:
+			try:
+				if request.POST.get('especial') == "No":
+					zonariesgo=Zonariesgo.objects.get(desde__lte=nivelriesgoresidual,hasta__gte=nivelriesgoresidual)
+				elif request.POST.get('especial') == "Si":
+					zonariesgo=ZonaRiesgoEspecial.objects.get(desde__lte=nivelriesgoresidual,hasta__gte=nivelriesgoresidual)
+			except Exception as e:
 				zonariesgo=0
+
+			# zonariesgo=''
+			# if nivelriesgoresidual <= 1:
+			# 	zonariesgo=1
+			# elif nivelriesgoresidual == 2 or nivelriesgoresidual == 3:
+			# 	zonariesgo = 2
+			# elif nivelriesgoresidual == 4 or nivelriesgoresidual == 5 or nivelriesgoresidual == 6 or nivelriesgoresidual == 7 :
+			# 	zonariesgo = 3
+			# elif nivelriesgoresidual == 8 or nivelriesgoresidual == 9 or nivelriesgoresidual == 10 or nivelriesgoresidual == 11 or nivelriesgoresidual == 12 or nivelriesgoresidual == 13 or nivelriesgoresidual == 14:
+			# 	zonariesgo = 4
+			# elif nivelriesgoresidual == 15 or nivelriesgoresidual == 16 or nivelriesgoresidual ==17 or nivelriesgoresidual ==18 or nivelriesgoresidual ==19 or nivelriesgoresidual ==20 or nivelriesgoresidual ==21 or nivelriesgoresidual ==22 or nivelriesgoresidual ==23 or nivelriesgoresidual ==24 or nivelriesgoresidual ==25:
+			# 	zonariesgo = 5
+			# else:
+			# 	zonariesgo=0
 			
 			print zonariesgo		
 			campos = Controles()
@@ -1701,7 +1734,7 @@ def matrizcontrol_editar(request,id):
 				nivelriesgoinherente = 0
 				
 
-			promedio = Controles.objects.filter(escenario=request.POST.get('escenarioriesgo')).aggregate(Avg('valoracion_control')).values()[0]
+			promedio = Controles.objects.filter(escenario=request.POST.get('escenarioriesgo'),habilitado=True).aggregate(Avg('valoracion_control')).values()[0]
 			print 'prom'	
 			print promedio
 
@@ -1732,18 +1765,26 @@ def matrizcontrol_editar(request,id):
 			# YA con el riesgo residual se obtiene la zona de riesgo residual
 
 			zonariesgo=''
-			if nivelriesgoresidual <= 1:
-				zonariesgo=1
-			elif nivelriesgoresidual == 2 or nivelriesgoresidual == 3:
-				zonariesgo = 2
-			elif nivelriesgoresidual == 4 or nivelriesgoresidual == 5 or nivelriesgoresidual == 6 or nivelriesgoresidual == 7 :
-				zonariesgo = 3
-			elif nivelriesgoresidual == 8 or nivelriesgoresidual == 9 or nivelriesgoresidual == 10 or nivelriesgoresidual == 11 or nivelriesgoresidual == 12 or nivelriesgoresidual == 13 or nivelriesgoresidual == 14:
-				zonariesgo = 4
-			elif nivelriesgoresidual == 15 or nivelriesgoresidual == 16 or nivelriesgoresidual ==17 or nivelriesgoresidual ==18 or nivelriesgoresidual ==19 or nivelriesgoresidual ==20 or nivelriesgoresidual ==21 or nivelriesgoresidual ==22 or nivelriesgoresidual ==23 or nivelriesgoresidual ==24 or nivelriesgoresidual ==25:
-				zonariesgo = 5
-			else:
+			try:
+				if request.POST.get('especial') == "No":
+					zonariesgo=Zonariesgo.objects.get(desde__lte=nivelriesgoresidual,hasta__gte=nivelriesgoresidual)
+				elif request.POST.get('especial') == "Si":
+					zonariesgo=ZonaRiesgoEspecial.objects.get(desde__lte=nivelriesgoresidual,hasta__gte=nivelriesgoresidual)
+			except Exception as e:
 				zonariesgo=0
+
+			# if nivelriesgoresidual <= 1:
+			# 	zonariesgo=1
+			# elif nivelriesgoresidual == 2 or nivelriesgoresidual == 3:
+			# 	zonariesgo = 2
+			# elif nivelriesgoresidual == 4 or nivelriesgoresidual == 5 or nivelriesgoresidual == 6 or nivelriesgoresidual == 7 :
+			# 	zonariesgo = 3
+			# elif nivelriesgoresidual == 8 or nivelriesgoresidual == 9 or nivelriesgoresidual == 10 or nivelriesgoresidual == 11 or nivelriesgoresidual == 12 or nivelriesgoresidual == 13 or nivelriesgoresidual == 14:
+			# 	zonariesgo = 4
+			# elif nivelriesgoresidual == 15 or nivelriesgoresidual == 16 or nivelriesgoresidual ==17 or nivelriesgoresidual ==18 or nivelriesgoresidual ==19 or nivelriesgoresidual ==20 or nivelriesgoresidual ==21 or nivelriesgoresidual ==22 or nivelriesgoresidual ==23 or nivelriesgoresidual ==24 or nivelriesgoresidual ==25:
+			# 	zonariesgo = 5
+			# else:
+			# 	zonariesgo=0
 			
 			print zonariesgo		
 			campos = Controles.objects.get(pk=id)
@@ -1778,6 +1819,7 @@ def matrizcontrol_editar(request,id):
 			'subproceso':subproceso,
 			'control':control,
 			'controlid': id,
+			'instancia': instancia,
 		}
 
 		return HttpResponseRedirect(reverse('subprocesos',args=[proc]))
@@ -1785,7 +1827,8 @@ def matrizcontrol_editar(request,id):
 			ctx = {	
 				'subproceso':subproceso,
 				'control':control,
-				'controlid': id,		
+				'controlid': id,
+				'instancia': instancia.escenario.pk,		
 		}
 
 	return render(request, 'controles_editar.html', ctx)
@@ -2778,8 +2821,12 @@ def ajaxImpactoEdicion(request):
 def ajaxSumaProbabilidad(request):
 	if request.is_ajax():
 		totalprob = request.GET['suma_prob']
+		especial = request.GET['especial']
 		# totalprob=round(totalprob,0)
-		data =dict(Escalaprobabilidad.objects.values('escala','desde','hasta','clasificacion').get(desde__lte=totalprob,hasta__gte=totalprob))
+		if especial == "No":
+			data =dict(Escalaprobabilidad.objects.values('escala','desde','hasta','clasificacion').get(desde__lte=totalprob,hasta__gte=totalprob))
+		elif especial == "Si":
+			data =dict(EscalaProbabilidadEspecial.objects.values('escala','desde','hasta','clasificacion').get(desde__lte=totalprob,hasta__gte=totalprob))
 		# Escalaprobabilidad.objects.get(desde__lte=37.5,hasta__gte=37.5)
 
 		# data ={
@@ -2791,8 +2838,12 @@ def ajaxSumaProbabilidad(request):
 def ajaxSumaImpacto(request):
 	if request.is_ajax():
 		totalimpact = request.GET['suma_impact']
+		especial = request.GET['especial']
 		# totalimpact=round(totalimpact,0)
-		data =dict(Escalaimpacto.objects.values('escala','desde','hasta','clasificacion').get(desde__lte=totalimpact,hasta__gte=totalimpact))
+		if especial == "No":
+			data =dict(Escalaimpacto.objects.values('escala','desde','hasta','clasificacion').get(desde__lte=totalimpact,hasta__gte=totalimpact))
+		elif especial == "Si":
+			data =dict(EscalaImpactoEspecial.objects.values('escala','desde','hasta','clasificacion').get(desde__lte=totalimpact,hasta__gte=totalimpact))
 		# Escalaprobabilidad.objects.get(desde__lte=37.5,hasta__gte=37.5)
 
 		# data ={
@@ -2813,14 +2864,15 @@ def ajaxControles(request):
 	if request.is_ajax():
 		control = request.GET['controles']
 		subproceso = request.GET['subproceso']
+		#especial = request.GET['especial']
 		# procesoa = request.GET['procesoa']
 		procesoe = request.GET['procesoe']
 		# actividades =list(Actividades.objects.values('pk','nombreactividad').filter(Q(codsubproceso__codproceso=procesoa) | Q(codsubproceso__codproceso=procesoe))
 		escenarios = list(Subprocesosxescenarios.objects.values('pk','escenario').filter(codsubproceso__codproceso=procesoe))
-		tipocontrol = list(Tipocontrol.objects.values('pk','desctipocontrol'))
-		naturalezacontrol=list(Naturalezacontrol.objects.values('pk','descnaturaleza'))
-		frecuenciacontrol=list(FrecuenciaControl.objects.values('pk','descripcion'))
-		observacionesauditoria=list(ObservacionesAuditoria.objects.values('pk','descripcion'))
+		tipocontrol = list(Tipocontrol.objects.values('pk','desctipocontrol').filter(habilitado=True))
+		naturalezacontrol=list(Naturalezacontrol.objects.values('pk','descnaturaleza').filter(habilitado=True))
+		frecuenciacontrol=list(FrecuenciaControl.objects.values('pk','descripcion').filter(habilitado=True))
+		observacionesauditoria=list(ObservacionesAuditoria.objects.values('pk','descripcion').filter(habilitado=True))
 		# codactividad = list(Controles.objects.values('codactividad').filter(codcontrol=control))
 		controlitems = list(Controles.objects.values('escenario','codactividad','codtipocontrol','efectividad','codnaturaleza','descripcion','frecuencia','observaciones_auditoria','habilitado').filter(pk=control))
 
@@ -2835,11 +2887,50 @@ def ajaxControles(request):
 
 	return HttpResponse(json.dumps(data, default=decimal_default), content_type='application/json')
 
+def ajaxControlesEdicion(request):
+	if request.is_ajax():
+		#escenario=request.GET['cod_escenario']
+		control = request.GET['controles']
+		s=Controles.objects.get(pk=control)
+		periodo=s.fecha_implementacion.strftime('%Y-%m-%d')
+
+		
+		subproceso = request.GET['subproceso']
+		#especial = request.GET['especial']
+		# procesoa = request.GET['procesoa']
+		procesoe = request.GET['procesoe']
+		# actividades =list(Actividades.objects.values('pk','nombreactividad').filter(Q(codsubproceso__codproceso=procesoa) | Q(codsubproceso__codproceso=procesoe))
+		escenarios = list(Subprocesosxescenarios.objects.values('pk','escenario').filter(codsubproceso__codproceso=procesoe))
+		maxim=Tipocontrol.objects.filter(periodo__date__lte=periodo).aggregate(Max('periodo')).get('periodo__max')
+		tipocontrol = list(Tipocontrol.objects.values('pk','desctipocontrol').filter(periodo__date=maxim))
+		maxim=Naturalezacontrol.objects.filter(periodo__date__lte=periodo).aggregate(Max('periodo')).get('periodo__max')
+		naturalezacontrol=list(Naturalezacontrol.objects.values('pk','descnaturaleza').filter(periodo__date=maxim))
+		maxim=FrecuenciaControl.objects.filter(periodo__date__lte=periodo).aggregate(Max('periodo')).get('periodo__max')
+		frecuenciacontrol=list(FrecuenciaControl.objects.values('pk','descripcion').filter(periodo__date=maxim))
+		maxim=ObservacionesAuditoria.objects.filter(periodo__date__lte=periodo).aggregate(Max('periodo')).get('periodo__max')
+		observacionesauditoria=list(ObservacionesAuditoria.objects.values('pk','descripcion').filter(periodo__date=maxim))
+		# codactividad = list(Controles.objects.values('codactividad').filter(codcontrol=control))
+		controlitems = list(Controles.objects.values('escenario','codactividad','codtipocontrol','efectividad','codnaturaleza','descripcion','frecuencia','observaciones_auditoria','habilitado','especial').filter(pk=control))
+
+		data ={
+			'escenarios':escenarios,
+			'tipocontrol':tipocontrol,
+			'naturalezacontrol':naturalezacontrol,
+			'frecuenciacontrol':frecuenciacontrol,
+			'observacionesauditoria':observacionesauditoria,
+			'controlitems': controlitems,
+		}
+
+	return HttpResponse(json.dumps(data, default=decimal_default), content_type='application/json')	
+
 def ajaxSumaControl(request):
 	if request.is_ajax():
 		totalctrl = request.GET['suma_control']
-
-		data =dict(EscalaControl.objects.values('desde','hasta','clasificacion').get(desde__lte=totalctrl,hasta__gte=totalctrl))
+		especial = request.GET['especial']
+		if especial == "No":
+			data =dict(EscalaControl.objects.values('desde','hasta','clasificacion').get(desde__lte=totalctrl,hasta__gte=totalctrl))
+		elif especial == "Si":
+			data =dict(EscalaControlEspecial.objects.values('desde','hasta','clasificacion').get(desde__lte=totalctrl,hasta__gte=totalctrl))
 		# Escalaprobabilidad.objects.get(desde__lte=37.5,hasta__gte=37.5)
 
 		# data ={
@@ -2856,60 +2947,92 @@ def ajaxPonderacion(request):
 	if request.is_ajax():
 		bandera = request.GET['bandera']
 		valor = request.GET['valor']
-		
+		especial= request.GET['especial']
+		print "aqui va especial"
+		print especial
+
 		#TipoControl
 		if bandera == "1":
-			ponderaciones = list(Tipocontrol.objects.values('pk','ponderacion').filter(pk=request.GET['valor']))
-
+			if especial == "No":
+				ponderaciones = list(Tipocontrol.objects.values('pk','ponderacion').filter(pk=request.GET['valor']))
+			elif especial == "Si":
+				ponderaciones = list(Tipocontrol.objects.values('pk','ponderacion_especial').filter(pk=request.GET['valor']).annotate(ponderacion=F('ponderacion_especial')))	
 		#Naturaleza del control	
 		elif bandera == "2":
-			ponderaciones = list(Naturalezacontrol.objects.values('ponderacion').filter(pk=valor))
+			if especial == "No":
+				ponderaciones = list(Naturalezacontrol.objects.values('ponderacion').filter(pk=valor))
+			if especial == "Si":
+				ponderaciones = list(Naturalezacontrol.objects.values('ponderacion_especial').filter(pk=valor).annotate(ponderacion=F('ponderacion_especial')))	
 		#Frecuencia del control	
 		elif bandera == "3":
-			ponderaciones = list(FrecuenciaControl.objects.values('ponderacion').filter(pk=valor))
+			if especial == "No":
+				ponderaciones = list(FrecuenciaControl.objects.values('ponderacion').filter(pk=valor))
+			if especial == "Si":
+				ponderaciones = list(FrecuenciaControl.objects.values('ponderacion_especial').filter(pk=valor).annotate(ponderacion=F('ponderacion_especial')))	
 		#Observaciones de Auditoria	
 		elif bandera == "4":
-			ponderaciones = list(ObservacionesAuditoria.objects.values('ponderacion').filter(pk=valor))
-		
+			if especial == "No":
+				ponderaciones = list(ObservacionesAuditoria.objects.values('ponderacion').filter(pk=valor))
+			if especial == "Si":
+				ponderaciones = list(ObservacionesAuditoria.objects.values('ponderacion_especial').filter(pk=valor).annotate(ponderacion=F('ponderacion_especial')))
 		#--------------------------------PROBABILIDAD------------------------------------------#
 
 		#Frecuencia de la actividad	
 		elif bandera == "5":
-			ponderaciones = list(FrecuenciaActividadesRelacionadasRiesgo.objects.values('ponderacion').filter(pk=valor))	
-
+			if especial == "No":
+				ponderaciones = list(FrecuenciaActividadesRelacionadasRiesgo.objects.values('ponderacion').filter(pk=valor))	
+			if especial == "Si":
+				ponderaciones = list(FrecuenciaActividadesRelacionadasRiesgo.objects.values('ponderacion_especial').filter(pk=valor).annotate(ponderacion=F('ponderacion_especial')))		
 		#Definicion del Proceso	
 		elif bandera == "6":
-			ponderaciones = list(DefinicionProceso.objects.values('ponderacion').filter(pk=valor))		
-
+			if especial == "No":
+				ponderaciones = list(DefinicionProceso.objects.values('ponderacion').filter(pk=valor))		
+			if especial == "Si":
+				ponderaciones = list(DefinicionProceso.objects.values('ponderacion_especial').filter(pk=valor).annotate(ponderacion=F('ponderacion_especial')))			
 		#Areas Involucradas
 		elif bandera == "7":
-			ponderaciones = list(AreasInvolucradas.objects.values('ponderacion').filter(pk=valor))		
+			if especial == "No":
+				ponderaciones = list(AreasInvolucradas.objects.values('ponderacion').filter(pk=valor))
+			if especial == "Si":
+				ponderaciones = list(AreasInvolucradas.objects.values('ponderacion_especial').filter(pk=valor).annotate(ponderacion=F('ponderacion_especial')))		
 
 		#Eventos de Riesgo
 		elif bandera == "8":
-			ponderaciones = list(EventosRiesgo.objects.values('ponderacion').filter(pk=valor))		
-
+			if especial == "No":
+				ponderaciones = list(EventosRiesgo.objects.values('ponderacion').filter(pk=valor))		
+			if especial == "Si":
+				ponderaciones = list(EventosRiesgo.objects.values('ponderacion_especial').filter(pk=valor).annotate(ponderacion=F('ponderacion_especial')))			
 		#-----------------------------------IMPACTO----------------------------------------------#
 		#Riesgo Reputacional
 		elif bandera == "9":
-			ponderaciones = list(RiesgoReputacional.objects.values('ponderacion').filter(pk=valor))
-		
+			if especial == "No":
+				ponderaciones = list(RiesgoReputacional.objects.values('ponderacion').filter(pk=valor))
+			if especial == "Si":
+				ponderaciones = list(RiesgoReputacional.objects.values('ponderacion_especial').filter(pk=valor).annotate(ponderacion=F('ponderacion_especial')))
 		#Riesgo Institucional
 		elif bandera == "10":
-			ponderaciones = list(RiesgoInstitucional.objects.values('ponderacion').filter(pk=valor))
-		
+			if especial == "No":
+				ponderaciones = list(RiesgoInstitucional.objects.values('ponderacion').filter(pk=valor))
+			if especial == "Si":
+				ponderaciones = list(RiesgoInstitucional.objects.values('ponderacion_especial').filter(pk=valor).annotate(ponderacion=F('ponderacion_especial')))
 		#Transacciones de Estados Financieros
 		elif bandera == "11":
-			ponderaciones = list(TransaccionesEstadosFinancieros.objects.values('ponderacion').filter(pk=valor))
-
+			if especial == "No":
+				ponderaciones = list(TransaccionesEstadosFinancieros.objects.values('ponderacion').filter(pk=valor))
+			if especial == "Si":
+				ponderaciones = list(TransaccionesEstadosFinancieros.objects.values('ponderacion_especial').filter(pk=valor).annotate(ponderacion=F('ponderacion_especial')))	
 		#Cumplimientos Normativos
 		elif bandera == "12":
-			ponderaciones = list(CumplimientoNormativo.objects.values('ponderacion').filter(pk=valor))
-		
+			if especial == "No":
+				ponderaciones = list(CumplimientoNormativo.objects.values('ponderacion').filter(pk=valor))
+			if especial == "Si":
+				ponderaciones = list(CumplimientoNormativo.objects.values('ponderacion_especial').filter(pk=valor).annotate(ponderacion=F('ponderacion_especial')))
 		#Tipo de Proceso
 		elif bandera == "13":
-			ponderaciones = list(Tipoproceso.objects.values('ponderacion').filter(pk=valor))
-		
+			if especial == "No":
+				ponderaciones = list(Tipoproceso.objects.values('ponderacion').filter(pk=valor))
+			if especial == "Si":
+				ponderaciones = list(Tipoproceso.objects.values('ponderacion_especial').filter(pk=valor).annotate(ponderacion=F('ponderacion_especial')))
 			
 		data={
 			'ponderaciones': ponderaciones,

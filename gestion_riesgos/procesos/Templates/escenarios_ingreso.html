@@ -138,7 +138,7 @@
                                       <label>Parametros Especiales</label>
                                         <div class="toggle-switch">
 
-                                            <input type="checkbox" class="toggle-switch__checkbox" checked="" name="habilitado" id="id_habilitado">
+                                            <input type="checkbox" class="toggle-switch__checkbox" checked="" name="especial" id="id_especial">
                                             <i class="toggle-switch__helper"></i>
                                         </div>
                                     </div>
@@ -468,17 +468,23 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 5,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
+
 			
-			$.each(response.ponderaciones, function(index, val) {
+			
+					$.each(response.ponderaciones, function(index, val) {
 				
 				$('#frecuenciaact_id').val(val.ponderacion)
 				valor=$('#frecuenciaact_id').val()
 				sumaProbabilidad();
 			});
+			
+			
+		
 		});
 		
 		}
@@ -500,7 +506,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 6,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -535,7 +542,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 7,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -569,7 +577,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 8,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -606,7 +615,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 9,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -639,7 +649,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 10,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -672,7 +683,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 11,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -698,25 +710,30 @@
 	$('#id_cumplimientonormativo').change(function(event) {
 
 		var codigo= $(this).val();
-		// console.log(codigo);
+		 console.log(especial);
 
 		if (codigo > 0)  {
 		$.ajax({
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 12,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
+
 			
-			$.each(response.ponderaciones, function(index, val) {
-				
+					$.each(response.ponderaciones, function(index, val) {
+
 				$('#cumplimientonormativo_id').val(val.ponderacion)
 				valor=$('#cumplimientonormativo_id').val()
+				//alert(valor);
 				sumaImpacto();
 			
 			});
+		
+					
 		});
 		
 		}
@@ -738,7 +755,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 13,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -789,10 +807,10 @@
      if (total >= 0){
      	$.ajax({
 	        type: "GET",
-	        data:{ suma_prob :total },
+	        data:{ suma_prob :total, especial: especial, },
 	        url: "{% url 'ajaxSumaProbabilidad' %}"
 	    }).done(function(response){
-	    		
+	    		//alert(response.clasificacion);
 	    		$("#idclasifprobabilidad").val(response.clasificacion)
 	    		$("#idescalaprobabilidad").val(response.escala)
 	    		    	
@@ -817,9 +835,10 @@
      if(total >= 0){
      	 $.ajax({
 	        type: "GET",
-	        data:{ suma_impact :total },
+	        data:{ suma_impact :total, especial: especial, },
 	        url: "{% url 'ajaxSumaImpacto' %}"
 	    }).done(function(response){
+
 	    	$("#idclasifimpacto").val(response.clasificacion)
 	    	$("#idescalaimpacto").val(response.escala)
 	    })
@@ -838,6 +857,20 @@
 	//     $("#idescalaprobabilidad").val(0)
 	// }
 
+	var especial="No"
+	$("#id_especial").attr('checked', false);
+	$(document).ready(function() {
+		$("#id_especial").click(function() {
+			if($("#id_especial").is(':checked')){
+				especial="Si"
+				//alert("Esta Activado");
+			} else {
+				//alert("No Activo");
+				 especial="No"
+			}
+			//alert(especial);
+		});
+	});
 	
 
 

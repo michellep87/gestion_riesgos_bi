@@ -66,8 +66,21 @@
                           </div>
                           </div>
                       </div>
-                  </div>
+                  </div><div class="row">
+                                  <div class="col-sm-2">
+                                      <div class="form-group">
+                                      <label>Parametros Especiales</label>
+                                        <div class="toggle-switch">
+
+                                            <input type="checkbox" class="toggle-switch__checkbox" checked="" name="especial" id="id_especial">
+                                            <i class="toggle-switch__helper"></i>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  </div>
+                                  <br>
 	            <br>
+
 	            <div class="row">
              	
              	<div class="col-sm-5">
@@ -200,7 +213,7 @@
                 <input type="hidden" name="procesoidc" id="subproceso_id" value="{{request.session.proceso}}">
 				<div id="cod_subproceso" class="invisible" >{{subproceso.escenario__codsubproceso__pk}}</div>
 				<div id="cod_control" class="invisible">{{controlid}}</div>
-
+				<div id="cod_escenario" class="invisible">{{instancia}}</div>
 				<div id="cod_procesoact" class="invisible" name="procesoid" >{{subproceso.codactividad__codsubproceso__codproceso__pk}}</div>
                 <input type="hidden" name="procesoidc" id="subproceso_idact" value="{{subproceso.codactividad__codsubproceso__codproceso__pk}}">
 				<div id="cod_subprocesoact" class="invisible" >{{subproceso.codactividad__codsubproceso__pk}}</div>
@@ -247,10 +260,9 @@
 	        type: "GET",
 	        data:{ controles :controlid,
 	        	   subproceso :valor,
-	        	   
 	        	   procesoe: valorprocesc,
 	        	 },
-	        url: "{% url 'ajaxControles' %}"
+	        url: "{% url 'ajaxControlesEdicion' %}"
 	    }).done(function(response){
 	    	//Escenario de Riesgos
 	        $.each(response.escenarios, function(index, val) {
@@ -342,7 +354,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 1,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -372,7 +385,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 2,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -403,7 +417,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 3,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -434,7 +449,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 4,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -481,7 +497,7 @@
      var total=  $("#idtotalcontrol").val()
      $.ajax({
 	        type: "GET",
-	        data:{ suma_control :total },
+	        data:{ suma_control :total, especial: especial, },
 	        url: "{% url 'ajaxSumaControl' %}"
 	    }).done(function(response){
 	    	$("#idclasifcontrol").val(response.clasificacion)
@@ -490,7 +506,20 @@
 
 	}
 
-	
+	var especial="No"
+	$("#id_especial").attr('checked', false);
+	$(document).ready(function() {
+		$("#id_especial").click(function() {
+			if($("#id_especial").is(':checked')){
+				especial="Si"
+				//alert("Esta Activado");
+			} else {
+				//alert("No Activo");
+				 especial="No"
+			}
+			//alert(especial);
+		});
+	});
 	
 
 

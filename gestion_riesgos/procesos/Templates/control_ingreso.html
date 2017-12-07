@@ -96,7 +96,20 @@
         				</div>
             
         			</div>
-             </div>         
+             </div>
+             <div class="row">
+                                  <div class="col-sm-2">
+                                      <div class="form-group">
+                                      <label>Parametros Especiales</label>
+                                        <div class="toggle-switch">
+
+                                            <input type="checkbox" class="toggle-switch__checkbox" checked="" name="especial" id="id_especial">
+                                            <i class="toggle-switch__helper"></i>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  </div>
+                                  <br>         
 
   <div>
   <table class="table table-bordered ">
@@ -298,7 +311,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 1,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -328,7 +342,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 2,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -359,7 +374,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 3,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -390,7 +406,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 4,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -437,7 +454,7 @@
      var total=  $("#idtotalcontrol").val()
      $.ajax({
 	        type: "GET",
-	        data:{ suma_control :total },
+	        data:{ suma_control :total, especial: especial, },
 	        url: "{% url 'ajaxSumaControl' %}"
 	    }).done(function(response){
 	    	$("#idclasifcontrol").val(response.clasificacion)
@@ -447,6 +464,20 @@
 	}
 
 	
+	var especial="No"
+	$("#id_especial").attr('checked', false);
+	$(document).ready(function() {
+		$("#id_especial").click(function() {
+			if($("#id_especial").is(':checked')){
+				especial="Si"
+				//alert("Esta Activado");
+			} else {
+				//alert("No Activo");
+				 especial="No"
+			}
+			//alert(especial);
+		});
+	});
 	
 
 

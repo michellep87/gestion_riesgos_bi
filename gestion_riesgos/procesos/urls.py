@@ -47,6 +47,7 @@ urlpatterns = [
 	url(r'^ajaxUnidadMedida/$', views.ajaxUnidadMedida, name='ajaxUnidadMedida'),
 	url(r'^ajaxDuenios/$', views.ajaxDuenios, name='ajaxDuenios'),
 	url(r'^ajaxControles/$', views.ajaxControles, name='ajaxControles'),
+	url(r'^ajaxControlesEdicion/$', views.ajaxControlesEdicion, name='ajaxControlesEdicion'),
 	url(r'^ajaxPonderacion/$', views.ajaxPonderacion, name='ajaxPonderacion'),
 	url(r'^ajaxSumaControl/$', views.ajaxSumaControl, name='ajaxSumaControl'),
 	url(r'^ajaxEscenarios/$', views.ajaxEscenarios, name='ajaxEscenarios'),

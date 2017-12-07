@@ -73,6 +73,7 @@ class Subprocesosxescenarios(models.Model):
     escala_impacto = models.IntegerField(db_column='EscalaImpacto', blank=True, null=True)  # Field name made lowercase.
     clasificacion_impacto = models.CharField(db_column='ClasificacionImpacto', max_length=200, blank=True, null=True)
     fecha_implementacion = models.DateTimeField(db_column='FechaImplementacion', auto_now=True)
+    especial = models.NullBooleanField(db_column='Especial')
     class Meta:
         managed = False
         db_table = 'SubProcesosXEscenarios'
@@ -137,6 +138,7 @@ class Controles(models.Model):
     escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
     clasificacion = models.CharField(db_column='Clasificacion', max_length=200, blank=True, null=True)
     habilitado = models.NullBooleanField()
+    especial = models.NullBooleanField(db_column='Especial')  # Field name made lowercase.
     
     class Meta:
         managed = False

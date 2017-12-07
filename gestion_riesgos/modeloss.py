@@ -183,6 +183,7 @@ class Controles(models.Model):
     escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
     clasificacion = models.CharField(db_column='Clasificacion', max_length=200, blank=True, null=True)  # Field name made lowercase.
     habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    especial = models.NullBooleanField(db_column='Especial')  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -215,6 +216,7 @@ class ControlesAudit(models.Model):
     escala = models.IntegerField(db_column='Escala', blank=True, null=True)  # Field name made lowercase.
     clasificacion = models.CharField(db_column='Clasificacion', max_length=200, blank=True, null=True)  # Field name made lowercase.
     habilitado = models.NullBooleanField(db_column='Habilitado')  # Field name made lowercase.
+    especial = models.NullBooleanField(db_column='Especial')  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -1311,6 +1313,7 @@ class Subprocesosxescenarios(models.Model):
     escalaimpacto = models.IntegerField(db_column='EscalaImpacto', blank=True, null=True)  # Field name made lowercase.
     clasificacionimpacto = models.CharField(db_column='ClasificacionImpacto', max_length=200, blank=True, null=True)  # Field name made lowercase.
     fechaimplementacion = models.DateTimeField(db_column='FechaImplementacion', blank=True, null=True)  # Field name made lowercase.
+    especial = models.NullBooleanField(db_column='Especial')  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -1352,6 +1355,7 @@ class SubprocesosxescenariosAudit(models.Model):
     escalaimpacto = models.IntegerField(db_column='EscalaImpacto', blank=True, null=True)  # Field name made lowercase.
     clasificacionimpacto = models.CharField(db_column='ClasificacionImpacto', max_length=200, blank=True, null=True)  # Field name made lowercase.
     fechaimplementacion = models.DateTimeField(db_column='FechaImplementacion', blank=True, null=True)  # Field name made lowercase.
+    especial = models.NullBooleanField(db_column='Especial')  # Field name made lowercase.
 
     class Meta:
         managed = False
