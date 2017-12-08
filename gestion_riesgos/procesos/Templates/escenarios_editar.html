@@ -124,6 +124,14 @@
 
 	           $("#id_descsubproceso option[value="+ val.codsubproceso +"]").attr("selected",true).trigger('change');
 
+	        
+	           if (val.especial != 1){
+                    $("#id_especial").prop("checked",false).trigger('change');  
+                }
+
+                if (val.especial == 1){
+                    $("#id_especial").prop("checked",true).trigger('change');  
+                }
 	        });
 
 	        $.each(response.tiporiesgo,function(index, val) {
@@ -580,7 +588,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 5,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -648,7 +657,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 7,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -682,7 +692,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 8,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -719,7 +730,7 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 9,
-				   valor: codigo	
+				   valor: codigo,especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -752,7 +763,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 10,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -785,7 +797,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 11,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -818,7 +831,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 12,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -851,7 +865,8 @@
 			url: "{% url 'ajaxPonderacion' %}",
 			type: 'GET',
 			data: {bandera: 13,
-				   valor: codigo	
+				   valor: codigo,
+				   especial: especial,	
 			},
 		})
 		.done(function(response) {
@@ -899,7 +914,7 @@
      if (total >= 0){
      	$.ajax({
 	        type: "GET",
-	        data:{ suma_prob :total },
+	        data:{ suma_prob :total, especial: especial, },
 	        url: "{% url 'ajaxSumaProbabilidad' %}"
 	    }).done(function(response){
 	    		
@@ -927,7 +942,7 @@
      if(total >= 0){
      	 $.ajax({
 	        type: "GET",
-	        data:{ suma_impact :total },
+	        data:{ suma_impact :total, especial: especial, },
 	        url: "{% url 'ajaxSumaImpacto' %}"
 	    }).done(function(response){
 	    	$("#idclasifimpacto").val(response.clasificacion)
