@@ -212,7 +212,7 @@ class ImagenesSubprocesos(models.Model):
     subproceso = models.ForeignKey('Subprocesos', models.DO_NOTHING, db_column='CodSubproceso', blank=True, null=True)  # Field name made lowercase.
     diagrama = models.FileField(db_column='Diagrama',upload_to='upload/', max_length=150, blank=True, null=True)  # Field name made lowercase.
     imagen_diagrama = models.BinaryField(db_column='ImagenDiagrama', blank=True, null=True)  # Field name made lowercase.
-
+    habilitado = models.NullBooleanField()
     class Meta:
         managed = False
         db_table = 'ImagenesXSubprocesos'

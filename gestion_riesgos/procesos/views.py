@@ -180,7 +180,7 @@ def subprocesos(request, id):
 	controlespendientes=Controles.objects.filter(escenario__isnull=True,codactividad__codsubproceso__codproceso=id)#.annotate(tot=Count('codcontrol'))
 	cedulanormativa= CedulaNormativa.objects.filter(codproceso=id)
 	indicadoresdesempenio = IndicadoresDesempenio.objects.filter(codproceso=id)
-	diagramassubprocesos = ImagenesSubprocesos.objects.filter(subproceso__codproceso=id)
+	diagramassubprocesos = ImagenesSubprocesos.objects.filter(subproceso__codproceso=id, habilitado=True)
 	conteo = controlespendientes.count()
 	conteoriesgos=escenarios.count()
 
@@ -1828,7 +1828,7 @@ def matrizcontrol_editar(request,id):
 				'subproceso':subproceso,
 				'control':control,
 				'controlid': id,
-				'instancia': instancia.escenario.pk,		
+				'instancia': instancia,		
 		}
 
 	return render(request, 'controles_editar.html', ctx)
@@ -2097,6 +2097,7 @@ def diagrama_subproceso(request,id):
 					campos = ImagenesSubprocesos()
 					campos.subproceso=Subprocesos.objects.get(pk=id)
 					campos.diagrama = data
+					campos.habilitado="True"
 					campos.save()
 					mensaje = 'exito'
 		except Exception as e:
@@ -2140,12 +2141,14 @@ def ver_diagramas(request,id):
 
 	if request.POST:
 			try:
+				
 				if bandera=='inserta':
 					print 'insert'
 					campos = ImagenesSubprocesos()
 				else:
 					campos = ImagenesSubprocesos.objects.get(pk= id)
-				campos.diagrama = request.FILES['diagrama']
+				campos.diagrama =request.FILES['diagrama'] 
+				# campos.habilitado="True" if (request.POST.get('habilitado'))=="on" else "False"
 				campos.save()
 				# Guardar Imagen en la base de Datos
 				# from django.db import connection
@@ -2693,6 +2696,27 @@ def ajaxTablaActividades(request):
 				'subproceso':list(subproceso),
 			}
 	return HttpResponse(json.dumps(data, default=decimal_default), content_type='application/json')
+
+def ajaxInhabilitarImagen(request):
+	if request.is_ajax():
+		diagrama= request.GET['iddiagrama']
+		habilitados=request.GET['habilitado']
+		ctx={}
+		instanciag = ImagenesSubprocesos.objects.get(pk = diagrama)
+		formulario = ImagenesSubprocesosForm(instance= instanciag)
+		try:
+			campos = ImagenesSubprocesos.objects.get(pk= diagrama)
+			campos.habilitado="True" if (habilitados)=="Si" else "False"
+			campos.save()
+			formulario = ImagenesSubprocesosForm(instance= campos)
+		except Exception as e:
+			raise e
+		ctx={
+			'formulario': formulario,
+		}
+
+		return render(request, 'subprocesos_diagramas.html', ctx)
+		
 
 #=========================================== Escenarios de Riesgos==================================================================================
 def ajaxEscenarios(request):

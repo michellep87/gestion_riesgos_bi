@@ -53,6 +53,7 @@ urlpatterns = [
 	url(r'^ajaxEscenarios/$', views.ajaxEscenarios, name='ajaxEscenarios'),
 	url(r'^ajaxTablaActividades/$', views.ajaxTablaActividades, name='ajaxTablaActividades'),
 	url(r'^ajaxCargarActividades/$', views.ajaxCargarActividades, name='ajaxCargarActividades'),
+	url(r'^ajaxInhabilitarImagen/$', views.ajaxInhabilitarImagen, name='ajaxInhabilitarImagen'),
 	
 
 	

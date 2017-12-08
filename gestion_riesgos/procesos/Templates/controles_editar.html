@@ -213,7 +213,7 @@
                 <input type="hidden" name="procesoidc" id="subproceso_id" value="{{request.session.proceso}}">
 				<div id="cod_subproceso" class="invisible" >{{subproceso.escenario__codsubproceso__pk}}</div>
 				<div id="cod_control" class="invisible">{{controlid}}</div>
-				<div id="cod_escenario" class="invisible">{{instancia}}</div>
+				<!-- <div id="cod_escenario" class="invisible">{{instancia.escenario.pk}}</div> -->
 				<div id="cod_procesoact" class="invisible" name="procesoid" >{{subproceso.codactividad__codsubproceso__codproceso__pk}}</div>
                 <input type="hidden" name="procesoidc" id="subproceso_idact" value="{{subproceso.codactividad__codsubproceso__codproceso__pk}}">
 				<div id="cod_subprocesoact" class="invisible" >{{subproceso.codactividad__codsubproceso__pk}}</div>

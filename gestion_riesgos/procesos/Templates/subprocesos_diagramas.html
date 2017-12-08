@@ -49,14 +49,27 @@
 		 <form action="" method="POST" accept-charset="utf-8" enctype='multipart/form-data'>
                                 {% csrf_token %}
                                 <input type="hidden" name="metodo" value="subproceso">
-                           
+                                <input type="hidden" name="diagra" id="iddiagram" value="{{instanciag.pk}}">
+                                 <input type="hidden" name="habil" id="habil" value="{{instanciag.habilitado}}">
+                           		<div class="row">
+                                  <div class="col-sm-2">
+                                      <div class="form-group">
+                                      <label>Habilitado</label>
+                                        <div class="toggle-switch">
+
+                                            <input type="checkbox" class="toggle-switch__checkbox" checked="" name="habilitado" id="id_habilitado">
+                                            <i class="toggle-switch__helper"></i>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  </div>
                                 <div class="row">
                                     <div class="col-sm-12">
                                     {{formulario.diagrama|bootstrap_horizontal:'col-xs-4'}}
                                         
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-default" id="btnsubprocesos">Agregar</button>
+                                <button type="submit" class="btn btn-default" id="btnsubprocesos">Actualizar</button>
                                 <div id="divpadre">
                                           <img src="/media/{{instanciag.diagrama}}">
                                       </div>
@@ -71,7 +84,41 @@
 		
 </div>
 
+<script>
+	
+	var habilitado="No"
+	var iddiagrama=$("#iddiagram").val();
+	var check=$("#habil").val();
+	$("#id_habilitado").attr('checked', false);
+	$(document).ready(function() {
+		if (check == "False"){
+                    $("#id_habilitado").prop("checked",false).trigger('change');  
+                }
 
+                if (check == "True"){
+                    $("#id_habilitado").prop("checked",true).trigger('change');  
+                }
+		$("#id_habilitado").click(function() {
+			if($("#id_habilitado").is(':checked')){
+				habilitado="Si"
+				//alert(iddiagrama);
+			} else {
+				//alert("No Activo");
+				 habilitado="No"
+			}
+			//alert(especial);
+			 $.ajax({
+	        type: "GET",
+	        data:{ habilitado :habilitado, iddiagrama: iddiagrama, },
+	        url: "{% url 'ajaxInhabilitarImagen' %}"
+	    }).done(function(response){
+
+	    	
+	    })
+		});
+	});
+	
+</script>
 
 	
 {% endblock %}
