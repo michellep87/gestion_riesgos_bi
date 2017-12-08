@@ -209,7 +209,7 @@
                         <button type="submit" class="btn btn-default" id="btnEscenario">Guardar</button>
                     </div>
                 </div>
-                <div id="cod_proceso" class="invisible" name="procesoid" >{{request.session.proceso}}</div>
+                <div id="cod_proceso" class="invisible" name="procesoid" >{{subproceso.escenario__codsubproceso__codproceso__pk}}</div>
                 <input type="hidden" name="procesoidc" id="subproceso_id" value="{{request.session.proceso}}">
 				<div id="cod_subproceso" class="invisible" >{{subproceso.escenario__codsubproceso__pk}}</div>
 				<div id="cod_control" class="invisible">{{controlid}}</div>

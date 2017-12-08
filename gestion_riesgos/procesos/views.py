@@ -740,6 +740,7 @@ def subprocesos_ingreso(request, id):
 
 	try:
 		del request.session['proceso']
+		# del request.session['subproceso']
 		
 	except Exception as e:
 		pass
@@ -1734,6 +1735,39 @@ def matrizcontrol_editar(request,id):
 				nivelriesgoinherente = 0
 				
 
+			
+
+			# if nivelriesgoresidual <= 1:
+			# 	zonariesgo=1
+			# elif nivelriesgoresidual == 2 or nivelriesgoresidual == 3:
+			# 	zonariesgo = 2
+			# elif nivelriesgoresidual == 4 or nivelriesgoresidual == 5 or nivelriesgoresidual == 6 or nivelriesgoresidual == 7 :
+			# 	zonariesgo = 3
+			# elif nivelriesgoresidual == 8 or nivelriesgoresidual == 9 or nivelriesgoresidual == 10 or nivelriesgoresidual == 11 or nivelriesgoresidual == 12 or nivelriesgoresidual == 13 or nivelriesgoresidual == 14:
+			# 	zonariesgo = 4
+			# elif nivelriesgoresidual == 15 or nivelriesgoresidual == 16 or nivelriesgoresidual ==17 or nivelriesgoresidual ==18 or nivelriesgoresidual ==19 or nivelriesgoresidual ==20 or nivelriesgoresidual ==21 or nivelriesgoresidual ==22 or nivelriesgoresidual ==23 or nivelriesgoresidual ==24 or nivelriesgoresidual ==25:
+			# 	zonariesgo = 5
+			# else:
+			# 	zonariesgo=0
+			
+			campos = Controles.objects.get(pk=id)
+			campos.codactividad = None if(request.POST.get('codactividad'))=="" else Actividades.objects.get(pk=request.POST.get('codactividad'))
+			campos.codtipocontrol = None if (request.POST.get('codtipocontrol'))=="" else Tipocontrol.objects.get(pk=request.POST.get('codtipocontrol'))
+			campos.codnaturaleza = None if (request.POST.get('codnaturaleza'))=="" else Naturalezacontrol.objects.get(pk=request.POST.get('codnaturaleza'))
+			campos.frecuencia = None if (request.POST.get('frecuencia'))=="" else FrecuenciaControl.objects.get(pk=request.POST.get('frecuencia'))
+			campos.observaciones_auditoria = None if (request.POST.get('observaciones_auditoria'))=="" else ObservacionesAuditoria.objects.get(pk=request.POST.get('observaciones_auditoria'))
+			campos.escenario = None if(request.POST.get('escenarioriesgo'))=="" else Subprocesosxescenarios.objects.get(pk=request.POST.get('escenarioriesgo'))
+			campos.valoracion_control = request.POST.get('totalcontrol')
+			campos.descripcion = request.POST.get('descripcion')
+			campos.efectividad = request.POST.get('totalcontrol')
+			# campos.nivel_riesgo_residual = nivelriesgoresidual
+			# campos.zona_riesgo =None if (zonariesgo) == 0 else Zonariesgo.objects.get(pk=zonariesgo) 
+			campos.escala = request.POST.get('escalacontrol')
+			campos.clasificacion = request.POST.get('clasifcontrol')
+			campos.habilitado= "True" if (request.POST.get('habilitado'))=="on" else "False"
+			campos.save()
+			ControlesForm(instance=campos)
+
 			promedio = Controles.objects.filter(escenario=request.POST.get('escenarioriesgo'),habilitado=True).aggregate(Avg('valoracion_control')).values()[0]
 			print 'prom'	
 			print promedio
@@ -1773,37 +1807,11 @@ def matrizcontrol_editar(request,id):
 			except Exception as e:
 				zonariesgo=0
 
-			# if nivelriesgoresidual <= 1:
-			# 	zonariesgo=1
-			# elif nivelriesgoresidual == 2 or nivelriesgoresidual == 3:
-			# 	zonariesgo = 2
-			# elif nivelriesgoresidual == 4 or nivelriesgoresidual == 5 or nivelriesgoresidual == 6 or nivelriesgoresidual == 7 :
-			# 	zonariesgo = 3
-			# elif nivelriesgoresidual == 8 or nivelriesgoresidual == 9 or nivelriesgoresidual == 10 or nivelriesgoresidual == 11 or nivelriesgoresidual == 12 or nivelriesgoresidual == 13 or nivelriesgoresidual == 14:
-			# 	zonariesgo = 4
-			# elif nivelriesgoresidual == 15 or nivelriesgoresidual == 16 or nivelriesgoresidual ==17 or nivelriesgoresidual ==18 or nivelriesgoresidual ==19 or nivelriesgoresidual ==20 or nivelriesgoresidual ==21 or nivelriesgoresidual ==22 or nivelriesgoresidual ==23 or nivelriesgoresidual ==24 or nivelriesgoresidual ==25:
-			# 	zonariesgo = 5
-			# else:
-			# 	zonariesgo=0
-			
-			print zonariesgo		
-			campos = Controles.objects.get(pk=id)
-			campos.codactividad = None if(request.POST.get('codactividad'))=="" else Actividades.objects.get(pk=request.POST.get('codactividad'))
-			campos.codtipocontrol = None if (request.POST.get('codtipocontrol'))=="" else Tipocontrol.objects.get(pk=request.POST.get('codtipocontrol'))
-			campos.codnaturaleza = None if (request.POST.get('codnaturaleza'))=="" else Naturalezacontrol.objects.get(pk=request.POST.get('codnaturaleza'))
-			campos.frecuencia = None if (request.POST.get('frecuencia'))=="" else FrecuenciaControl.objects.get(pk=request.POST.get('frecuencia'))
-			campos.observaciones_auditoria = None if (request.POST.get('observaciones_auditoria'))=="" else ObservacionesAuditoria.objects.get(pk=request.POST.get('observaciones_auditoria'))
-			campos.escenario = None if(request.POST.get('escenarioriesgo'))=="" else Subprocesosxescenarios.objects.get(pk=request.POST.get('escenarioriesgo'))
-			campos.valoracion_control = request.POST.get('totalcontrol')
-			campos.descripcion = request.POST.get('descripcion')
-			campos.efectividad = request.POST.get('totalcontrol')
-			campos.nivel_riesgo_residual = nivelriesgoresidual
-			campos.zona_riesgo =None if (zonariesgo) == 0 else Zonariesgo.objects.get(pk=zonariesgo) 
-			campos.escala = request.POST.get('escalacontrol')
-			campos.clasificacion = request.POST.get('clasifcontrol')
-			campos.habilitado= "True" if (request.POST.get('habilitado'))=="on" else "False"
-			campos.save()
-			ControlesForm(instance=campos)
+			print zonariesgo	
+			campo=Controles.objects.get(pk=id)
+			campo.nivel_riesgo_residual = nivelriesgoresidual
+			campo.zona_riesgo =None if (zonariesgo) == 0 else Zonariesgo.objects.get(pk=zonariesgo)
+			campo.save()
 
 			#Guardar Efectividad total del escenario
 			escenario = Subprocesosxescenarios.objects.get(pk=request.POST.get('escenarioriesgo'))
@@ -2187,172 +2195,6 @@ def ver_diagramas(request,id):
 		}
 	return render(request, 'subprocesos_diagramas.html', ctx)
 
-
-#===========================================================================================================================#
-
-# @login_required
-# def procesos_listado(request):
-# 	ctx = {}
-# 	listado = Procesos.objects.all()
-
-# 	ctx = {
-# 			'listado': listado
-# 	}
-# 	return render (request, 'procesos_listado.html', ctx)
-
-# @login_required
-# def subprocesosescenarios(request, id):
-# 	try:
-# 		instancia = Subprocesosxescenarios.objects.filter(codsubproceso = id)
-# 	except Subprocesosxescenarios.DoesNotExist: 
-# 		instancia = None
-	
-# 	formulario = SubprocesosXEscenariosForm()
-# 	listado = Subprocesosxescenarios.objects.filter(codsubproceso = id)
-# 	ctx = {}
-# 	instanciap = Subprocesos.objects.get(codsubproceso= id)
-# 	formulariosubproceso = SubprocesosForm(instance= instanciap)
-# 	subprocesos = SubprocesosEditarForm()
-# 	Puesto = PuestosEditarForm()
-# 	escenario = EscenarioriesgosEditarForm()
-
-# 	if request.POST:
-# 		if request.POST['metodo'] == 'subproceso':
-# 			print 'subproceso'
-# 			try:
-# 				print 'diruriru'
-# 				campos = Subprocesos.objects.get(pk= id)#.objects.filter(codproceso = id)#Subprocesos.objects.filter(codproceso = id)
-# 				campos.codproceso = Procesos.objects.get(pk= id)#None if (request.POST.get('id'))=='' else Procesos.objects.get(codproceso = request.POST.get('id'))
-# 				campos.descsubproceso = request.POST.get('descsubproceso')
-# 				campos.codestado = Estados.objects.get(pk=1)#None if (request.POST.get('codestado'))=='' else Estados.objects.get(codestado = request.POST.get('codestado'))
-# 				campos.due_osubproceso = None if (request.POST.get('descpuesto'))=='' else Puestos.objects.get(pk=request.POST.get('descpuesto'))#request.POST.get('descpuesto')
-# 				campos.orden_subproceso = request.POST.get('orden_subproceso')
-# 				campos.observaciones = request.POST.get('observaciones')
-# 				campos.anexo = request.POST.get('anexo')
-# 				#campos.fecha_implementacion = request.POST.get('fecha_implementacion')
-# 				campos.save()
-# 				formulariosubproceso = SubprocesosForm(instance= campos)
-# 				#formulario = SubprocesosForm(instance = campos)
-# 				mensaje = 'exito'
-# 			except Exception as e:
-# 				raise
-# 				mensaje = e
-			
-
-# 		if request.POST['metodo'] == 'subprocesosxescenarios':
-# 			try:
-# 				campos = Subprocesosxescenarios()
-# 				campos.escenario = request.POST.get('escenario') #None if (request.POST.get('codescenarioriesgo'))=='' else Escnariosriesgos.objects.get(pk=request.POST.get('codescenarioriesgo'))
-# 				campos.codsubproceso = None if (request.POST.get('codsubproceso'))=='' else Subprocessos.objects.get(pk=request.POST.get('codsubproceso'))
-# 				campos.probabilidad = request.POST.get('probabilidad')
-# 				campos.impacto = request.POST.get('impacto')
-
-# 			except Exception as e:
-# 				raise e
-# 			ctx = {
-# 					'formulario': formulario,
-# 					'formulariop': formulariosubproceso,
-# 					'listado': listado,
-# 					'subprocesos': subprocesos,
-# 					'mensaje': mensaje,
-# 					'puesto': Puesto,
-# 					'escenario': escenario,
-
-# 			}
-# 			return HttpResponseRedirect('/procesos/subprocesosxescenarios/ingreso/'+ id +'/')
-			
-			
-# 	else:
-# 		print 'sopitaaa'
-# 		ctx = {
-# 			'formulario': formulario,
-# 			'formulariop': formulariosubproceso,
-# 			'listado': listado,
-# 			'subprocesos': subprocesos,
-# 			'instanciap': instanciap,
-# 			'puesto': Puesto,
-# 			'escenario': escenario,
-# 		}
-			
-# 		return render(request, 'subprocesos_escenarios_ingreso.html', ctx)
-
-
-# @login_required
-# def actividades(request):
-# 	formulario = ActividadesForm()
-# 	listado = Actividades.objects.all()
-# 	ctx = {}
-# 	tipoactividad = TipoActividadEditarForm()
-# 	proceso=request.session['proceso']
-# 	subprocesos = SubprocesosEditarForm()
-# 	subprocesos.fields['descsubproceso'] = forms.ModelChoiceField(queryset= Subprocesos.objects.filter(codproceso=proceso), label = 'Descripcion de Subproceso')
-# 	if request.POST:
-# 		try:
-# 			campos = Actividades()
-# 			campos.codsubproceso = None if (request.POST.get('codsubproceso'))=='' else Subprocesos.objects.get(codsubproceso = request.POST.get('codsubproceso'))
-# 			campos.ordenactividad = request.POST.get('ordenactividad')
-# 			campos.codtipoactividad = None if (request.POST.get('codtipoactividad'))=='' else Tipoactividad.objects.get(codtipoactividad = request.POST.get('codtipoactividad'))
-# 			campos.descripcionactividad = request.POST.get('descripcionactividad')
-# 			campos.nombreactividad = request.POST.get('nombreactividad')
-# 			campos.horas = request.POST.get('horas')
-# 			campos.save()
-
-# 			r = request.POST.getlist('Responsable')
-
-# 			for data in r:
-
-# 				resp = Raci()
-# 				resp.codactividad = campos
-# 				resp.codraci = None if(request.POST.get('letraR'))=="" else Tiporaci.objects.get(letra=request.POST.get('letraR'))
-# 				resp.codpuesto = Puestos.objects.get(id=data)
-# 				resp.save()
-
-
-# 			A = request.POST.getlist('Acargo')	
-# 			for data in A:
-
-# 				ac = Raci()
-# 				ac.codactividad = campos
-# 				ac.codraci = None if(request.POST.get('letraA'))=="" else Tiporaci.objects.get(letra=request.POST.get('letraA'))
-# 				ac.codpuesto = Puestos.objects.get(id=data)
-# 				ac.save()
-
-
-# 			C = request.POST.getlist('Consultar')	
-# 			for data in A:
-
-# 				con = Raci()
-# 				con.codactividad = campos
-# 				con.codraci = None if(request.POST.get('letraC'))=="" else Tiporaci.objects.get(letra=request.POST.get('letraC'))
-# 				con.codpuesto = Puestos.objects.get(id=data)
-# 				con.save()
-
-# 			I = request.POST.getlist('Informar')	
-# 			for data in I:
-
-# 				inf = Raci()
-# 				inf.codactividad = campos
-# 				inf.codraci = None if(request.POST.get('letraI'))=="" else Tiporaci.objects.get(letra=request.POST.get('letraI'))
-# 				inf.codpuesto = Puestos.objects.get(id=data)
-# 				inf.save()
-					
-# 			mensaje = 'exito'
-# 		except Exception as e:
-# 			mensaje = e
-# 		ctx = {
-# 				'formulario': formulario,
-# 				'listado': listado,
-# 				'tipoactividad': tipoactividad,
-# 				'subprocesos': subprocesos,
-# 		}
-# 	else:
-# 			ctx = {
-# 				'formulario': formulario,
-# 				'listado': listado,
-# 				'tipoactividad': tipoactividad,
-# 				'subprocesos': subprocesos,
-# 		}
-# 	return render(request, 'actividades_ingreso.html', ctx)
 #============================================= AJAX ===============================================================================================
 
 import json
@@ -3062,6 +2904,177 @@ def ajaxPonderacion(request):
 			'ponderaciones': ponderaciones,
 		}
 	return HttpResponse(json.dumps(data, default=decimal_default), content_type='application/json')	
+
+
+
+
+
+
+#===========================================================================================================================#
+
+# @login_required
+# def procesos_listado(request):
+# 	ctx = {}
+# 	listado = Procesos.objects.all()
+
+# 	ctx = {
+# 			'listado': listado
+# 	}
+# 	return render (request, 'procesos_listado.html', ctx)
+
+# @login_required
+# def subprocesosescenarios(request, id):
+# 	try:
+# 		instancia = Subprocesosxescenarios.objects.filter(codsubproceso = id)
+# 	except Subprocesosxescenarios.DoesNotExist: 
+# 		instancia = None
+	
+# 	formulario = SubprocesosXEscenariosForm()
+# 	listado = Subprocesosxescenarios.objects.filter(codsubproceso = id)
+# 	ctx = {}
+# 	instanciap = Subprocesos.objects.get(codsubproceso= id)
+# 	formulariosubproceso = SubprocesosForm(instance= instanciap)
+# 	subprocesos = SubprocesosEditarForm()
+# 	Puesto = PuestosEditarForm()
+# 	escenario = EscenarioriesgosEditarForm()
+
+# 	if request.POST:
+# 		if request.POST['metodo'] == 'subproceso':
+# 			print 'subproceso'
+# 			try:
+# 				print 'diruriru'
+# 				campos = Subprocesos.objects.get(pk= id)#.objects.filter(codproceso = id)#Subprocesos.objects.filter(codproceso = id)
+# 				campos.codproceso = Procesos.objects.get(pk= id)#None if (request.POST.get('id'))=='' else Procesos.objects.get(codproceso = request.POST.get('id'))
+# 				campos.descsubproceso = request.POST.get('descsubproceso')
+# 				campos.codestado = Estados.objects.get(pk=1)#None if (request.POST.get('codestado'))=='' else Estados.objects.get(codestado = request.POST.get('codestado'))
+# 				campos.due_osubproceso = None if (request.POST.get('descpuesto'))=='' else Puestos.objects.get(pk=request.POST.get('descpuesto'))#request.POST.get('descpuesto')
+# 				campos.orden_subproceso = request.POST.get('orden_subproceso')
+# 				campos.observaciones = request.POST.get('observaciones')
+# 				campos.anexo = request.POST.get('anexo')
+# 				#campos.fecha_implementacion = request.POST.get('fecha_implementacion')
+# 				campos.save()
+# 				formulariosubproceso = SubprocesosForm(instance= campos)
+# 				#formulario = SubprocesosForm(instance = campos)
+# 				mensaje = 'exito'
+# 			except Exception as e:
+# 				raise
+# 				mensaje = e
+			
+
+# 		if request.POST['metodo'] == 'subprocesosxescenarios':
+# 			try:
+# 				campos = Subprocesosxescenarios()
+# 				campos.escenario = request.POST.get('escenario') #None if (request.POST.get('codescenarioriesgo'))=='' else Escnariosriesgos.objects.get(pk=request.POST.get('codescenarioriesgo'))
+# 				campos.codsubproceso = None if (request.POST.get('codsubproceso'))=='' else Subprocessos.objects.get(pk=request.POST.get('codsubproceso'))
+# 				campos.probabilidad = request.POST.get('probabilidad')
+# 				campos.impacto = request.POST.get('impacto')
+
+# 			except Exception as e:
+# 				raise e
+# 			ctx = {
+# 					'formulario': formulario,
+# 					'formulariop': formulariosubproceso,
+# 					'listado': listado,
+# 					'subprocesos': subprocesos,
+# 					'mensaje': mensaje,
+# 					'puesto': Puesto,
+# 					'escenario': escenario,
+
+# 			}
+# 			return HttpResponseRedirect('/procesos/subprocesosxescenarios/ingreso/'+ id +'/')
+			
+			
+# 	else:
+# 		print 'sopitaaa'
+# 		ctx = {
+# 			'formulario': formulario,
+# 			'formulariop': formulariosubproceso,
+# 			'listado': listado,
+# 			'subprocesos': subprocesos,
+# 			'instanciap': instanciap,
+# 			'puesto': Puesto,
+# 			'escenario': escenario,
+# 		}
+			
+# 		return render(request, 'subprocesos_escenarios_ingreso.html', ctx)
+
+
+# @login_required
+# def actividades(request):
+# 	formulario = ActividadesForm()
+# 	listado = Actividades.objects.all()
+# 	ctx = {}
+# 	tipoactividad = TipoActividadEditarForm()
+# 	proceso=request.session['proceso']
+# 	subprocesos = SubprocesosEditarForm()
+# 	subprocesos.fields['descsubproceso'] = forms.ModelChoiceField(queryset= Subprocesos.objects.filter(codproceso=proceso), label = 'Descripcion de Subproceso')
+# 	if request.POST:
+# 		try:
+# 			campos = Actividades()
+# 			campos.codsubproceso = None if (request.POST.get('codsubproceso'))=='' else Subprocesos.objects.get(codsubproceso = request.POST.get('codsubproceso'))
+# 			campos.ordenactividad = request.POST.get('ordenactividad')
+# 			campos.codtipoactividad = None if (request.POST.get('codtipoactividad'))=='' else Tipoactividad.objects.get(codtipoactividad = request.POST.get('codtipoactividad'))
+# 			campos.descripcionactividad = request.POST.get('descripcionactividad')
+# 			campos.nombreactividad = request.POST.get('nombreactividad')
+# 			campos.horas = request.POST.get('horas')
+# 			campos.save()
+
+# 			r = request.POST.getlist('Responsable')
+
+# 			for data in r:
+
+# 				resp = Raci()
+# 				resp.codactividad = campos
+# 				resp.codraci = None if(request.POST.get('letraR'))=="" else Tiporaci.objects.get(letra=request.POST.get('letraR'))
+# 				resp.codpuesto = Puestos.objects.get(id=data)
+# 				resp.save()
+
+
+# 			A = request.POST.getlist('Acargo')	
+# 			for data in A:
+
+# 				ac = Raci()
+# 				ac.codactividad = campos
+# 				ac.codraci = None if(request.POST.get('letraA'))=="" else Tiporaci.objects.get(letra=request.POST.get('letraA'))
+# 				ac.codpuesto = Puestos.objects.get(id=data)
+# 				ac.save()
+
+
+# 			C = request.POST.getlist('Consultar')	
+# 			for data in A:
+
+# 				con = Raci()
+# 				con.codactividad = campos
+# 				con.codraci = None if(request.POST.get('letraC'))=="" else Tiporaci.objects.get(letra=request.POST.get('letraC'))
+# 				con.codpuesto = Puestos.objects.get(id=data)
+# 				con.save()
+
+# 			I = request.POST.getlist('Informar')	
+# 			for data in I:
+
+# 				inf = Raci()
+# 				inf.codactividad = campos
+# 				inf.codraci = None if(request.POST.get('letraI'))=="" else Tiporaci.objects.get(letra=request.POST.get('letraI'))
+# 				inf.codpuesto = Puestos.objects.get(id=data)
+# 				inf.save()
+					
+# 			mensaje = 'exito'
+# 		except Exception as e:
+# 			mensaje = e
+# 		ctx = {
+# 				'formulario': formulario,
+# 				'listado': listado,
+# 				'tipoactividad': tipoactividad,
+# 				'subprocesos': subprocesos,
+# 		}
+# 	else:
+# 			ctx = {
+# 				'formulario': formulario,
+# 				'listado': listado,
+# 				'tipoactividad': tipoactividad,
+# 				'subprocesos': subprocesos,
+# 		}
+# 	return render(request, 'actividades_ingreso.html', ctx)
 
 
 
